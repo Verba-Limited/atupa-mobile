@@ -1,5 +1,7 @@
 {
   "name": "masoyinbo",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
