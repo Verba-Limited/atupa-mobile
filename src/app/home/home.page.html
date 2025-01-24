@@ -8,18 +8,19 @@
 
     <div class="content-wrapper">
       <div class="knowledge-div">
-        <h1 class="title">
-          Test your Knowledge and<br />
-          Learn Yoruba Culture
-        </h1>
+        <h1 class="title">Set up Account</h1>
         <p class="subtitle">
-          Explore different culture, heritage and have<br />
-          understanding about yoruba culture
+          Register to Masoyinbo to have access to exclusive <br />
+          learning and quiz
         </p>
       </div>
 
       <div class="button-container">
-        <ion-button expand="block" class="create-account">
+        <ion-button
+          (click)="navigateToSignup()"
+          expand="block"
+          class="create-account"
+        >
           Register
         </ion-button>
         <ion-button (click)="navigateToLogin()" expand="block" class="login">
