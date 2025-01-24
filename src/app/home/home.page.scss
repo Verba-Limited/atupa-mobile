@@ -66,25 +66,26 @@
    .button-container {
      display: flex;
      flex-direction: column;
-     gap: 15px;
+     gap: 10px;
    }
 
    .create-account {
-     background: #7B462F;
-     color: white;
+     --background: #7B462F;
+     --color: white;
      height: 52px;
      text-transform: none;
-     border-radius: 10px;
+     --border-radius: 10px;
      font-weight: 700;
    }
 
    .login {
-     background: #F6EBDD;
-     color: #8B4513;
+     --background: #F6EBDD;
+     --color: #8B4513;
      height: 52px;
      text-transform: none;
-     border-radius: 10px;
+     --border-radius: 10px;
      font-weight: 700;
+     box-shadow: #F6EBDD;
    }
 
    @media (max-height: 600px) {

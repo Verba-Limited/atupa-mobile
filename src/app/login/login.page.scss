@@ -1,0 +1,123 @@
+   .container {
+       padding: 16px;
+
+       .back-arrow {
+           position: absolute;
+           top: 35px;
+           left: 30px;
+           font-size: 22px;
+           color: black;
+           cursor: pointer;
+       }
+
+       ion-input-password-toggle {
+           color: black;
+       }
+
+       .framer {
+           color: #505050;
+           text-align: center;
+
+           p {
+               font-size: 16px;
+               font-weight: 400;
+               line-height: 24px;
+           }
+
+           h2 {
+               font-size: 20px;
+               font-weight: 700;
+           }
+
+           ion-button {
+               --color: var(--ion-color-custom-purple);
+               --background: #ffffff;
+               text-transform: none;
+           }
+
+           .block {
+               width: 100%;
+               height: 300px;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+           }
+
+           ion-modal {
+               --width: 375px;
+               --height: 377px;
+           }
+       }
+
+       .forgot-password {
+           text-align: end;
+           color: #505050;
+           cursor: pointer;
+           font-size: 14px;
+       }
+
+       .create-account {
+           --background: #7B462F;
+           --color: white;
+           height: 52px;
+           text-transform: none;
+           --border-radius: 10px;
+           font-weight: 700;
+           margin-top: 10px;
+       }
+
+       /* Divider Section */
+       .divider {
+           display: flex;
+           align-items: center;
+           margin: 20px 0;
+           padding-top: 50px;
+       }
+
+       .line {
+           flex: 1;
+           border: none;
+           height: 1px;
+           background-color: #e0e0e0;
+           margin: 0 10px;
+       }
+
+       .divider-text {
+           font-size: 14px;
+           color: #6c757d;
+       }
+   }
+
+   .social-buttons {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       gap: 30px;
+       padding-top: 20px;
+
+   }
+
+   .social-button {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       gap: 10px;
+       width: 100%;
+       border-radius: 8px;
+       border: 1px solid #e0e0e0;
+       font-size: 16px;
+       font-weight: 600;
+       cursor: pointer;
+       transition: background-color 0.3s;
+       color: #2E2E2E;
+   }
+
+   .question {
+       text-align: center;
+       color: #505050;
+       padding-top: 10px;
+
+       .terms-link {
+           color: #7B462F;
+       }
+   }

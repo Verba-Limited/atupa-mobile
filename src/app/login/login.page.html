@@ -1,0 +1,64 @@
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Welcome Back</h2>
+      <p>
+        Sign in to Masoyinbo to continue <br />
+        your adventure
+      </p>
+    </div>
+    <form action="">
+      <div style="margin-top: 50px">
+        <ion-input
+          label="Email Address"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Email Address"
+          style="color: #505050"
+        ></ion-input>
+        <br />
+        <ion-input placeholder="Password" fill="outline" type="password">
+          <ion-input-password-toggle
+            slot="end"
+            color="dark"
+          ></ion-input-password-toggle>
+        </ion-input>
+
+        <div class="forgot-password">
+          <p style="font-size: 14px; font-weight: 400" routerLink="/sign-up">
+            Forgot Password?
+          </p>
+        </div>
+        <br />
+        <ion-button expand="block" class="create-account"> Sign in </ion-button>
+      </div>
+    </form>
+
+    <div class="divider">
+      <hr class="line" />
+      <span class="divider-text">or sign in with</span>
+      <hr class="line" />
+    </div>
+
+    <!-- Social Buttons Section -->
+    <div class="social-buttons">
+      <div class="social-button">
+        <img src="../../assets/icon/goggle.svg " alt="" />
+        <p>Google</p>
+      </div>
+      <div class="social-button">
+        <img src="../../assets/icon/facebook 1.svg " alt="" />
+        <p>Facebook</p>
+      </div>
+    </div>
+    <p class="question">
+      Don't have an account?
+      <span class="terms-link">Register</span>
+    </p>
+  </div>
+</ion-content>
