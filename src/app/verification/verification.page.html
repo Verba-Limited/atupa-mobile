@@ -29,5 +29,20 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <div class="ion-text-center ion-padding">
+      <p class="resend-code">
+        Didn’t get the code?
+        <span style="color: #7b462f; cursor: pointer">Resend code </span>
+      </p>
+    </div>
+
+    <ion-button
+      expand="block"
+      class="create-account"
+      (click)="navigateToChangePassword()"
+    >
+      Verify
+    </ion-button>
   </div>
 </ion-content>

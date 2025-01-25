@@ -1,22 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-verification',
-  templateUrl: './verification.page.html',
-  styleUrls: ['./verification.page.scss'],
+  selector: 'app-change-password',
+  templateUrl: './change-password.page.html',
+  styleUrls: ['./change-password.page.scss'],
   standalone: true,
   imports: [IonicModule],
 })
-export class VerificationPage {
+export class ChangePasswordPage {
   constructor(private navCtrl: NavController, private router: Router) {}
 
   navigateBack() {
     this.navCtrl.back(); // Navigate to the previous page
-  }
-
-  navigateToChangePassword() {
-    this.router.navigate(['/change-password']);
   }
 }
