@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.page.html',
+  styleUrls: ['./forgot-password.page.scss'],
   standalone: true,
   imports: [IonicModule],
 })
-export class LoginPage {
+export class ForgotPasswordPage {
   constructor(private navCtrl: NavController, private router: Router) {}
   showPassword = false; // Toggle for password visibility
   password = ''; // Bind password input
@@ -21,7 +21,7 @@ export class LoginPage {
     this.navCtrl.back(); // Navigate to the previous page
   }
 
-  navigateToForget() {
-    this.router.navigate(['/forgot-password']);
+  navigateToVerification() {
+    this.router.navigate(['/verification']);
   }
 }
