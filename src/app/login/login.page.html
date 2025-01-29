@@ -29,11 +29,9 @@
           ></ion-input-password-toggle>
         </ion-input>
 
-        <div (click)="navigateToForget()">
-          <p class="forgot-password" style="font-size: 14px; font-weight: 400">
-            Forgot Password?
-          </p>
-        </div>
+        <p class="forgot-password" style="font-size: 14px; font-weight: 400">
+          <span (click)="navigateToForget()">Forgot Password?</span>
+        </p>
         <br />
         <ion-button expand="block" class="create-account"> Sign in </ion-button>
       </div>
@@ -58,7 +56,7 @@
     </div>
     <p class="question">
       Don't have an account?
-      <span class="terms-link">Register</span>
+      <span (click)="signPage()" class="terms-link">Register</span>
     </p>
   </div>
 </ion-content>

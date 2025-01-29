@@ -53,8 +53,8 @@
         </ion-button>
 
         <p class="question">
-          Don't have an account?
-          <span class="terms-link">log in</span>
+          Already have an account?
+          <span (click)="loginPage()" class="terms-link">Log in</span>
         </p>
       </div>
     </form>
@@ -79,11 +79,18 @@
 
     <p class="question" style="padding-top: 10px">
       By registering you agree to Masoyinbo
-      <span class="terms"
-        >Terms <br />
-        of service</span
-      >
-      and <span class="terms">Privacy Policy</span>
+      <span class="terms">
+        <a href="/terms" style="text-decoration: none; color: inherit"
+          >Terms <br />
+          of service</a
+        >
+      </span>
+      and
+      <span class="terms">
+        <a href="/privacy-policy" style="text-decoration: none; color: inherit"
+          >Privacy Policy</a
+        >
+      </span>
     </p>
   </div>
 </ion-content>

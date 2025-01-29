@@ -64,6 +64,7 @@
            --border-radius: 10px;
            font-weight: 700;
            margin-top: 10px;
+           --box-shadow: none;
        }
 
        /* Divider Section */
@@ -115,7 +116,7 @@
    .question {
        text-align: center;
        color: #505050;
-       padding-top: 10px;
+       padding-top: 20px;
 
        .terms-link {
            color: #7B462F;

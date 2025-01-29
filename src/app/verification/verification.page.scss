@@ -1,4 +1,8 @@
 .container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Full height to use flex properly */
     padding: 16px;
 
     .back-arrow {
@@ -10,11 +14,10 @@
         cursor: pointer;
     }
 
-
-
     .framer {
         color: #505050;
         text-align: center;
+        flex: 0 1 auto;
 
         p {
             font-size: 16px;
@@ -26,25 +29,13 @@
             font-size: 20px;
             font-weight: 700;
         }
+    }
 
-        ion-button {
-            --color: var(--ion-color-custom-purple);
-            --background: #ffffff;
-            text-transform: none;
-        }
-
-        .block {
-            width: 100%;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        ion-modal {
-            --width: 375px;
-            --height: 377px;
-        }
+    ion-grid {
+        flex-grow: 1;
+        /* Allow the grid to take available space */
+        margin-bottom: 50px;
+        /* Space before the button */
     }
 
     ion-input {
@@ -55,14 +46,9 @@
         font-size: 24px;
     }
 
-    ion-button {
-        --background: #7B462F;
-        --color: #fff;
-        --border-radius: 8px;
-        --padding-top: 12px;
-        --padding-bottom: 12px;
-        --padding-start: 24px;
-        --padding-end: 24px;
+    .resend-code {
+        font-size: 14px;
+        font-weight: 400;
     }
 
     .create-account {
@@ -72,6 +58,10 @@
         text-transform: none;
         --border-radius: 10px;
         font-weight: 700;
-        margin-top: 10px;
+        margin-top: auto;
+        --box-shadow: none;
+        /* Push the button to the bottom */
+        margin-bottom: 50px;
+        /* Add space below the button */
     }
 }

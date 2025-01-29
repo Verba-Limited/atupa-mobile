@@ -24,4 +24,8 @@ export class LoginPage {
   navigateToForget() {
     this.router.navigate(['/forgot-password']);
   }
+
+  signPage() {
+    this.router.navigate(['/sign-up']);
+  }
 }
