@@ -28,4 +28,8 @@ export class LoginPage {
   signPage() {
     this.router.navigate(['/sign-up']);
   }
+
+  openDashboad() {
+    this.router.navigateByUrl('/tabs');
+  }
 }
