@@ -8,8 +8,6 @@ import { IonicModule } from '@ionic/angular';
   standalone: true,
   imports: [IonicModule],
 })
-export class HomeTabPage implements OnInit {
+export class HomeTabPage {
   constructor() {}
-
-  ngOnInit() {}
 }

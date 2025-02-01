@@ -1,0 +1,18 @@
+ion-tab-bar {
+    --color-selected: #7B462F; // Active color
+}
+
+ion-tab-button {
+    --color: #2E2E2E; // Default color
+    --color-hover: #ff9800; // Custom hover color (Not available by default)
+}
+
+// Manually apply hover effect
+ion-tab-button:hover {
+    color: var(--color-hover);
+}
+
+ion-label {
+    --font-size: 16px;
+    --font-weight: 600;
+}

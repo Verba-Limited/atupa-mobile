@@ -1,13 +1,150 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home-tab</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="container">
+    <div class="main-header">
+      <div>
+        <h1 class="header">Hi, Promise</h1>
+        <p class="sub-header">Let's play a quiz today!</p>
+      </div>
+      <div class="side">
+        <div class="star">
+          <div class="star-color">
+            <img src="../../assets/icon/Vector.svg" alt="" />
+          </div>
+          <div><p style="font-size: 14px">1000</p></div>
+        </div>
+        <div class="alert">
+          <img
+            style="width: 32px; height: 32px"
+            src="../../assets/icon/Group 3.svg"
+            alt=""
+          />
+          <div class="dot">
+            <img src="../../assets/icon/Ellipse 11.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home-tab</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- main content -->
+
+    <div class="scroll-container">
+      <div class="quiz-card green">
+        <div class="card-content">
+          <h2>Onka</h2>
+          <div class="points">
+            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+            <span>1000 points</span>
+          </div>
+          <div class="play-section">
+            <img
+              src="../../assets/icon/Rectangle 19.svg"
+              alt=""
+              style="margin-top: 15px"
+            />
+            <img
+              src="../../assets/icon/Rectangle 22.svg"
+              alt=""
+              style="margin-top: 15px"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-card orange">
+        <div class="card-content">
+          <h2>Eranko</h2>
+          <div class="points">
+            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+            <span>1200 points</span>
+          </div>
+          <div class="play-section">
+            <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+            <img src="../../assets/icon/flat.svg" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-card gray">
+        <div class="card-content">
+          <h2>Oba I</h2>
+          <div class="points">
+            <ion-icon name="star"></ion-icon>
+            <span>1000 points</span>
+          </div>
+          <div class="play-section">
+            <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- lesson section -->
+
+    <div>
+      <div class="lesson-header">
+        <p class="heading">Lesson</p>
+        <p class="see-more">See more</p>
+      </div>
+
+      <div>
+        <div class="proverb-card">
+          <div class="proverb-image">
+            <img src="../../assets/icon/Rectangle 24.svg" alt="" />
+            <!-- <h2 class="title">Owe</h2> -->
+          </div>
+
+          <div class="proverb-content">
+            <!-- <p>
+              Know about different <br />
+              proverb in yoruba and <br />
+              when to use it
+            </p> -->
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="quiz">
+        <p class="heading">Latest Quiz</p>
+        <div class="latest">
+          <div class="quiz-container">
+            <!-- Left: Image -->
+            <div class="icon">
+              <img src="../../assets/icon/flat.svg" alt="Eranko icon" />
+            </div>
+
+            <!-- Middle: Title and Button -->
+            <div class="quiz-info">
+              <h3 class="title">Eranko - Level 2</h3>
+              <button class="continue-btn">Continue</button>
+            </div>
+
+            <!-- Right: Progress Circle -->
+            <div class="progress-circle">
+              <span class="progress-text">5/10</span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="latest">
+          <div class="quiz-container">
+            <!-- Left: Image -->
+            <div class="icon2">
+              <img src="../../assets/icon/Rectangle 22.svg" alt="Eranko icon" />
+            </div>
+
+            <!-- Middle: Title and Button -->
+            <div class="quiz-info">
+              <h3 class="title">Onka - Level 1</h3>
+              <button class="continue-btn">Continue</button>
+            </div>
+
+            <!-- Right: Progress Circle -->
+            <div class="progress-circle2">
+              <span class="progress-text">6/10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
