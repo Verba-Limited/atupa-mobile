@@ -1,0 +1,117 @@
+.framer {
+    color: #505050;
+    text-align: center;
+}
+
+.quiz {
+    position: relative;
+    display: inline-block; // Ensures it wraps around the image
+}
+
+.quiz img {
+    width: 99.95px; // Adjust this as needed
+    height: 101px;
+}
+
+.quiz-text {
+    position: absolute;
+    top: 50%; // Centers text vertically
+    left: 50%; // Centers text horizontally
+    transform: translate(-50%, -50%); // Fine-tunes centering
+    color: white; // Change as needed
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.quiz-description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.82px;
+}
+
+.container {
+    padding: 10px;
+
+
+    .first {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+    }
+
+    .quiz-card {
+        flex: 0 0 auto; // Prevent card shrinking
+        width: 157px;
+        height: 143px;
+        border-radius: 20px;
+        padding: 16px;
+
+        &.green {
+            background: #BACA93;
+        }
+
+        &.orange {
+            background: #EDC78D;
+        }
+
+        &.gray {
+            background: #D9D9D9;
+        }
+
+        &.sky {
+            background: #CCCDB1;
+        }
+
+        &.light {
+            background: #D7DEC9;
+        }
+    }
+
+    .card-content {
+        h2 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .points {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 16px;
+            font-size: 14px;
+
+            ion-icon {
+                color: #FF9500;
+            }
+        }
+    }
+
+    .play-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .play-btn {
+            background: #7B462F;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .numbers {
+            font-size: 24px;
+            font-weight: 700;
+            color: #7B462F;
+        }
+
+        .giraffe-img {
+            height: 60px;
+        }
+    }
+}
