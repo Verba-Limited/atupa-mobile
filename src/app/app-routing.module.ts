@@ -48,6 +48,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
+  {
+    path: 'levels',
+    loadChildren: () => import('./levels/levels.module').then( m => m.LevelsPageModule)
+  },
 ];
 
 @NgModule({

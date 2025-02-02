@@ -1,0 +1,95 @@
+.levels-container {
+    padding: 16px;
+
+    .back-arrow {
+        position: absolute;
+        top: 35px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+
+    .framer {
+        color: #505050;
+        text-align: center;
+
+        p {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+    }
+
+    .description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .levels-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 15px;
+
+        .level-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+            background: #FFF5EB;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            ion-icon {
+                font-size: 24px;
+
+                &[name="checkmark-circle"] {
+                    color: #7B462F;
+                }
+
+                &[name="play-circle"] {
+                    color: #7B462F;
+                }
+
+                &[name="lock-closed"] {
+                    color: #7B462F;
+                }
+            }
+
+            span {
+                color: #7B462F;
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            &.locked {
+                // opacity: 0.8;
+                cursor: not-allowed;
+
+                span {
+                    color: #7B462F;
+                }
+            }
+
+            &:not(.locked):hover {
+                background: #FFE8D3;
+            }
+        }
+    }
+}

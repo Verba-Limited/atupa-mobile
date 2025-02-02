@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -8,8 +9,10 @@ import { IonicModule } from '@ionic/angular';
   standalone: true,
   imports: [IonicModule],
 })
-export class QuizPage implements OnInit {
-  constructor() {}
+export class QuizPage {
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
+  levelsPage() {
+    this.router.navigate(['/levels']);
+  }
 }
