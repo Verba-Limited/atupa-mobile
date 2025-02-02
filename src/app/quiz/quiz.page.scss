@@ -31,7 +31,7 @@
 }
 
 .container {
-    padding: 10px;
+    padding: 16px;
 
 
     .first {
@@ -65,6 +65,14 @@
 
         &.light {
             background: #D7DEC9;
+        }
+
+        &.sea {
+            background: #D8E5BC;
+        }
+
+        &.brown {
+            background: #D2C5B2;
         }
     }
 
