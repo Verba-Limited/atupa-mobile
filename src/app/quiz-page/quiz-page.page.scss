@@ -93,7 +93,6 @@
         width: 90px;
         height: 90px;
         position: absolute;
-
         left: 0;
         bottom: -40px;
     }
@@ -117,7 +116,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .option {
@@ -159,8 +158,26 @@
     gap: 5px;
     color: #6b8e23;
     font-weight: 700;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .option.correct img {
     width: 20px;
+}
+
+.quiz-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding-top: 30%;
+    }
 }
