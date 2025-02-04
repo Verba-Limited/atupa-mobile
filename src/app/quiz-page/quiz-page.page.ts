@@ -3,20 +3,15 @@ import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-levels',
-  templateUrl: './levels.page.html',
-  styleUrls: ['./levels.page.scss'],
-  // standalone: true,
+  selector: 'app-quiz-page',
+  templateUrl: './quiz-page.page.html',
+  styleUrls: ['./quiz-page.page.scss'],
   imports: [IonicModule],
 })
-export class LevelsPage {
+export class QuizPagePage {
   constructor(private navCtrl: NavController, private router: Router) {}
 
   navigateBack() {
     this.navCtrl.back(); // Navigate to the previous page
-  }
-
-  quizPage() {
-    this.router.navigate(['/quiz-page']);
   }
 }

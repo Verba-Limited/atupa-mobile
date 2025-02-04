@@ -1,0 +1,63 @@
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2 class="onka">Onka</h2>
+      <div class="timer">
+        <img src="../../assets/icon/stopwatch 1.svg" alt="" />
+        <p>30s</p>
+      </div>
+    </div>
+
+    <!-- Centered Quiz Card -->
+    <div class="quiz-container">
+      <div class="quiz-card">
+        <div class="text-content">
+          <div>
+            <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
+          </div>
+          <h1>Question 3/10</h1>
+          <p>
+            Kini nọmba Merin le <br />
+            ogun meji ninu ede <br />
+            Gẹẹsi?
+          </p>
+          <div>
+            <img
+              class="volume"
+              src="../../assets/icon/volume-high 1.svg"
+              alt=""
+            />
+          </div>
+
+          <div>
+            <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="options-container">
+        <div class="option">
+          <input type="radio" id="option1" name="quiz" />
+          <label for="option1">643</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="option2" name="quiz" checked />
+          <label for="option2">643</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="option3" name="quiz" />
+          <label for="option3">343</label>
+        </div>
+        <div class="option">
+          <input type="radio" id="option4" name="quiz" />
+          <label for="option4">443</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -52,6 +52,10 @@ const routes: Routes = [
     path: 'levels',
     loadChildren: () => import('./levels/levels.module').then( m => m.LevelsPageModule)
   },
+  {
+    path: 'quiz-page',
+    loadChildren: () => import('./quiz-page/quiz-page.module').then( m => m.QuizPagePageModule)
+  },
 ];
 
 @NgModule({

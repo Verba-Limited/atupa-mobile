@@ -1,0 +1,166 @@
+.container {
+    padding: 16px;
+
+    .back-arrow {
+        position: absolute;
+        top: 37px;
+        left: 16px; // Adjust for better alignment
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .framer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        color: #505050;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        .onka {
+            font-size: 20px;
+            font-weight: bold;
+            flex-grow: 1;
+            margin-left: 25px;
+            text-align: center; // Ensure centering
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 7px;
+
+            img {
+                width: 18px;
+            }
+
+            p {
+                color: #C23327;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+    }
+
+    // Centering Quiz Card
+    .quiz-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        // height: calc(100vh - 100px); // Adjust based on header size
+    }
+
+    .quiz-card {
+        background-image: url('../../assets/icon/Rectangle\ 49.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 349px;
+        height: 251px;
+        position: relative;
+        /* Allows absolute positioning inside */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    .text-content {
+        text-align: center;
+    }
+
+    .text-content h1 {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 32.74px;
+        color: #505050;
+    }
+
+    .first {
+        width: 90px;
+        height: 90px;
+        position: absolute;
+        right: 0;
+        top: -30px;
+    }
+
+    .second {
+        width: 90px;
+        height: 90px;
+        position: absolute;
+
+        left: 0;
+        bottom: -40px;
+    }
+}
+
+.text-content p {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32.74px;
+    color: #2e2e2e;
+}
+
+.volume {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 24px;
+}
+
+.options-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    width: 160px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #505050;
+    cursor: pointer;
+}
+
+.option input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #bbb;
+    border-radius: 50%;
+    outline: none;
+}
+
+.option input:checked {
+    border-color: #6b8e23;
+}
+
+.option.correct {
+    border: 2px solid #6b8e23;
+    background: white;
+}
+
+.option.correct label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #6b8e23;
+    font-weight: 700;
+}
+
+.option.correct img {
+    width: 20px;
+}
