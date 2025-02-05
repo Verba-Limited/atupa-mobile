@@ -186,8 +186,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-     .sub-content{
+    flex-direction: column;
+
+    .sub-content {
         display: flex;
-            align-items: center;
-     }
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .create-account {
+        --background: #7B462F;
+        --color: white;
+        height: 52px;
+        text-transform: none;
+        --border-radius: 10px;
+        font-weight: 700;
+        margin-top: 10px;
+        width: 343px;
+        --box-shadow: none;
+    }
 }
