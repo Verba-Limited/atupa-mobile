@@ -40,32 +40,33 @@
         </div>
       </div>
 
+      <!-- quiz.component.html -->
       <div class="options-container">
-        <div class="option">
-          <input type="radio" id="option1" name="quiz" />
-          <label for="option1">643</label>
-        </div>
-        <div class="option">
-          <input type="radio" id="option2" name="quiz" checked />
-          <label for="option2">643</label>
-        </div>
-        <div class="option">
-          <input type="radio" id="option3" name="quiz" />
-          <label for="option3">343</label>
-        </div>
-        <div class="option">
-          <input type="radio" id="option4" name="quiz" />
-          <label for="option4">443</label>
+        <div class="option" *ngFor="let option of options">
+          <input
+            type="radio"
+            [id]="option.id"
+            name="quiz"
+            (change)="onSelectOption()"
+          />
+          <label [for]="option.id">{{ option.label }}</label>
         </div>
       </div>
     </div>
 
-    <div class="quiz-button">
+    <div class="quiz-button" *ngIf="!isOptionSelected">
       <div class="button">
         <img src="../../assets/icon/Group 38.svg" alt="" />
         <img src="../../assets/icon/Group 39.svg" alt="" />
         <img src="../../assets/icon/Group 40.svg" alt="" />
         <img src="../../assets/icon/Group 41.svg" alt="" />
+      </div>
+    </div>
+
+    <div class="new-content" *ngIf="isOptionSelected">
+      <div class="sub-content">
+        <img src="../../assets/icon/Rectangle 69.svg" alt="" />
+        <p>E ku ise !</p>
       </div>
     </div>
   </div>

@@ -181,3 +181,13 @@
         padding-top: 30%;
     }
 }
+
+.new-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     .sub-content{
+        display: flex;
+            align-items: center;
+     }
+}

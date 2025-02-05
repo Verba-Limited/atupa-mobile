@@ -13,6 +13,7 @@ import { QuizPagePage } from './quiz-page.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    CommonModule,
     QuizPagePage,
     QuizPagePageRoutingModule,
   ],
