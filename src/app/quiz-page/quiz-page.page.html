@@ -48,6 +48,7 @@
             [id]="option.id"
             name="quiz"
             (change)="onSelectOption()"
+            checked
           />
           <label [for]="option.id">{{ option.label }}</label>
         </div>
@@ -71,6 +72,13 @@
 
       <div>
         <ion-button expand="block" class="create-account"> Next </ion-button>
+      </div>
+      <div class="new-content">
+        <h3 class="explain">Explanation</h3>
+        <p class="paragram">
+          Merin = 4 (hundreds), Le = with , Ogun = <br />
+          20 (times), Meji = 2 (remaining units)
+        </p>
       </div>
     </div>
   </div>
