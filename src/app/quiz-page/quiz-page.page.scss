@@ -141,6 +141,16 @@
     border: 2px solid #bbb;
     border-radius: 50%;
     outline: none;
+
+}
+
+.check-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    z-index: 2;
 }
 
 .option input:checked {

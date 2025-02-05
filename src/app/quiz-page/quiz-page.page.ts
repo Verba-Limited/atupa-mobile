@@ -5,8 +5,8 @@ import { IonicModule, NavController } from '@ionic/angular';
 
 export interface Option {
   id: string;
-  text: string;
-  isChecked: boolean;
+  label: string;
+  isChecked?: boolean;
 }
 @Component({
   selector: 'app-quiz-page',
@@ -18,19 +18,25 @@ export interface Option {
 export class QuizPagePage {
   constructor(private navCtrl: NavController, private router: Router) {}
 
+  isOptionSelected: boolean = false;
   navigateBack() {
     this.navCtrl.back(); // Navigate to the previous page
   }
-  isOptionSelected: boolean = false; // Controls visibility
-
-  options = [
-    { id: 'option1', label: '643' },
-    { id: 'option2', label: '340' },
-    { id: 'option3', label: '343' },
-    { id: 'option4', label: '443' },
+  // Initialize options with isChecked = false
+  options: Option[] = [
+    { id: 'option1', label: '643', isChecked: false },
+    { id: 'option2', label: '340', isChecked: false },
+    { id: 'option3', label: '343', isChecked: false },
+    { id: 'option4', label: '443', isChecked: false },
   ];
 
-  onSelectOption() {
-    this.isOptionSelected = true; // Hide .quiz-button and show new div
+  // Called when an option is clicked
+  selectOption(selectedOption: Option) {
+    // Uncheck all options
+    this.options.forEach((option) => (option.isChecked = false));
+    // Check the selected one
+    selectedOption.isChecked = true;
+    // Show the next div, etc.
+    this.isOptionSelected = true;
   }
 }
