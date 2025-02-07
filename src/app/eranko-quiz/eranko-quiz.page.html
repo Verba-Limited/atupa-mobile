@@ -6,7 +6,7 @@
       class="back-arrow"
     ></ion-icon>
     <div class="framer">
-      <h2 class="onka">Onka</h2>
+      <h2 class="onka">Eranko</h2>
       <div class="timer">
         <img src="../../assets/icon/stopwatch 1.svg" alt="" />
         <p>30s</p>
@@ -21,10 +21,10 @@
             <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
           </div>
           <h1>Question 3/10</h1>
+          <img src="../../assets/icon/Rectangle 67.svg" alt="" />
           <p>
-            Kini nọmba Merin le <br />
-            ogun meji ninu ede <br />
-            Gẹẹsi?
+            What is the animal <br />
+            called in yoruba?
           </p>
           <div>
             <img
@@ -45,10 +45,6 @@
           class="option"
           *ngFor="let option of options"
           (click)="selectOption(option)"
-          [ngClass]="{
-      'correct': option.isChecked && option.isCorrect,
-      'wrong': option.isChecked && !option.isCorrect
-    }"
         >
           <!-- You can also include a custom check icon overlay if desired -->
           <input
@@ -62,30 +58,13 @@
       </div>
     </div>
 
-    <!-- Button shown if no option is selected -->
-    <div class="quiz-button" *ngIf="!isOptionSelected">
-      <div class="button">
-        <img src="../../assets/icon/Group 38.svg" alt="" />
-        <img src="../../assets/icon/Group 39.svg" alt="" />
-        <img src="../../assets/icon/Group 40.svg" alt="" />
-        <img src="../../assets/icon/Group 41.svg" alt="" />
-      </div>
-    </div>
-
     <!-- New content shown when an option is selected -->
-    <div class="new-content" *ngIf="isOptionSelected">
-      <div class="sub-content" *ngIf="!isWrongAnswer">
+    <div class="new-content">
+      <div class="sub-content">
         <img src="../../assets/icon/Rectangle 69.svg" alt="" />
-        <p>E ku ise !</p>
+        <p>Omoluabi !</p>
       </div>
 
-      <!-- Wrong answer div: only shown if the selected answer is wrong -->
-      <div class="sub-content2" *ngIf="isWrongAnswer">
-        <img src="../../assets/icon/Rectangle 76.svg" alt="" />
-        <p>Ko da ra !</p>
-      </div>
-
-      <!-- Next button -->
       <div>
         <ion-button
           expand="block"

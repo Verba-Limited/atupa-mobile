@@ -15,4 +15,7 @@ export class QuizPage {
   levelsPage() {
     this.router.navigate(['/levels']);
   }
+  erankoPage() {
+    this.router.navigate(['/eranko-quiz']);
+  }
 }

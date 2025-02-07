@@ -56,18 +56,19 @@
     }
 
     .quiz-card {
-        background-image: url('../../assets/icon/Rectangle\ 49.svg');
+        background-image: url('../../assets/icon/Rectangle\ 60.svg');
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         width: 349px;
-        height: 251px;
+        // height: 299px;
         position: relative;
+        border-radius: 30px;
         /* Allows absolute positioning inside */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 20px;
+        // padding: 20px;
     }
 
     .text-content {
