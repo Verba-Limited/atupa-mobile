@@ -9,10 +9,11 @@
       <h2 class="onka">Onka</h2>
       <div class="timer">
         <img src="../../assets/icon/stopwatch 1.svg" alt="" />
-        <p>30s</p>
+        <!-- <p>{{ timer }}s</p> -->
+        <ion-text color="danger" *ngIf="timer <= 5">{{ timer }}s</ion-text>
+        <ion-text *ngIf="timer > 5">{{ timer }}s</ion-text>
       </div>
     </div>
-
     <!-- Centered Quiz Card -->
     <div class="quiz-container">
       <div class="quiz-card">
@@ -20,18 +21,15 @@
           <div>
             <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
           </div>
-          <h1>Question 3/10</h1>
+          <h1>Question {{ currentQuestion.questionNumber }}/10 </h1>
           <p>
-            Kini nọmba Merin le <br />
+            {{ currentQuestion.question }}
+            <!-- Kini nọmba Merin le <br />
             ogun meji ninu ede <br />
-            Gẹẹsi?
+            Gẹẹsi? -->
           </p>
           <div>
-            <img
-              class="volume"
-              src="../../assets/icon/volume-high 1.svg"
-              alt=""
-            />
+            <img class="volume" src="../../assets/icon/volume-high 1.svg" alt="" />
           </div>
           <div>
             <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
@@ -41,18 +39,40 @@
 
       <!-- Options -->
       <div class="options-container">
-        <div
+
+        <!-- <ion-list>
+          <ion-radio-group [(ngModel)]="selectedAnswer">
+            <ion-item *ngFor="let key of getOptionKeys()">
+              <ion-label>{{ currentQuestion.options[key] }}</ion-label>
+              <ion-radio [value]="key"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list> -->
+
+        <!-- <div [(ngModel)]="selectedAnswer"> -->
+          <div
+            class="option"
+            *ngFor="let key of getOptionKeys()"
+            (click)="selectOption(key)"
+            [class.correct]="key">
+            <input
+              type="radio"
+              name="quiz"
+               />
+              <label [for]="key">{{ currentQuestion.options[key] }}</label>
+          </div>
+        <!-- </div> -->
+
+        <!-- <div
           class="option"
           *ngFor="let option of options"
           (click)="selectOption(option)"
-          [class.correct]="option.isChecked"
-        >
+          [class.correct]="option.isChecked">
           <input
             type="radio"
             [id]="option.id"
             name="quiz"
-            [checked]="option.isChecked"
-          />
+            [checked]="option.isChecked" /> -->
 
           <!-- <ng-container *ngIf="option.isChecked">
             <img
@@ -61,9 +81,9 @@
               class="check-icon"
             />
           </ng-container> -->
-          <label [for]="option.id">{{ option.label }}</label>
-          <!-- Conditionally display a check icon -->
-        </div>
+          <!-- <label [for]="option.id">{{ option.label }}</label> -->
+        <!-- </div> -->
+
       </div>
     </div>
 
