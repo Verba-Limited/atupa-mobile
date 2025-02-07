@@ -2,41 +2,60 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
-
 export interface Option {
   id: string;
   label: string;
   isChecked?: boolean;
+  isCorrect?: boolean;
 }
+
 @Component({
   selector: 'app-quiz-page',
   templateUrl: './quiz-page.page.html',
   styleUrls: ['./quiz-page.page.scss'],
   imports: [IonicModule, CommonModule],
-  standalone: true, // If using standalone components
+  standalone: true,
 })
 export class QuizPagePage {
-  constructor(private navCtrl: NavController, private router: Router) {}
-
   isOptionSelected: boolean = false;
-  navigateBack() {
-    this.navCtrl.back(); // Navigate to the previous page
-  }
-  // Initialize options with isChecked = false
+  isWrongAnswer: boolean = false;
+
+  // Mark one option as correct, for example option3 is correct.
   options: Option[] = [
-    { id: 'option1', label: '643', isChecked: false },
-    { id: 'option2', label: '340', isChecked: false },
-    { id: 'option3', label: '343', isChecked: false },
-    { id: 'option4', label: '443', isChecked: false },
+    { id: 'option1', label: '643', isChecked: false, isCorrect: false },
+    { id: 'option2', label: '340', isChecked: false, isCorrect: false },
+    { id: 'option3', label: '343', isChecked: false, isCorrect: true },
+    { id: 'option4', label: '443', isChecked: false, isCorrect: false },
   ];
 
-  // Called when an option is clicked
+  constructor(private navCtrl: NavController, private router: Router) {}
+
+  navigateBack() {
+    this.navCtrl.back();
+  }
+
   selectOption(selectedOption: Option) {
-    // Uncheck all options
+    // Reset all options first.
     this.options.forEach((option) => (option.isChecked = false));
-    // Check the selected one
+
+    // Mark the selected option as checked.
     selectedOption.isChecked = true;
-    // Show the next div, etc.
+
+    // Show the new content section.
     this.isOptionSelected = true;
+
+    // Set the wrong answer flag accordingly.
+    this.isWrongAnswer = !selectedOption.isCorrect;
+  }
+
+  nextQuestion() {
+    // Reset all option check states.
+    this.options.forEach((option) => (option.isChecked = false));
+
+    // Reset the flags.
+    this.isOptionSelected = false;
+    this.isWrongAnswer = false;
+
+    // Add additional logic here to load the next question if needed.
   }
 }

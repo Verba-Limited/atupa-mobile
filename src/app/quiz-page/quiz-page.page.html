@@ -45,24 +45,19 @@
           class="option"
           *ngFor="let option of options"
           (click)="selectOption(option)"
-          [class.correct]="option.isChecked"
+          [ngClass]="{
+      'correct': option.isChecked && option.isCorrect,
+      'wrong': option.isChecked && !option.isCorrect
+    }"
         >
+          <!-- You can also include a custom check icon overlay if desired -->
           <input
             type="radio"
             [id]="option.id"
             name="quiz"
             [checked]="option.isChecked"
           />
-
-          <!-- <ng-container *ngIf="option.isChecked">
-            <img
-              src="../../assets/icon/circle-check 1.svg"
-              alt="Selected"
-              class="check-icon"
-            />
-          </ng-container> -->
           <label [for]="option.id">{{ option.label }}</label>
-          <!-- Conditionally display a check icon -->
         </div>
       </div>
     </div>
@@ -79,13 +74,28 @@
 
     <!-- New content shown when an option is selected -->
     <div class="new-content" *ngIf="isOptionSelected">
-      <div class="sub-content">
+      <div class="sub-content" *ngIf="!isWrongAnswer">
         <img src="../../assets/icon/Rectangle 69.svg" alt="" />
         <p>E ku ise !</p>
       </div>
-      <div>
-        <ion-button expand="block" class="create-account"> Next </ion-button>
+
+      <!-- Wrong answer div: only shown if the selected answer is wrong -->
+      <div class="sub-content2" *ngIf="isWrongAnswer" class="wrong-answer">
+        <img src="../../assets/icon/Rectangle 76.svg" alt="" />
+        <p>Ko da ra !</p>
       </div>
+
+      <!-- Next button -->
+      <div>
+        <ion-button
+          expand="block"
+          class="create-account"
+          (click)="nextQuestion()"
+        >
+          Next
+        </ion-button>
+      </div>
+
       <div class="new-content">
         <h3 class="explain">Explanation</h3>
         <p class="paragram">
