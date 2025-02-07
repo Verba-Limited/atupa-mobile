@@ -18,4 +18,7 @@ export class QuizPage {
   erankoPage() {
     this.router.navigate(['/eranko-quiz']);
   }
+  owePage() {
+    this.router.navigate(['/owe-page']);
+  }
 }

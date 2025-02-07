@@ -60,6 +60,10 @@ const routes: Routes = [
     path: 'eranko-quiz',
     loadChildren: () => import('./eranko-quiz/eranko-quiz.module').then( m => m.ErankoQuizPageModule)
   },
+  {
+    path: 'owe-page',
+    loadChildren: () => import('./owe-page/owe-page.module').then( m => m.OwePagePageModule)
+  },
 ];
 
 @NgModule({

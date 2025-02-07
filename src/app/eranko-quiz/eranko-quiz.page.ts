@@ -20,10 +20,10 @@ export class ErankoQuizPage {
 
   // Mark one option as correct, for example option3 is correct.
   options: Option[] = [
-    { id: 'option1', label: '643', isChecked: false, isCorrect: false },
-    { id: 'option2', label: '340', isChecked: false, isCorrect: false },
-    { id: 'option3', label: '343', isChecked: false, isCorrect: true },
-    { id: 'option4', label: '443', isChecked: false, isCorrect: false },
+    { id: 'option1', label: 'Ekun', isChecked: false, isCorrect: false },
+    { id: 'option2', label: 'Ekete', isChecked: false, isCorrect: false },
+    { id: 'option3', label: 'Aja', isChecked: false, isCorrect: true },
+    { id: 'option4', label: 'Aja', isChecked: false, isCorrect: false },
   ];
 
   constructor(private navCtrl: NavController, private router: Router) {}
@@ -44,16 +44,5 @@ export class ErankoQuizPage {
 
     // Set the wrong answer flag accordingly.
     this.isWrongAnswer = !selectedOption.isCorrect;
-  }
-
-  nextQuestion() {
-    // Reset all option check states.
-    this.options.forEach((option) => (option.isChecked = false));
-
-    // Reset the flags.
-    this.isOptionSelected = false;
-    this.isWrongAnswer = false;
-
-    // Add additional logic here to load the next question if needed.
   }
 }

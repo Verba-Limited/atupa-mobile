@@ -1,0 +1,56 @@
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2 class="onka">Owe</h2>
+      <div class="timer">
+        <img src="../../assets/icon/stopwatch 1.svg" alt="" />
+        <p>30s</p>
+      </div>
+    </div>
+
+    <!-- Centered Quiz Card -->
+    <div class="quiz-container">
+      <div class="quiz-card">
+        <div class="text-content">
+          <div>
+            <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
+          </div>
+          <h1>Question 3/10</h1>
+          <p>Pari owe yi ?</p>
+          <p class="slight">
+            Kò sí ęni tí ó ma gùn <br />
+            ęşin tí kò....
+          </p>
+          <div>
+            <img
+              class="volume"
+              src="../../assets/icon/volume-high 1.svg"
+              alt=""
+            />
+          </div>
+          <div>
+            <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- radio section -->
+
+    <div class="radio-list">
+      <ion-radio-group>
+        <ion-list>
+          <ion-item *ngFor="let option of options" class="radio-item">
+            <ion-radio slot="start" [value]="option"></ion-radio>
+            <ion-label>{{ option }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-radio-group>
+    </div>
+  </div>
+</ion-content>
