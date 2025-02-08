@@ -3,115 +3,93 @@
     <ion-icon
       (click)="navigateBack()"
       name="arrow-back-outline"
-      class="back-arrow"
-    ></ion-icon>
+      class="back-arrow"></ion-icon>
     <div class="framer">
       <h2 class="onka">Onka</h2>
+      <h3 class="cumuscore">{{ userCumulativePoint }}</h3>
       <div class="timer">
         <img src="../../assets/icon/stopwatch 1.svg" alt="" />
-        <!-- <p>{{ timer }}s</p> -->
         <ion-text color="danger" *ngIf="timer <= 5">{{ timer }}s</ion-text>
         <ion-text *ngIf="timer > 5">{{ timer }}s</ion-text>
       </div>
     </div>
     <!-- Centered Quiz Card -->
-    <div class="quiz-container">
-      <div class="quiz-card">
-        <div class="text-content">
-          <div>
-            <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
+    <div *ngIf="currentQuestion">
+      <div class="quiz-container">
+        <div class="quiz-card">
+          <div class="text-content">
+            <div>
+              <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
+            </div>
+            <!-- <h1>Question {{ currentQuestion.questionNumber }}/10</h1> -->
+            <h1>Question {{ questionIndex }}/{{quizQuestions.length}}</h1>
+            <p>
+              {{ currentQuestion.question }}
+            </p>
+            <div>
+              <img class="volume" src="../../assets/icon/volume-high 1.svg" alt="" />
+            </div>
+            <div>
+              <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
+            </div>
           </div>
-          <h1>Question {{ currentQuestion.questionNumber }}/10 </h1>
-          <p>
-            {{ currentQuestion.question }}
-            <!-- Kini nọmba Merin le <br />
-            ogun meji ninu ede <br />
-            Gẹẹsi? -->
-          </p>
-          <div>
-            <img class="volume" src="../../assets/icon/volume-high 1.svg" alt="" />
-          </div>
-          <div>
-            <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
+        </div>
+
+        <!-- Options -->
+        <div class="options-container">
+          <div class="option" *ngFor="let key of getOptionKeys()" 
+          (click)="selectOption(key)" 
+          [class.correct]="isOptionSelected && correctOption && (key === currentQuestion.answer)"
+          [class.incorrect]="isOptionSelected && !correctOption && (key === wrongAnswer)">
+              <input type="radio" [id]="key" name="quiz" [checked]="isOptionSelected" [disabled]="isOptionSelected" />
+              <label [for]="key">{{ currentQuestion.options[key] }}</label>
           </div>
         </div>
       </div>
 
-      <!-- Options -->
-      <div class="options-container">
+      <!-- Button shown if no option is selected -->
+      <div class="quiz-button" *ngIf="!isOptionSelected">
+        <div class="button">
+          <img src="../../assets/icon/Group 38.svg" alt="" />
+          <img src="../../assets/icon/Group 39.svg" alt="" />
+          <img src="../../assets/icon/Group 40.svg" alt="" />
+          <img src="../../assets/icon/Group 41.svg" alt="" />
+        </div>
+      </div>
 
-        <!-- <ion-list>
-          <ion-radio-group [(ngModel)]="selectedAnswer">
-            <ion-item *ngFor="let key of getOptionKeys()">
-              <ion-label>{{ currentQuestion.options[key] }}</ion-label>
-              <ion-radio [value]="key"></ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list> -->
+      <!-- New content shown when an option is selected -->
+      <div class="new-content" *ngIf="isOptionSelected">
+        <div class="sub-content" *ngIf="selectedAnswer && selectedAnswer === currentQuestion.answer">
+          <img src="../../assets/icon/ekuise.svg" alt="" />
+          <p>E ku ise!</p>
+        </div>
+        <div class="sub-content" *ngIf="selectedAnswer && selectedAnswer !== currentQuestion.answer">
+          <img src="../../assets/icon/kodara.svg" alt="" />
+           <p>Ko da ra!</p>
+        </div>
 
-        <!-- <div [(ngModel)]="selectedAnswer"> -->
-          <div
-            class="option"
-            *ngFor="let key of getOptionKeys()"
-            (click)="selectOption(key)"
-            [class.correct]="key">
-            <input
-              type="radio"
-              name="quiz"
-               />
-              <label [for]="key">{{ currentQuestion.options[key] }}</label>
+        <div>
+          <ion-button expand="block" class="create-account" (click)="loadNextQuestion()" *ngIf="selectedAnswer"> Next </ion-button>
+        </div>
+        <div class="new-content">
+          <h3 class="explain">Explanation</h3>
+          <p class="paragram">
+            {{ currentQuestion.explanation }}
+          </p>
+        </div>
+
+        <div *ngIf="answeredQuestions.size === quizQuestions.length">
+          <div class="new-content">
+            <h3>Level Completed!</h3>
+            <p>Your Score: {{ userCumulativePoint }} / {{ totalLevelPoints }}</p>
           </div>
-        <!-- </div> -->
-
-        <!-- <div
-          class="option"
-          *ngFor="let option of options"
-          (click)="selectOption(option)"
-          [class.correct]="option.isChecked">
-          <input
-            type="radio"
-            [id]="option.id"
-            name="quiz"
-            [checked]="option.isChecked" /> -->
-
-          <!-- <ng-container *ngIf="option.isChecked">
-            <img
-              src="../../assets/icon/circle-check 1.svg"
-              alt="Selected"
-              class="check-icon"
-            />
-          </ng-container> -->
-          <!-- <label [for]="option.id">{{ option.label }}</label> -->
-        <!-- </div> -->
-
-      </div>
-    </div>
-
-    <!-- Button shown if no option is selected -->
-    <div class="quiz-button" *ngIf="!isOptionSelected">
-      <div class="button">
-        <img src="../../assets/icon/Group 38.svg" alt="" />
-        <img src="../../assets/icon/Group 39.svg" alt="" />
-        <img src="../../assets/icon/Group 40.svg" alt="" />
-        <img src="../../assets/icon/Group 41.svg" alt="" />
-      </div>
-    </div>
-
-    <!-- New content shown when an option is selected -->
-    <div class="new-content" *ngIf="isOptionSelected">
-      <div class="sub-content">
-        <img src="../../assets/icon/Rectangle 69.svg" alt="" />
-        <p>E ku ise !</p>
-      </div>
-      <div>
-        <ion-button expand="block" class="create-account"> Next </ion-button>
-      </div>
-      <div class="new-content">
-        <h3 class="explain">Explanation</h3>
-        <p class="paragram">
-          Merin = 4 (hundreds), Le = with , Ogun = <br />
-          20 (times), Meji = 2 (remaining units)
-        </p>
+          <ion-button expand="block" class="create-account" *ngIf="levelCompleted" (click)="goToNextLevel()">
+            Proceed to Level {{ currentQuestion.levelNumber + 1 }}
+          </ion-button>
+          <ion-button expand="block" class="create-account" *ngIf="!levelCompleted" (click)="resetLevel()">
+            Retry Level
+          </ion-button>
+        </div>
       </div>
     </div>
   </div>

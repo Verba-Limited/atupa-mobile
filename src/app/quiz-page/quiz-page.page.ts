@@ -4,12 +4,6 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
 
-export interface Option {
-  id: string;
-  label: string;
-  isChecked?: boolean;
-}
-
 interface QuizQuestion {
   id: string;
   categoryId: string;
@@ -214,6 +208,13 @@ export class QuizPagePage {
   levelCompleted = false;
   timerInterval: any;
 
+  isOptionSelected: boolean = false;
+
+  correctOption = false;
+  wrongAnswer: any;
+
+  questionIndex: number = 0;
+
   constructor(private navCtrl: NavController, private router: Router) {}
 
   ngOnInit() {
@@ -228,6 +229,7 @@ export class QuizPagePage {
 
   calculateTotalLevelPoints() {
     this.totalLevelPoints = this.quizQuestions.reduce((sum, q) => sum + q.points, 0);
+    console.log('Total level points:', this.totalLevelPoints);
   }
 
   startTimer() {
@@ -249,11 +251,13 @@ export class QuizPagePage {
   loadNextQuestion() {
     this.stopTimer();
     this.selectedAnswer = null;
+    this.isOptionSelected = false;
 
     if (this.answeredQuestions.size < this.quizQuestions.length) {
       this.currentQuestion = this.quizQuestions[this.answeredQuestions.size];
       this.answeredQuestions.add(this.currentQuestion.id);
       this.startTimer();
+      this.questionIndex++;
     } else {
       this.evaluateLevelProgress();
     }
@@ -266,6 +270,13 @@ export class QuizPagePage {
 
       if (option === this.currentQuestion.answer) {
         this.userCumulativePoint += this.currentQuestion.points;
+        console.log("correct answer");
+        console.log("userCumulativePoint", this.userCumulativePoint);
+        this.correctOption = true;
+      } else {
+        console.log("wrong answer");
+        this.correctOption = false;
+        this.wrongAnswer = this.selectedAnswer;
       }
     }
   }
@@ -273,6 +284,7 @@ export class QuizPagePage {
   evaluateLevelProgress() {
     const requiredScore = this.totalLevelPoints * 0.7;
     this.levelCompleted = this.userCumulativePoint >= requiredScore;
+    console.log('Level completed:', this.levelCompleted);
   }
 
   resetLevel() {
@@ -286,37 +298,31 @@ export class QuizPagePage {
       return Object.keys(this.currentQuestion.options);
   }
 
-
-  isOptionSelected: boolean = false;
   navigateBack() {
     this.navCtrl.back(); // Navigate to the previous page
   }
-  // Initialize options with isChecked = false
-  // options: Option[] = [
-  //   { id: 'option1', label: '643', isChecked: false },
-  //   { id: 'option2', label: '340', isChecked: false },
-  //   { id: 'option3', label: '343', isChecked: false },
-  //   { id: 'option4', label: '443', isChecked: false },
-  // ];
-
-  // Called when an option is clicked
-  // selectOption(selectedOption: Option) {
-  //   // Uncheck all options
-  //   this.options.forEach((option) => (option.isChecked = false));
-  //   // Check the selected one
-  //   selectedOption.isChecked = true;
-  //   // Show the next div, etc.
-  //   this.isOptionSelected = true;
-  // }
 
   selectOption(selectedOption: any) {
     console.log("selected option--->", selectedOption);
-    // Uncheck all options
-    this.currentQuestion.options.forEach((option: any) => (option.isChecked = false));
-    // Check the selected one
-    // selectedOption.isChecked = true;
-    // Show the next div, etc.
     this.isOptionSelected = true;
+    this.answerQuestion(selectedOption);
+  }
+
+  goToNextLevel() {
+    if (!this.currentQuestion) return;
+  
+    const currentLevel = this.currentQuestion.levelNumber;
+    const nextLevel = currentLevel + 1;
+
+    const nextLevelQuestions = this.quizQuestions.find(q => q.levelNumber === nextLevel);
+    
+    if (nextLevelQuestions) {
+      console.log(`Proceeding to Level ${nextLevel}...`);
+      this.navCtrl.navigateForward(`/quiz-level/${nextLevel}`); // Adjust route as needed
+    } else {
+      console.log("No more levels available.");
+      this.navCtrl.navigateForward('/quiz-completed'); // Final completion page
+    }
   }
 
 }

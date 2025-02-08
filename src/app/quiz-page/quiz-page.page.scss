@@ -1,5 +1,6 @@
 .container {
     padding: 16px;
+    background-color: #fff;
 
     .back-arrow {
         position: absolute;
@@ -28,6 +29,17 @@
             text-align: center; // Ensure centering
         }
 
+        .cumuscore {
+            border: 2px solid #6b8e23;
+            border-radius: 10px;
+            flex-grow: 0.3;
+            font-size: 14px;
+            margin-top: 20px;
+            margin-right: 8px;
+            font-weight: 600;
+            color: #505050;
+        }
+
         .timer {
             display: flex;
             align-items: center;
@@ -53,6 +65,7 @@
         align-items: center;
         flex-direction: column;
         // height: calc(100vh - 100px); // Adjust based on header size
+        margin-top: 15px;
     }
 
     .quiz-card {
@@ -107,8 +120,8 @@
 
 .volume {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 20px;
+    right: 15px;
     width: 24px;
 }
 
@@ -153,9 +166,10 @@
     z-index: 2;
 }
 
-.option input:checked {
-    border-color: #6b8e23;
-}
+// .option input:checked {
+//     border-color: #6b8e23;
+//     background-color: #6b8e23;
+// }
 
 .option.correct {
     border: 2px solid #6b8e23;
@@ -168,8 +182,6 @@
     gap: 5px;
     color: #6b8e23;
     font-weight: 700;
-
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -178,6 +190,27 @@
 .option.correct img {
     width: 20px;
 }
+
+.option.incorrect {
+    border: 2px solid #C23327;
+    background: white;
+}
+
+.option.incorrect label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #C23327;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option.incorrect img {
+    width: 20px;
+}
+
 
 .quiz-button {
     display: flex;
@@ -202,6 +235,7 @@
         display: flex;
         align-items: center;
         margin-top: 20px;
+        color: #2E2E2E;
     }
 
     .create-account {
@@ -226,6 +260,6 @@
         color: #505050;
         font-size: 16px;
         font-weight: 400;
-        line-height: 24px;
+        line-height: 5px;
     }
 }
