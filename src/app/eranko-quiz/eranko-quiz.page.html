@@ -1,0 +1,81 @@
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2 class="onka">Eranko</h2>
+      <div class="timer">
+        <img src="../../assets/icon/stopwatch 1.svg" alt="" />
+        <p>30s</p>
+      </div>
+    </div>
+
+    <!-- Centered Quiz Card -->
+    <div class="quiz-container">
+      <div class="quiz-card">
+        <div class="text-content">
+          <div>
+            <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
+          </div>
+          <h1>Question 3/10</h1>
+          <img src="../../assets/icon/Rectangle 67.svg" alt="" />
+          <p>
+            What is the animal <br />
+            called in yoruba?
+          </p>
+          <div>
+            <img
+              class="volume"
+              src="../../assets/icon/volume-high 1.svg"
+              alt=""
+            />
+          </div>
+          <div>
+            <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Options -->
+      <div class="options-container">
+        <div
+          class="option"
+          *ngFor="let option of options"
+          (click)="selectOption(option)"
+        >
+          <!-- You can also include a custom check icon overlay if desired -->
+          <input
+            type="radio"
+            [id]="option.id"
+            name="quiz"
+            [checked]="option.isChecked"
+          />
+          <label [for]="option.id">{{ option.label }}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- New content shown when an option is selected -->
+    <div class="new-content">
+      <div class="sub-content">
+        <img src="../../assets/icon/Rectangle 69.svg" alt="" />
+        <p>Omoluabi !</p>
+      </div>
+
+      <div>
+        <ion-button expand="block" class="create-account"> Next </ion-button>
+      </div>
+
+      <div class="new-content">
+        <h3 class="explain">Explanation</h3>
+        <p class="paragram">
+          Merin = 4 (hundreds), Le = with , Ogun = <br />
+          20 (times), Meji = 2 (remaining units)
+        </p>
+      </div>
+    </div>
+  </div>
+</ion-content>

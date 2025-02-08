@@ -299,7 +299,7 @@ export class QuizPagePage {
   }
 
   navigateBack() {
-    this.navCtrl.back(); // Navigate to the previous page
+    this.navCtrl.back();
   }
 
   selectOption(selectedOption: any) {

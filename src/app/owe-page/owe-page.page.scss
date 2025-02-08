@@ -1,0 +1,140 @@
+.container {
+    padding: 16px;
+
+    .back-arrow {
+        position: absolute;
+        top: 37px;
+        left: 16px; // Adjust for better alignment
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .framer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        color: #505050;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+
+        .onka {
+            font-size: 20px;
+            font-weight: bold;
+            flex-grow: 1;
+            margin-left: 25px;
+            text-align: center; // Ensure centering
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 7px;
+
+            img {
+                width: 18px;
+            }
+
+            p {
+                color: #C23327;
+                font-size: 16px;
+                font-weight: 600;
+            }
+        }
+    }
+
+
+    // Centering Quiz Card
+    .quiz-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        // height: calc(100vh - 100px); // Adjust based on header size
+    }
+
+    .quiz-card {
+        background-image: url('../../assets/icon/Rectangle\ 49\ \(1\).svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 349px;
+        height: 251px;
+        position: relative;
+        /* Allows absolute positioning inside */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        // padding: 20px;
+        border-radius: 30px;
+    }
+
+    .text-content {
+        text-align: center;
+    }
+
+    .text-content h1 {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 32.74px;
+        color: #505050;
+    }
+
+    .slight {
+        font-style: italic;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .first {
+        width: 90px;
+        height: 90px;
+        position: absolute;
+        right: 0;
+        top: -30px;
+    }
+
+    .second {
+        width: 90px;
+        height: 90px;
+        position: absolute;
+        left: 0;
+        bottom: -40px;
+    }
+
+
+    .text-content p {
+        font-weight: 700;
+        font-size: 24px;
+        // line-height: 32.74px;
+        color: #2e2e2e;
+    }
+
+    .volume {
+        position: absolute;
+        bottom: 23px;
+        right: 14px;
+    }
+
+
+    .radio-list {
+        background: transparent;
+        padding: 15px;
+    }
+
+    .radio-item {
+        background: #f8f8f8;
+        border-radius: 8px;
+        margin: 10px 0;
+        padding: 15px;
+        box-shadow: none;
+    }
+
+    ion-radio {
+        --color: black;
+        --color-checked: black;
+    }
+}
