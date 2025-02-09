@@ -80,7 +80,7 @@
             <div>
               <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
             </div>
-            <h1>Question {{ questionIndex }}/{{quizQuestions.length}}</h1>
+            <h1 *ngIf="questionIndex <=quizQuestions.length">Question {{ questionIndex }}/{{quizQuestions.length}}</h1>
             <p>
               {{ currentQuestion.question }}
             </p>
