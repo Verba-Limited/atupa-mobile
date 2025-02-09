@@ -42,15 +42,78 @@
 
     <!-- radio section -->
 
-    <div class="radio-list">
-      <ion-radio-group>
-        <ion-list>
-          <ion-item *ngFor="let option of options" class="radio-item">
-            <ion-radio slot="start" [value]="option"></ion-radio>
-            <ion-label>{{ option }}</ion-label>
-          </ion-item>
-        </ion-list>
+    <ion-list class="custom-list">
+      <ion-radio-group
+        [(ngModel)]="selectedOption"
+        (ionChange)="onSelectionChange($event)"
+      >
+        <div class="radio-container">
+          <ion-radio value="option1"></ion-radio>
+          <div class="content">
+            Kò sí ení tí ó ma gùn eṣin tí kò ní ju ìpàkó. Bí kó fẹ ju ìpàkó,
+            eṣin tí ó ńgùn á je kojú.
+          </div>
+        </div>
+
+        <div class="radio-container">
+          <ion-radio value="option2"></ion-radio>
+          <div class="content">
+            Kò sí ení tí ó ma gùn eṣin tí kò Agba ki wa loja, ki ori omo tuntun
+            o wo.
+          </div>
+        </div>
+
+        <div class="radio-container">
+          <ion-radio value="option3"></ion-radio>
+          <div class="content">
+            Kò sí ení tí ó ma gùn eṣin tí kò Agba ki wa loja, ki ori omo tuntun
+            o wo.
+          </div>
+        </div>
+
+        <div class="radio-container">
+          <ion-radio value="option4"></ion-radio>
+          <div class="content">
+            Kò sí ení tí ó ma gùn eṣin tí kò Agba ki wa loja, ki ori omo tuntun
+            o wo.
+          </div>
+        </div>
       </ion-radio-group>
+
+      <!-- Result content -->
+    </ion-list>
+    <!-- Quiz Button (Hidden when an option is selected) -->
+    <div class="quiz-button" *ngIf="!showNewContent">
+      <div class="button">
+        <img src="../../assets/icon/Group 38.svg" alt="" />
+        <img src="../../assets/icon/Group 39.svg" alt="" />
+        <img src="../../assets/icon/Group 40.svg" alt="" />
+        <img src="../../assets/icon/Group 41.svg" alt="" />
+      </div>
+    </div>
+
+    <!-- New Content (Shown when an option is selected) -->
+    <div class="new-content" *ngIf="showNewContent">
+      <div class="sub-content">
+        <img src="../../assets/icon/ekuise.svg" alt="" />
+        <p>E ku ise!</p>
+      </div>
+
+      <div>
+        <ion-button expand="block" class="create-account"> Next </ion-button>
+      </div>
+
+      <div class="new-content">
+        <h3 class="explain">Explanation</h3>
+        <p class="trans">
+          <span class="translation">Translation</span>: No one rides a horse
+          without moving his head, voluntarily or involuntarily.
+        </p>
+        <p class="trans">
+          <span class="translation">Meaning</span>: Your status in life dictates
+          your attitude towards your peers
+        </p>
+      </div>
     </div>
   </div>
 </ion-content>
