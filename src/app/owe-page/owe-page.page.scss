@@ -138,7 +138,7 @@
     ion-radio {
         margin-right: 16px;
         --color: #666;
-        --color-checked: #000;
+        --color-checked: #7EA421;
         margin-top: 13px;
     }
 
@@ -167,17 +167,17 @@
     ion-radio-group {
         .radio-container ion-radio.radio-checked {
             &+.text-content {
-                color: #2E4412; // Optional: change text color when selected
+                color: #7EA421; // Optional: change text color when selected
             }
 
             &:checked {
-                --color-checked: #2E4412; // Change radio button color when checked
+                --color-checked: #7EA421; // Change radio button color when checked
             }
         }
 
         // Parent container gets green border when its radio is checked
         .radio-container:has(ion-radio.radio-checked) {
-            border-color: #2E4412;
+            border-color: #7EA421;
             background-color: #F6F8F4; // Optional: slightly different background for selected
         }
     }
