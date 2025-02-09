@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { Platform, IonicModule, NavController } from '@ionic/angular';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { BackgroundAudioService } from '../services/background-audio.service';
 
 interface QuizQuestion {
   id: string;
@@ -210,17 +212,51 @@ export class QuizPagePage {
 
   isOptionSelected: boolean = false;
 
-  correctOption = false;
+  correctOption: boolean = false;
   wrongAnswer: any;
 
   questionIndex: number = 0;
 
-  constructor(private navCtrl: NavController, private router: Router) {}
+  questionCompleted: boolean = false;
+
+  suggestionCosts: Record<'ileke' | 'obi' | 'eyoOwo' | 'ami', number> = {
+    ileke: 10,
+    obi: 5,
+    eyoOwo: 20,
+    ami: 15,
+  };
+  
+  usedSuggestions: Record<'ileke' | 'obi' | 'eyoOwo' | 'ami', boolean> = {
+    ileke: false,
+    obi: false,
+    eyoOwo: false,
+    ami: false,
+  };
+  
+  isBgSoundPlaying: boolean = true;
+
+  constructor(private navCtrl: NavController, 
+    private router: Router, 
+    private platform: Platform, 
+    private bgAudio: BackgroundAudioService) {
+  }
 
   ngOnInit() {
+    this.bgAudio.play();
+    this.isBgSoundPlaying = true;
     this.shuffleQuestions();
     this.loadNextQuestion();
     this.calculateTotalLevelPoints();
+  }
+
+  stopBackgroundAudio() {
+    this.isBgSoundPlaying = false;
+    this.bgAudio.stop();
+  }
+
+  playBackgroundAudio() {
+    this.isBgSoundPlaying = true;
+    this.bgAudio.play();
   }
 
   shuffleQuestions() {
@@ -229,7 +265,6 @@ export class QuizPagePage {
 
   calculateTotalLevelPoints() {
     this.totalLevelPoints = this.quizQuestions.reduce((sum, q) => sum + q.points, 0);
-    console.log('Total level points:', this.totalLevelPoints);
   }
 
   startTimer() {
@@ -252,13 +287,17 @@ export class QuizPagePage {
     this.stopTimer();
     this.selectedAnswer = null;
     this.isOptionSelected = false;
+    this.usedSuggestions = { ileke: false, obi: false, eyoOwo: false, ami: false };
 
     if (this.answeredQuestions.size < this.quizQuestions.length) {
       this.currentQuestion = this.quizQuestions[this.answeredQuestions.size];
       this.answeredQuestions.add(this.currentQuestion.id);
       this.startTimer();
       this.questionIndex++;
+      this.questionCompleted = false;
     } else {
+      this.questionIndex = 0;
+      this.questionCompleted = true;
       this.evaluateLevelProgress();
     }
   }
@@ -270,11 +309,8 @@ export class QuizPagePage {
 
       if (option === this.currentQuestion.answer) {
         this.userCumulativePoint += this.currentQuestion.points;
-        console.log("correct answer");
-        console.log("userCumulativePoint", this.userCumulativePoint);
         this.correctOption = true;
       } else {
-        console.log("wrong answer");
         this.correctOption = false;
         this.wrongAnswer = this.selectedAnswer;
       }
@@ -284,10 +320,10 @@ export class QuizPagePage {
   evaluateLevelProgress() {
     const requiredScore = this.totalLevelPoints * 0.7;
     this.levelCompleted = this.userCumulativePoint >= requiredScore;
-    console.log('Level completed:', this.levelCompleted);
   }
 
   resetLevel() {
+    this.questionIndex = 0;
     this.answeredQuestions.clear();
     this.userCumulativePoint = 0;
     this.shuffleQuestions();
@@ -295,7 +331,7 @@ export class QuizPagePage {
   }
 
   getOptionKeys() {
-      return Object.keys(this.currentQuestion.options);
+    return Object.keys(this.currentQuestion.options);
   }
 
   navigateBack() {
@@ -303,26 +339,223 @@ export class QuizPagePage {
   }
 
   selectOption(selectedOption: any) {
-    console.log("selected option--->", selectedOption);
     this.isOptionSelected = true;
     this.answerQuestion(selectedOption);
   }
 
   goToNextLevel() {
     if (!this.currentQuestion) return;
-  
+
     const currentLevel = this.currentQuestion.levelNumber;
     const nextLevel = currentLevel + 1;
 
     const nextLevelQuestions = this.quizQuestions.find(q => q.levelNumber === nextLevel);
-    
+
     if (nextLevelQuestions) {
-      console.log(`Proceeding to Level ${nextLevel}...`);
-      this.navCtrl.navigateForward(`/quiz-level/${nextLevel}`); // Adjust route as needed
+      this.navCtrl.navigateForward(`/quiz-level/${nextLevel}`);
     } else {
-      console.log("No more levels available.");
-      this.navCtrl.navigateForward('/quiz-completed'); // Final completion page
+      this.navCtrl.navigateForward('/quiz-completed');
     }
   }
+  
+  useSuggestion(type: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
+    if (this.userCumulativePoint < this.suggestionCosts[type]) return;
+  
+    this.userCumulativePoint -= this.suggestionCosts[type];
+    this.usedSuggestions[type] = true;
+  
+    switch (type) {
+      case 'ileke':
+        this.removeIncorrectOptions(2);
+        break;
+      case 'obi':
+        this.removeIncorrectOptions(1);
+        break;
+      case 'eyoOwo':
+        this.isOptionSelected = true;
+        this.answerQuestion(this.currentQuestion.answer);
+        break;
+      case 'ami':
+        alert(`Hint: ${this.currentQuestion.explanation}`);
+        break;
+    }
+  }
+  
+  removeIncorrectOptions(count: number) {
+    let incorrectOptions = Object.keys(this.currentQuestion.options).filter(opt => opt !== this.currentQuestion.answer);
+    incorrectOptions = incorrectOptions.sort(() => Math.random() - 0.5).slice(0, count);
+  
+    incorrectOptions.forEach(opt => delete this.currentQuestion.options[opt]);
+  }
+
+
+  // Text to Speech Section
+  async speakText(text: string) {
+    try {
+      if (this.platform.is('capacitor')) {
+        await this.nativeSpeechSynthesis(text);
+      } else {
+        await this.webSpeechSynthesis(text);
+      }
+      console.log('Text spoken successfully');
+    } catch (error) {
+      console.error('Error speaking text:', error);
+    }
+  }
+  private async nativeSpeechSynthesis(text: string) {
+    await TextToSpeech.speak({
+      text: text,
+      lang: 'en-US',
+      rate: 3.0,
+      pitch: 2.0,
+    });
+  }
+  private async webSpeechSynthesis(text: string) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'yo';
+    window.speechSynthesis.speak(utterance);
+  }
+  // End Text to Speech Section
+
+
+  // constructor(private navCtrl: NavController, private router: Router, private platform: Platform) {}
+
+  // ngOnInit() {
+  //   this.shuffleQuestions();
+  //   this.loadNextQuestion();
+  //   this.calculateTotalLevelPoints();
+  // }
+
+  // shuffleQuestions() {
+  //   this.quizQuestions = this.quizQuestions.sort(() => Math.random() - 0.5);
+  // }
+
+  // calculateTotalLevelPoints() {
+  //   this.totalLevelPoints = this.quizQuestions.reduce((sum, q) => sum + q.points, 0);
+  //   console.log('Total level points:', this.totalLevelPoints);
+  // }
+
+  // startTimer() {
+  //   this.timer = 10;
+  //   this.timerInterval = setInterval(() => {
+  //     if (this.timer > 0) {
+  //       this.timer--;
+  //     } else {
+  //       this.stopTimer();
+  //       this.loadNextQuestion();
+  //     }
+  //   }, 1000);
+  // }
+
+  // stopTimer() {
+  //   clearInterval(this.timerInterval);
+  // }
+
+  // loadNextQuestion() {
+  //   this.stopTimer();
+  //   this.selectedAnswer = null;
+  //   this.isOptionSelected = false;
+
+  //   if (this.answeredQuestions.size < this.quizQuestions.length) {
+  //     this.currentQuestion = this.quizQuestions[this.answeredQuestions.size];
+  //     this.answeredQuestions.add(this.currentQuestion.id);
+  //     this.startTimer();
+  //     this.questionIndex++;
+  //   } else {
+  //     this.evaluateLevelProgress();
+  //   }
+  // }
+
+  // answerQuestion(option: string) {
+  //   if (!this.selectedAnswer) {
+  //     this.selectedAnswer = option;
+  //     this.stopTimer();
+
+  //     if (option === this.currentQuestion.answer) {
+  //       this.userCumulativePoint += this.currentQuestion.points;
+  //       console.log("correct answer");
+  //       console.log("userCumulativePoint", this.userCumulativePoint);
+  //       this.correctOption = true;
+  //     } else {
+  //       console.log("wrong answer");
+  //       this.correctOption = false;
+  //       this.wrongAnswer = this.selectedAnswer;
+  //     }
+  //   }
+  // }
+
+  // evaluateLevelProgress() {
+  //   const requiredScore = this.totalLevelPoints * 0.7;
+  //   this.levelCompleted = this.userCumulativePoint >= requiredScore;
+  //   console.log('Level completed:', this.levelCompleted);
+  // }
+
+  // resetLevel() {
+  //   this.answeredQuestions.clear();
+  //   this.userCumulativePoint = 0;
+  //   this.shuffleQuestions();
+  //   this.loadNextQuestion();
+  // }
+
+  // getOptionKeys() {
+  //     return Object.keys(this.currentQuestion.options);
+  // }
+
+  // navigateBack() {
+  //   this.navCtrl.back();
+  // }
+
+  // selectOption(selectedOption: any) {
+  //   console.log("selected option--->", selectedOption);
+  //   this.isOptionSelected = true;
+  //   this.answerQuestion(selectedOption);
+  // }
+
+  // goToNextLevel() {
+  //   if (!this.currentQuestion) return;
+  
+  //   const currentLevel = this.currentQuestion.levelNumber;
+  //   const nextLevel = currentLevel + 1;
+
+  //   const nextLevelQuestions = this.quizQuestions.find(q => q.levelNumber === nextLevel);
+    
+  //   if (nextLevelQuestions) {
+  //     console.log(`Proceeding to Level ${nextLevel}...`);
+  //     this.navCtrl.navigateForward(`/quiz-level/${nextLevel}`); // Adjust route as needed
+  //   } else {
+  //     console.log("No more levels available.");
+  //     this.navCtrl.navigateForward('/quiz-completed'); // Final completion page
+  //   }
+  // }
+
+  // // Text to Speech Section
+  // async speakText(text: string) {
+  //   try {
+  //     if (this.platform.is('capacitor')) {
+  //       await this.nativeSpeechSynthesis(text);
+  //     } else {
+  //       await this.webSpeechSynthesis(text);
+  //     }
+  //     console.log('Text spoken successfully');
+  //   } catch (error) {
+  //     console.error('Error speaking text:', error);
+  //   }
+  // }
+  // private async nativeSpeechSynthesis(text: string) {
+  //   await TextToSpeech.speak({
+  //     text: text,
+  //     lang: 'en-US',
+  //     rate: 3.0,
+  //     pitch: 2.0,
+  //   });
+  // }
+  // private async webSpeechSynthesis(text: string) {
+  //   const utterance = new SpeechSynthesisUtterance(text);
+  //   utterance.lang = 'yo';
+  //   window.speechSynthesis.speak(utterance);
+  // }
+  // // End Text to Speech Section
+
+
 
 }
