@@ -119,22 +119,124 @@
         right: 14px;
     }
 
-
-    .radio-list {
-        background: transparent;
-        padding: 15px;
+    // owe-page.page.scss
+    .custom-list {
+        padding: 16px;
     }
 
-    .radio-item {
+    .radio-container {
+        display: flex;
+        align-items: flex-start;
+        padding: 16px;
+        margin-bottom: 8px;
         background: #f8f8f8;
         border-radius: 8px;
-        margin: 10px 0;
-        padding: 15px;
-        box-shadow: none;
+        border: 2px solid transparent; // Add transparent border by default
+        transition: border-color 0.2s ease; // Smooth transition for border color
     }
 
     ion-radio {
-        --color: black;
-        --color-checked: black;
+        margin-right: 16px;
+        --color: #666;
+        --color-checked: #7EA421;
+        margin-top: 13px;
     }
+
+    .content {
+        flex: 1;
+        line-height: 1.4;
+        color: #000;
+        font-size: 16px;
+        text-align: left;
+        display: block;
+    }
+
+    .quiz-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+    }
+
+    ion-radio-group {
+        .radio-container ion-radio.radio-checked {
+            &+.text-content {
+                color: #7EA421; // Optional: change text color when selected
+            }
+
+            &:checked {
+                --color-checked: #7EA421; // Change radio button color when checked
+            }
+        }
+
+        // Parent container gets green border when its radio is checked
+        .radio-container:has(ion-radio.radio-checked) {
+            border-color: #7EA421;
+            background-color: #F6F8F4; // Optional: slightly different background for selected
+        }
+    }
+
+    .new-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .sub-content {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            color: #2E2E2E;
+        }
+
+        .sub-content2 {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .trans {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .translation {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .create-account {
+            --background: #7B462F;
+            --color: white;
+            height: 52px;
+            text-transform: none;
+            --border-radius: 10px;
+            font-weight: 700;
+            margin-top: 10px;
+            width: 343px;
+            --box-shadow: none;
+        }
+
+        .explain {
+            color: #2E2E2E;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .paragram {
+            color: #505050;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 5px;
+        }
+    }
+
 }

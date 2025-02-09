@@ -1,9 +1,6 @@
-<ion-content>
+<!-- <ion-content>
   <div class="container">
-    <ion-icon
-      (click)="navigateBack()"
-      name="arrow-back-outline"
-      class="back-arrow"></ion-icon>
+    <ion-icon (click)="navigateBack()" name="arrow-back-outline" class="back-arrow"></ion-icon>
     <div class="framer">
       <h2 class="onka">Onka</h2>
       <h3 class="cumuscore">{{ userCumulativePoint }}</h3>
@@ -13,7 +10,69 @@
         <ion-text *ngIf="timer > 5">{{ timer }}s</ion-text>
       </div>
     </div>
-    <!-- Centered Quiz Card -->
+
+    <div *ngIf="currentQuestion">
+      <div class="quiz-container">
+        <div class="quiz-card">
+          <h1>Question {{ questionIndex }}/{{ quizQuestions.length }}</h1>
+          <p>{{ currentQuestion.question }}</p>
+          <div (click)="speakText(currentQuestion.question)">
+            <img class="volume" src="../../assets/icon/volume-high 1.svg" alt="" />
+          </div>
+        </div>
+
+        <div class="options-container">
+          <div class="option" *ngFor="let key of getOptionKeys()" (click)="selectOption(key)"
+            [class.correct]="isOptionSelected && correctOption && (key === currentQuestion.answer)"
+            [class.incorrect]="isOptionSelected && !correctOption && (key === wrongAnswer)">
+            <input type="radio" [id]="key" name="quiz" [checked]="isOptionSelected" [disabled]="isOptionSelected" />
+            <label [for]="key">{{ currentQuestion.options[key] }}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-button">
+        <button (click)="useSuggestion('ileke')" [disabled]="usedSuggestions.ileke || userCumulativePoint < suggestionCosts.ileke">
+          Ileke (Bead)
+        </button>
+        <button (click)="useSuggestion('obi')" [disabled]="usedSuggestions.obi || userCumulativePoint < suggestionCosts.obi">
+          Obi (Kolanut)
+        </button>
+        <button (click)="useSuggestion('eyoOwo')" [disabled]="usedSuggestions.eyoOwo || userCumulativePoint < suggestionCosts.eyoOwo">
+          Eyo Owo (Cowry)
+        </button>
+        <button (click)="useSuggestion('ami')" [disabled]="usedSuggestions.ami || userCumulativePoint < suggestionCosts.ami">
+          Ami (Sign)
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content> -->
+
+
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"></ion-icon>
+    <div class="framer">
+      <h2 class="onka">Onka</h2>
+      <h3 class="cumuscore">{{ userCumulativePoint }}</h3>
+      <div class="audio-size" (click)="stopBackgroundAudio()" *ngIf="isBgSoundPlaying">
+        <ion-icon name="mic-off-circle-outline"></ion-icon>
+      </div>
+
+      <div class="audio-size" (click)="playBackgroundAudio()" *ngIf="!isBgSoundPlaying">
+        <ion-icon name="mic-circle-outline"></ion-icon>
+      </div>
+
+      <div class="timer">
+        <img src="../../assets/icon/stopwatch 1.svg" alt="" />
+        <ion-text color="danger" *ngIf="timer <= 5">{{ timer }}s</ion-text>
+        <ion-text *ngIf="timer > 5">{{ timer }}s</ion-text>
+      </div>
+    </div>
     <div *ngIf="currentQuestion">
       <div class="quiz-container">
         <div class="quiz-card">
@@ -21,12 +80,11 @@
             <div>
               <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
             </div>
-            <!-- <h1>Question {{ currentQuestion.questionNumber }}/10</h1> -->
-            <h1>Question {{ questionIndex }}/{{quizQuestions.length}}</h1>
+            <h1 *ngIf="questionIndex <=quizQuestions.length">Question {{ questionIndex }}/{{quizQuestions.length}}</h1>
             <p>
               {{ currentQuestion.question }}
             </p>
-            <div>
+            <div (click)="speakText(currentQuestion.question)">
               <img class="volume" src="../../assets/icon/volume-high 1.svg" alt="" />
             </div>
             <div>
@@ -35,7 +93,6 @@
           </div>
         </div>
 
-        <!-- Options -->
         <div class="options-container">
           <div class="option" *ngFor="let key of getOptionKeys()" 
           (click)="selectOption(key)" 
@@ -46,18 +103,35 @@
           </div>
         </div>
       </div>
-
-      <!-- Button shown if no option is selected -->
-      <div class="quiz-button" *ngIf="!isOptionSelected">
+      <!-- <div class="quiz-button" *ngIf="!isOptionSelected">
         <div class="button">
           <img src="../../assets/icon/Group 38.svg" alt="" />
+
           <img src="../../assets/icon/Group 39.svg" alt="" />
+          
           <img src="../../assets/icon/Group 40.svg" alt="" />
+          
           <img src="../../assets/icon/Group 41.svg" alt="" />
+        </div>
+      </div> -->
+
+      <div class="quiz-button" *ngIf="!isOptionSelected">
+        <div class="button">
+          <button (click)="useSuggestion('ileke')" [disabled]="usedSuggestions.ileke || userCumulativePoint < suggestionCosts.ileke">
+            <img src="../../assets/icon/Group 38.svg" alt="" />
+          </button>
+          <button (click)="useSuggestion('obi')" [disabled]="usedSuggestions.obi || userCumulativePoint < suggestionCosts.obi">
+            <img src="../../assets/icon/Group 39.svg" alt="" />
+          </button>
+          <button (click)="useSuggestion('eyoOwo')" [disabled]="usedSuggestions.eyoOwo || userCumulativePoint < suggestionCosts.eyoOwo">
+            <img src="../../assets/icon/Group 40.svg" alt="" />
+          </button>
+          <button (click)="useSuggestion('ami')" [disabled]="usedSuggestions.ami || userCumulativePoint < suggestionCosts.ami">
+            <img src="../../assets/icon/Group 41.svg" alt="" />
+          </button>
         </div>
       </div>
 
-      <!-- New content shown when an option is selected -->
       <div class="new-content" *ngIf="isOptionSelected">
         <div class="sub-content" *ngIf="selectedAnswer && selectedAnswer === currentQuestion.answer">
           <img src="../../assets/icon/ekuise.svg" alt="" />
@@ -69,7 +143,8 @@
         </div>
 
         <div>
-          <ion-button expand="block" class="create-account" (click)="loadNextQuestion()" *ngIf="selectedAnswer"> Next </ion-button>
+          <!-- <ion-button expand="block" class="create-account" (click)="loadNextQuestion()" *ngIf="selectedAnswer && !questionCompleted"> Next </ion-button> -->
+          <ion-button expand="block" class="create-account" (click)="loadNextQuestion()" *ngIf="isOptionSelected && (questionIndex !== quizQuestions.length)"> Next </ion-button>
         </div>
         <div class="new-content">
           <h3 class="explain">Explanation</h3>
