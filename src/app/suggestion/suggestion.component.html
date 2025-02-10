@@ -1,0 +1,25 @@
+<ion-content class="modal-content">
+  <div class="modal-container">
+    <!-- Close Button -->
+    <ion-icon
+      name="close-outline"
+      class="close-button"
+      (click)="closeModal()"
+    ></ion-icon>
+
+    <!-- Alaye Header -->
+    <div class="header">Alaye</div>
+
+    <!-- Modal Text -->
+    <p class="modal-text">
+      No one rides a horse without <br />
+      moving his head, voluntarily or <br />
+      involuntarily
+
+      <!-- Back to Quiz Button -->
+      <ion-button class="back-button" expand="block" (click)="closeModal()"
+        >Back to Quiz</ion-button
+      >
+    </p>
+  </div>
+</ion-content>
