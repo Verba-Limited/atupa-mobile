@@ -318,7 +318,7 @@ export class QuizPagePage {
   }
 
   evaluateLevelProgress() {
-    const requiredScore = this.totalLevelPoints * 0.7;
+    const requiredScore = this.totalLevelPoints * 0.6;
     this.levelCompleted = this.userCumulativePoint >= requiredScore;
   }
 
