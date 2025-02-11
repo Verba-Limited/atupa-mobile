@@ -76,7 +76,7 @@
     text-align: center;
     background: #f8f0e5;
     max-width: 272px;
-    padding: 20px;
+    // padding: 20px;
     border-radius: 134px;
     margin: auto;
     height: 390px;
@@ -111,7 +111,7 @@
 }
 
 .score-circle {
-    width: 50px;
+    width: 52px;
     height: 50px;
     background: #d87f3c;
     border-radius: 50%;
@@ -126,13 +126,16 @@
     font-size: 14px;
     margin-top: 5px;
     color: #505050;
+    font-weight: 700;
 }
 
 // Congratulations text
 .congratulations {
     font-size: 16px;
-    font-weight: bold;
-    margin-top: 15px;
+    font-weight: 700;
+    margin-top: 16px;
+    color: #505050;
+    line-height: 21.82px;
 }
 
 // Reward section
@@ -155,4 +158,58 @@
 
 .reward-box img {
     width: 20px;
+}
+
+.star {
+    width: 128px;
+    height: 48px;
+    background-color: white;
+    border-radius: 8px;
+
+    .star-level {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-left: 4px;
+
+        .star-color {
+            background-color: #7B462F;
+            border-radius: 100%;
+            width: 17px;
+            height: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 40px;
+    padding-bottom: 20px;
+}
+
+.create-account {
+    --background: #7B462F;
+    --color: white;
+    height: 52px;
+    text-transform: none;
+    --border-radius: 10px;
+    font-weight: 700;
+    --box-shadow: none;
+    width: 343px;
+}
+
+.login {
+    --background: #F6EBDD;
+    --color: #8B4513;
+    height: 52px;
+    text-transform: none;
+    --border-radius: 10px;
+    font-weight: 700;
+    --box-shadow: none;
+    width: 343px;
 }
