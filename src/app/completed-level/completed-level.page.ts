@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -10,5 +11,9 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, FormsModule],
 })
 export class CompletedLevelPage {
-  constructor() {}
+  constructor(private router: Router) {}
+
+  alllevelPage() {
+    this.router.navigate(['/all-level']);
+  }
 }
