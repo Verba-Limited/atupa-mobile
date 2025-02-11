@@ -64,6 +64,10 @@ const routes: Routes = [
     path: 'owe-page',
     loadChildren: () => import('./owe-page/owe-page.module').then( m => m.OwePagePageModule)
   },
+  {
+    path: 'completed-level',
+    loadChildren: () => import('./completed-level/completed-level.module').then( m => m.CompletedLevelPageModule)
+  },
 ];
 
 @NgModule({

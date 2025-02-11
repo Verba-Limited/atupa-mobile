@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController, NavController } from '@ionic/angular';
 import { SuggestionComponent } from '../suggestion/suggestion.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-owe-page',
   templateUrl: './owe-page.page.html',
@@ -16,7 +17,8 @@ export class OwePagePage {
 
   constructor(
     private navCtrl: NavController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private router: Router
   ) {}
 
   navigateBack() {
@@ -38,5 +40,9 @@ export class OwePagePage {
       });
       await modal.present();
     }
+  }
+
+  completedPage() {
+    this.router.navigate(['/completed-level']);
   }
 }

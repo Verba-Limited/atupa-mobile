@@ -1,0 +1,158 @@
+.framer {
+    color: #505050;
+    text-align: center;
+
+    .quiz {
+        position: relative;
+        display: inline-block;
+
+        .quiz-labels {
+            position: absolute;
+            top: 68%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    }
+
+    .quiz img {
+        width: 182px;
+    }
+
+    .quiz-text {
+        color: #F6EBDD;
+        font-size: 16px;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .subtitle {
+        color: #F6EBDD; // Adjust the color if necessary
+        font-size: 20px; // You can modify the font-size as desired
+        margin: 0;
+        font-weight: 800;
+
+    }
+
+    .quiz-description {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21.82px;
+    }
+}
+
+.quiz-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20%;
+}
+
+// Star icons
+.stars {
+    position: absolute;
+    top: 41px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+
+
+.stars img {
+    width: 177.01px;
+    height: 78px;
+}
+
+// Quiz result container
+.quiz-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: #f8f0e5;
+    max-width: 272px;
+    padding: 20px;
+    border-radius: 134px;
+    margin: auto;
+    height: 390px;
+    position: relative;
+    // padding-top: 30px;
+}
+
+// Score circle
+.score-container {
+    display: flex;
+    align-items: center;
+    // margin-top: 20px;
+
+    .progress-circle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 4px solid #C16F30;
+        border-right-color: #C16F302B;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(-45deg);
+
+        .progress-text {
+            transform: rotate(45deg);
+            color: #2E2E2E;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    }
+}
+
+.score-circle {
+    width: 50px;
+    height: 50px;
+    background: #d87f3c;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+.score-text {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #505050;
+}
+
+// Congratulations text
+.congratulations {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+// Reward section
+.reward-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.reward-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.reward-box img {
+    width: 20px;
+}
