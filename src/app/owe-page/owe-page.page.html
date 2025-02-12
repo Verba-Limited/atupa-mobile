@@ -84,19 +84,31 @@
     </ion-list>
     <!-- Quiz Button (Hidden when an option is selected) -->
     <div class="quiz-button" *ngIf="!showNewContent">
-      <div class="button">
-        <button (click)="useSuggestion('ileke')">
-          <img src="../../assets/icon/Group 38.svg" alt="" />
-        </button>
-        <button (click)="useSuggestion('obi')">
-          <img src="../../assets/icon/Group 39.svg" alt="" />
-        </button>
-        <button (click)="useSuggestion('eyoOwo')">
-          <img src="../../assets/icon/Group 40.svg" alt="" />
-        </button>
-        <button (click)="useSuggestion('ami')">
-          <img src="../../assets/icon/Group 41.svg" alt="" />
-        </button>
+      <div class="overlay-container" *ngIf="!showNewContent">
+        <div
+          *ngFor="let item of overlayItems"
+          class="image-container"
+          (click)="useSuggestion(item.title)"
+        >
+          <!-- Background Image -->
+          <img
+            class="background-image"
+            src="../../assets/icon/Rectangle 73.svg"
+            alt="Background"
+          />
+
+          <!-- Overlay Content - Mapped Dynamically -->
+          <div class="overlay-content">
+            <img class="icon" [src]="item.icon" alt="Icon" />
+            <div style="margin-top: 3px">
+              <p class="title">{{ item.title }}</p>
+            </div>
+            <div style="margin-top: 10px">
+              <small class="subtitle">{{ item.subtitle }}</small>
+            </div>
+            <div class="badge">{{item.badge}}</div>
+          </div>
+        </div>
       </div>
     </div>
 

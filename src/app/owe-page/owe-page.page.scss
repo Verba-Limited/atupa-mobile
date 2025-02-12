@@ -162,6 +162,81 @@
             justify-content: center;
             gap: 15px;
         }
+
+        .overlay-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+        }
+
+        .image-container {
+
+            position: relative;
+            width: 67.25px;
+            height: 63.87px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .overlay-content {
+            position: absolute;
+            top: 62%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+
+        }
+
+        .icon {
+            width: 17.71px;
+            /* Adjust icon size */
+            height: auto;
+            margin-bottom: 1xpx;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: -1px;
+        }
+
+        .subtitle {
+            font-size: 10px;
+            font-style: italic;
+            margin-top: 0;
+            text-wrap: nowrap;
+        }
+
+        .title,
+        .subtitle {
+            line-height: 0;
+        }
+
+        /* Badge Styling */
+        .badge {
+            position: absolute;
+            top: -18px;
+            right: -20px;
+            background-color: #c57c3b;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            width: 17px;
+            height: 17px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
     }
 
     ion-radio-group {

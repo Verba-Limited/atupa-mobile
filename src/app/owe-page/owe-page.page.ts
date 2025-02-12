@@ -30,8 +30,35 @@ export class OwePagePage {
     this.showNewContent = true; // Show new-content div
   }
 
-  async useSuggestion(type: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
-    if (type === 'ami') {
+  overlayItems = [
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Eleke',
+      subtitle: 'yaa meji',
+      badge: '3',
+    },
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Obi',
+      subtitle: 'yaa onka',
+      badge: '2',
+    },
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Eyo',
+      subtitle: 'idahun',
+      badge: '1',
+    },
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Ami',
+      subtitle: 'alaye',
+      badge: '4',
+    },
+  ];
+
+  async useSuggestion(title: string) {
+    if (title === 'Ami') {
       const modal = await this.modalController.create({
         component: SuggestionComponent,
         cssClass: 'custom-modal', // Apply custom styles
