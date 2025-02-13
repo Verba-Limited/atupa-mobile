@@ -1,3 +1,20 @@
-<p>
-  shop-modal works!
-</p>
+<ion-content>
+  <div class="container">
+    <div class="image">
+      <img src="../../assets/icon/Group 50.svg" alt="" />
+    </div>
+    <ion-icon
+      name="close-outline"
+      class="close-button"
+      slot=""
+      (click)="closeModal()"
+    ></ion-icon>
+
+    <div class="shop-content">
+      <div class="header">Shop</div>
+      <p class="paragra">Available Eleke: <span>0</span></p>
+
+      <div class="board-container"></div>
+    </div>
+  </div>
+</ion-content>
