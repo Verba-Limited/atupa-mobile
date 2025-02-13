@@ -57,5 +57,116 @@
         background-size: cover;
         width: 302px;
         height: 319px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
+
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding: 10px 0;
+    }
+
+    .image-container {
+        position: relative;
+        width: 67.25px;
+        height: 63.87px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 2px;
+    }
+
+    .background-image {
+        display: block;
+        width: 53px;
+        height: auto;
+        border: 2px solid #F6EBDD;
+    }
+
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+
+        .icon {
+            width: 17.71px;
+            /* Adjust icon size */
+            height: auto;
+            margin-bottom: 1xpx;
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: -1px;
+        }
+    }
+
+    /* The badge in the top-right corner */
+    .badge {
+        position: absolute;
+        top: 5px;
+        /* Adjust as needed */
+        right: 5px;
+        /* Adjust as needed */
+        width: 20px;
+        /* Adjust size */
+        height: 20px;
+        /* Adjust size */
+        background-color: #c57c3b;
+        /* Or any color that fits your design */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .badge img {
+        width: 12px;
+        /* Adjust icon size */
+        height: 12px;
+    }
+
+    .amount {
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .buy-btn {
+        background: #f5e1c5;
+        border-radius: 15px;
+        border: none;
+        padding: 5px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+
+
+    .bundle {
+        background: url('../../assets/icon/Rectangle 97.svg');
+        background-size: cover;
+        color: white;
+        font-weight: bold;
+        border-radius: 6px;
+        display: inline-block;
+        margin-top: 24px;
+        height: 31px;
+        width: 288px;
+        text-align: center;
+        line-height: 31px;
+    }
+
 }
