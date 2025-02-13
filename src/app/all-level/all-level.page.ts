@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
+import { ShopModalComponent } from '../shop-modal/shop-modal.component';
 
 @Component({
   selector: 'app-all-level',
@@ -9,7 +10,17 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, FormsModule],
 })
 export class AllLevelPage implements OnInit {
-  constructor() {}
+  constructor(private modalCntl: ModalController) {}
 
   ngOnInit() {}
+
+  async openShopModal() {
+    const modal = await this.modalCntl.create({
+      component: ShopModalComponent,
+      cssClass: 'custom-shop-modal',
+      backdropDismiss: true,
+      showBackdrop: true,
+    });
+    await modal.present();
+  }
 }

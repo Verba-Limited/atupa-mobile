@@ -44,12 +44,23 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="button-container">
-      <ion-button expand="block" class="create-account">
-        Explore More
-      </ion-button>
-      <ion-button expand="block" class="login"> Back to Homepage </ion-button>
+  <div class="share-container">
+    <div class="share">
+      <img src="../../assets/icon/share-from-square 1.svg" alt="" />
+      <p>Share</p>
     </div>
+    <div class="share">
+      <img src="../../assets/icon/chart-simple 1.svg" alt="" />
+      <p>Leaderboard</p>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <ion-button (click)="openShopModal()" expand="block" class="create-account">
+      Explore More
+    </ion-button>
+    <ion-button expand="block" class="login"> Back to Homepage </ion-button>
   </div>
 </ion-content>
