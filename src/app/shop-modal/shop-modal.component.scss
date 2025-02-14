@@ -231,4 +231,20 @@
         border-bottom: 12px;
     }
 
+
+    .back-button {
+        --background: #7b462f;
+        color: white;
+        font-weight: bold;
+        --border-radius: 10px;
+        margin: 10px auto 0;
+        cursor: pointer;
+        width: 164px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
 }

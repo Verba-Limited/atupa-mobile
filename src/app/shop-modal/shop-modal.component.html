@@ -36,23 +36,31 @@
         </div>
       </div>
 
-      <div class="bundle-card">
-        <!-- Top Header / Banner -->
-        <div class="bundle-header">
-          <p>Bundle Pack</p>
-        </div>
-
-        <!-- Items List -->
-        <div class="bundle-items">
-          <div class="bundle-item" *ngFor="let item of bundlePack">
-            <img [src]="item.icon" [alt]="item.title" />
-            <span>{{ item.title }}</span>
-            <span>x5</span>
+      <div style="padding: 10px">
+        <div class="bundle-card">
+          <!-- Top Header / Banner -->
+          <div class="bundle-header">
+            <p>Bundle Pack</p>
           </div>
+
+          <!-- Items List -->
+          <div class="bundle-items">
+            <div class="bundle-item" *ngFor="let item of bundlePack">
+              <img [src]="item.icon" [alt]="item.title" />
+              <span>{{ item.title }}</span>
+              <span>x5</span>
+            </div>
+          </div>
+
+          <!-- Price/Buy Button -->
+          <div class="bundle-buy">₦20000 Buy</div>
         </div>
 
-        <!-- Price/Buy Button -->
-        <div class="bundle-buy">₦20000 Buy</div>
+        <div>
+          <ion-button class="back-button" expand="block" (click)="closeModal()"
+            >Back to Quiz</ion-button
+          >
+        </div>
       </div>
     </div>
   </div>
