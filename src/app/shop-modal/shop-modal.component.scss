@@ -155,18 +155,80 @@
 
 
 
-    .bundle {
-        background: url('../../assets/icon/Rectangle 97.svg');
-        background-size: cover;
-        color: white;
-        font-weight: bold;
-        border-radius: 6px;
-        display: inline-block;
-        margin-top: 24px;
-        height: 31px;
-        width: 288px;
+    .bundle-card {
+        background-color: #fff;
+        border-radius: 16px;
+        width: 297px;
+        // padding: 16px;
+        margin: 24px auto;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         text-align: center;
-        line-height: 31px;
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        border: 1px solid #7B462F;
+        border-radius: 20px;
+    }
+
+    .bundle-header {
+        background: url('../../assets/icon/Rectangle97.svg') no-repeat center/cover;
+        border-radius: 8px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        p {
+            color: #fff;
+            font-weight: bold;
+            margin: 0;
+        }
+    }
+
+    /* Grid Layout for the Items */
+    .bundle-items {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns */
+        gap: 16px;
+        /* spacing between grid items */
+        margin-top: 16px;
+    }
+
+    /* Each Item in the Grid */
+    .bundle-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+
+        img {
+            width: 17.71px;
+            height: 18px;
+        }
+
+        span {
+            font-weight: 700;
+            color: #000000;
+            font-size: 14px;
+        }
+    }
+
+    /* Price/Buy Button Area */
+    .bundle-buy {
+        background-color: #f3dfcd;
+        color: #7B462F;
+        font-weight: 800;
+        margin: 16px auto 0;
+        /* 16px top, auto left/right, 0 bottom */
+        border-radius: 8px;
+        cursor: pointer;
+        width: 119.25px;
+        height: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 12px;
     }
 
 }

@@ -36,16 +36,23 @@
         </div>
       </div>
 
-      <div>
-        <div class="bundle">Bundle Pack</div>
-        <div
-          *ngFor="let item of bundlePack"
-          style="display: flex; align-items: center; gap: 10px"
-        >
-          <img src="../../assets/icon/dots.svg" alt="" />
-          <p>{{ item.title }}</p>
-          <p>x5</p>
+      <div class="bundle-card">
+        <!-- Top Header / Banner -->
+        <div class="bundle-header">
+          <p>Bundle Pack</p>
         </div>
+
+        <!-- Items List -->
+        <div class="bundle-items">
+          <div class="bundle-item" *ngFor="let item of bundlePack">
+            <img [src]="item.icon" [alt]="item.title" />
+            <span>{{ item.title }}</span>
+            <span>x5</span>
+          </div>
+        </div>
+
+        <!-- Price/Buy Button -->
+        <div class="bundle-buy">₦20000 Buy</div>
       </div>
     </div>
   </div>

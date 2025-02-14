@@ -10,7 +10,7 @@ interface BoardItem {
 interface BundleItem {
   title: string;
   icon: string;
-  point: number;
+  point: string;
 }
 @Component({
   selector: 'app-shop-modal',
@@ -33,8 +33,9 @@ export class ShopModalComponent {
   ];
 
   bundlePack: BundleItem[] = [
-    { point: 3, title: 'Eleke ', icon: '../../assets/icon/dots.svg' },
-    { point: 5, title: 'Obi', icon: '' },
-    { point: 10, title: 'Eyo Owo', icon: '' },
+    { point: 'x5', title: 'Eleke ', icon: '../../assets/icon/dots.svg' },
+    { point: 'x5', title: 'Obi', icon: '../../assets/icon/almond 1.svg' },
+    { point: 'x5', title: 'Eyo Owo', icon: '../../assets/icon/coweries.svg' },
+    { point: 'x5', title: 'Ami', icon: '../../assets/icon/more 1.svg' },
   ];
 }
