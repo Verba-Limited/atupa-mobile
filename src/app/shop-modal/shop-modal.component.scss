@@ -60,7 +60,8 @@
         padding: 10px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        // gap: 10px;
+        // padding: 10px;
     }
 
     .row {
@@ -68,7 +69,8 @@
         align-items: center;
         justify-content: space-around;
         border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-        padding: 10px 0;
+        margin-top: 15px;
+        padding-top: 10px;
     }
 
     .image-container {
@@ -145,12 +147,15 @@
 
     .buy-btn {
         background: #f5e1c5;
-        border-radius: 15px;
+        /* border-radius: 15px; */
         border: none;
-        padding: 5px 15px;
+        /* padding: 5px 15px; */
         font-size: 14px;
+        width: 95px;
         font-weight: bold;
         cursor: pointer;
+        height: 32px;
+        border-radius: 10px;
     }
 
 
