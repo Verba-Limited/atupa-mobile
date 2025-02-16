@@ -23,7 +23,7 @@
         color: #F6EBDD;
         font-size: 16px;
         font-weight: 800;
-        text-transform: uppercase;
+        text-transform: capitalize;
         margin: 0;
     }
 
@@ -127,6 +127,8 @@
     margin-top: 5px;
     color: #505050;
     font-weight: 700;
+    margin-left: 10px;
+    text-align: left;
 }
 
 // Congratulations text
@@ -143,6 +145,7 @@
     font-size: 14px;
     font-weight: bold;
     margin-top: 10px;
+    color: #505050;
 }
 
 .reward-box {
@@ -171,6 +174,7 @@
         gap: 10px;
         align-items: center;
         margin-left: 4px;
+        color: #2E2E2E;
 
         .star-color {
             background-color: #7B462F;

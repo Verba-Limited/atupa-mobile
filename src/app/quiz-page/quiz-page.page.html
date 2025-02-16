@@ -3,24 +3,21 @@
     <ion-icon
       (click)="navigateBack()"
       name="arrow-back-outline"
-      class="back-arrow"
-    ></ion-icon>
+      class="back-arrow"></ion-icon>
     <div class="framer">
       <h2 class="onka">Onka</h2>
       <h3 class="cumuscore">{{ userCumulativePoint }}</h3>
       <div
         class="audio-size"
         (click)="stopBackgroundAudio()"
-        *ngIf="isBgSoundPlaying"
-      >
+        *ngIf="isBgSoundPlaying">
         <ion-icon name="mic-off-circle-outline"></ion-icon>
       </div>
 
       <div
         class="audio-size"
         (click)="playBackgroundAudio()"
-        *ngIf="!isBgSoundPlaying"
-      >
+        *ngIf="!isBgSoundPlaying">
         <ion-icon name="mic-circle-outline"></ion-icon>
       </div>
 
@@ -37,7 +34,7 @@
             <div>
               <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
             </div>
-            <h1 *ngIf="questionIndex <=quizQuestions.length">
+            <h1 *ngIf="questionIndex <= quizQuestions.length">
               Question {{ questionIndex }}/{{quizQuestions.length}}
             </h1>
             <p>{{ currentQuestion.question }}</p>
@@ -45,8 +42,7 @@
               <img
                 class="volume"
                 src="../../assets/icon/volume-high 1.svg"
-                alt=""
-              />
+                alt=""/>
             </div>
             <div>
               <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
@@ -57,77 +53,54 @@
         <div class="options-container">
           <div
             class="option"
-            *ngFor="let key of getOptionKeys()"
-            (click)="selectOption(key)"
+            *ngFor="let key of getOptionKeys();"
+            (click)="selectOption(key, questionIndex)"
             [class.correct]="isOptionSelected && correctOption && (key === currentQuestion.answer)"
-            [class.incorrect]="isOptionSelected && !correctOption && (key === wrongAnswer)"
-          >
+            [class.incorrect]="isOptionSelected && !correctOption && (key === wrongAnswer)">
             <input
               type="radio"
               [id]="key"
               name="quiz"
               [checked]="isOptionSelected"
-              [disabled]="isOptionSelected"
-            />
+              [disabled]="isOptionSelected" />
             <label [for]="key">{{ currentQuestion.options[key] }}</label>
           </div>
         </div>
       </div>
-      <!-- <div class="quiz-button" *ngIf="!isOptionSelected">
-        <div class="button">
-          <img src="../../assets/icon/Group 38.svg" alt="" />
-
-          <img src="../../assets/icon/Group 39.svg" alt="" />
-          
-          <img src="../../assets/icon/Group 40.svg" alt="" />
-          
-          <img src="../../assets/icon/Group 41.svg" alt="" />
-        </div>
-      </div> -->
 
       <div class="quiz-button" *ngIf="!isOptionSelected">
         <div class="button">
           <button
             (click)="useSuggestion('ileke')"
-            [disabled]="usedSuggestions.ileke || userCumulativePoint < suggestionCosts.ileke"
-          >
+            [disabled]="usedSuggestions.ileke || userCumulativePoint < suggestionCosts.ileke">
             <img src="../../assets/icon/Group 38.svg" alt="" />
           </button>
           <button
             (click)="useSuggestion('obi')"
-            [disabled]="usedSuggestions.obi || userCumulativePoint < suggestionCosts.obi"
-          >
+            [disabled]="usedSuggestions.obi || userCumulativePoint < suggestionCosts.obi">
             <img src="../../assets/icon/Group 39.svg" alt="" />
           </button>
           <button
             (click)="useSuggestion('eyoOwo')"
-            [disabled]="usedSuggestions.eyoOwo || userCumulativePoint < suggestionCosts.eyoOwo"
-          >
+            [disabled]="usedSuggestions.eyoOwo || userCumulativePoint < suggestionCosts.eyoOwo">
             <img src="../../assets/icon/Group 40.svg" alt="" />
           </button>
           <button
             (click)="useSuggestion('ami')"
-            [disabled]="usedSuggestions.ami || userCumulativePoint < suggestionCosts.ami"
-          >
+            [disabled]="usedSuggestions.ami || userCumulativePoint < suggestionCosts.ami">
             <img src="../../assets/icon/Group 41.svg" alt="" />
           </button>
         </div>
       </div>
 
       <div class="new-content" *ngIf="isOptionSelected">
-        <div
-          class="sub-content"
-          *ngIf="selectedAnswer && selectedAnswer === currentQuestion.answer"
-        >
+        <div class="sub-content" *ngIf="selectedAnswer && selectedAnswer === currentQuestion.answer">
           <img src="../../assets/icon/ekuise.svg" alt="" />
-          <p>E ku ise!</p>
+          <p>Ku ise!</p>
         </div>
-        <div
-          class="sub-content"
-          *ngIf="selectedAnswer && selectedAnswer !== currentQuestion.answer"
-        >
+        <div class="sub-content" *ngIf="selectedAnswer && selectedAnswer !== currentQuestion.answer">
           <img src="../../assets/icon/kodara.svg" alt="" />
-          <p>Ko da ra!</p>
+          <p>Ko dara!</p>
         </div>
 
         <div>
@@ -136,8 +109,7 @@
             expand="block"
             class="create-account"
             (click)="loadNextQuestion()"
-            *ngIf="isOptionSelected && (questionIndex !== quizQuestions.length)"
-          >
+            *ngIf="isOptionSelected && (questionIndex !== quizQuestions.length)">
             Next
           </ion-button>
         </div>
@@ -157,16 +129,14 @@
             expand="block"
             class="create-account"
             *ngIf="levelCompleted"
-            (click)="goToNextLevel()"
-          >
+            (click)="goToNextLevel()">
             Proceed to Level {{ currentQuestion.levelNumber + 1 }}
           </ion-button>
           <ion-button
             expand="block"
             class="create-account"
             *ngIf="!levelCompleted"
-            (click)="resetLevel()"
-          >
+            (click)="resetLevel()">
             Retry Level
           </ion-button>
         </div>

@@ -3,7 +3,7 @@
     <div class="quiz">
       <img src="../../assets/icon/Rectangle 98.svg" alt="" />
       <div class="quiz-labels">
-        <p class="quiz-text">Level 6</p>
+        <p class="quiz-text">{{ levelObject.title }}</p>
         <p class="subtitle">Completed</p>
       </div>
     </div>
@@ -17,11 +17,10 @@
     <div class="quiz-result">
       <div class="score-container">
         <div class="progress-circle">
-          <span class="progress-text">45%</span>
+          <span class="progress-text">{{ levelObject.userCumulativePoint }}%</span>
         </div>
         <p class="score-text">
-          You answered 5 out <br />
-          of 10 questions
+          You answered {{ levelObject.totalAnswered }} <br /> out of {{ levelObject.totalQuestions }} questions
         </p>
       </div>
 
@@ -36,7 +35,7 @@
           <div class="star-color">
             <img src="../../assets/icon/Vector.svg" alt="" />
           </div>
-          <p>1000 Points</p>
+          <p>{{ levelObject.userCumulativePoint }} Points</p>
         </div>
       </div>
     </div>
@@ -45,8 +44,7 @@
       <ion-button
         (click)="alllevelPage()"
         expand="block"
-        class="create-account"
-      >
+        class="create-account">
         Next Level
       </ion-button>
       <ion-button expand="block" class="login"> Back to Homepage </ion-button>
