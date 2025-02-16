@@ -33,11 +33,16 @@
 .container {
     padding: 16px;
 
-
     .first {
         display: flex;
         gap: 30px;
         justify-content: center;
+    }
+
+    .last {
+        display: flex;
+        gap: 30px;
+        justify-content: left;
     }
 
     .quiz-card {
