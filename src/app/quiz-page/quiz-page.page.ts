@@ -106,11 +106,11 @@ export class QuizPagePage {
       "options": {
         "option1": "Ogota",
         "option2": "Ogbon",
-        "option3": "Aadorun",
+        "option3": "Aadota",
         "option4": "Ogofa"
       },
       "answer": "option3",
-      "explanation": "50 in Yoruba is 'Aadorun'.",
+      "explanation": "50 in Yoruba is 'Aadota'.",
       "picture": "https://example.com/images/question_105.png",
       "points": 10
     },
@@ -139,12 +139,12 @@ export class QuizPagePage {
       "question": "Kini 200 ni Yoruba?",
       "options": {
         "option1": "Odogun",
-        "option2": "Eedegbeta",
+        "option2": "Igba",
         "option3": "Eedegberun",
         "option4": "Eedegbeta"
       },
       "answer": "option2",
-      "explanation": "200 in Yoruba is 'Eedegbeta'.",
+      "explanation": "200 in Yoruba is 'Igba'.",
       "picture": "https://example.com/images/question_107.png",
       "points": 10
     },
@@ -155,13 +155,13 @@ export class QuizPagePage {
       "questionNumber": 8,
       "question": "Kini 500 ni Yoruba?",
       "options": {
-        "option1": "Eedegberun",
+        "option1": "Egberun",
         "option2": "Eedegbeta",
         "option3": "Eedegbon",
-        "option4": "Eedegta"
+        "option4": "Eedegbarun"
       },
-      "answer": "option3",
-      "explanation": "500 in Yoruba is 'Eedegbon'.",
+      "answer": "option2",
+      "explanation": "500 in Yoruba is 'Eedegbeta'.",
       "picture": "https://example.com/images/question_108.png",
       "points": 10
     },
@@ -173,12 +173,12 @@ export class QuizPagePage {
       "question": "Kini 1000 ni Yoruba?",
       "options": {
         "option1": "Egbewa",
-        "option2": "Eedegberun",
+        "option2": "Egberun",
         "option3": "Eedegbon",
-        "option4": "Eedegta"
+        "option4": "Eedegbawa"
       },
       "answer": "option2",
-      "explanation": "1000 in Yoruba is 'Eedegberun'.",
+      "explanation": "1000 in Yoruba is 'Egberun'.",
       "picture": "https://example.com/images/question_109.png",
       "points": 10
     },
@@ -189,13 +189,13 @@ export class QuizPagePage {
       "questionNumber": 10,
       "question": "Kini 10,000 ni Yoruba?",
       "options": {
-        "option1": "Egbewa",
+        "option1": "Egbawa",
         "option2": "Eedegberun",
         "option3": "Egbeta",
-        "option4": "Egbeta"
+        "option4": "Egbarun"
       },
-      "answer": "option1",
-      "explanation": "10,000 in Yoruba is 'Egbewa'.",
+      "answer": "option4",
+      "explanation": "10,000 in Yoruba is 'Egbarun'.",
       "picture": "https://example.com/images/question_110.png",
       "points": 10
     }
