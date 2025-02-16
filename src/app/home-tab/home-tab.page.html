@@ -2,7 +2,7 @@
   <div class="container">
     <div class="main-header">
       <div>
-        <h1 class="header">Hi, Promise</h1>
+        <h1 class="header">Hi, Kanmit</h1>
         <p class="sub-header">Let's play a quiz today!</p>
       </div>
       <div class="side">
@@ -13,11 +13,7 @@
           <div><p style="font-size: 14px">1000</p></div>
         </div>
         <div class="alert">
-          <img
-            style="width: 32px; height: 32px"
-            src="../../assets/icon/Group 3.svg"
-            alt=""
-          />
+          <img style="width: 32px; height: 32px" src="../../assets/icon/Group 3.svg" alt="" />
           <div class="dot">
             <img src="../../assets/icon/Ellipse 11.svg" alt="" />
           </div>
@@ -28,7 +24,7 @@
     <!-- main content -->
 
     <div class="scroll-container">
-      <div class="quiz-card green">
+      <div class="quiz-card green" (click)="levelsPage('onka')">
         <div class="card-content">
           <h2>Onka</h2>
           <div class="points">
@@ -36,21 +32,13 @@
             <span>1000 points</span>
           </div>
           <div class="play-section">
-            <img
-              src="../../assets/icon/Rectangle 19.svg"
-              alt=""
-              style="margin-top: 15px"
-            />
-            <img
-              src="../../assets/icon/Rectangle 22.svg"
-              alt=""
-              style="margin-top: 15px"
-            />
+            <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
+            <img src="../../assets/icon/Rectangle 22.svg" alt="" style="margin-top: 15px" />
           </div>
         </div>
       </div>
 
-      <div class="quiz-card orange">
+      <div class="quiz-card orange" (click)="levelsPage('eranko')">
         <div class="card-content">
           <h2>Eranko</h2>
           <div class="points">
@@ -64,15 +52,16 @@
         </div>
       </div>
 
-      <div class="quiz-card gray">
+      <div class="quiz-card gray" (click)="levelsPage('oba-ilu')">
         <div class="card-content">
-          <h2>Oba I</h2>
+          <h2>Oba Ilu</h2>
           <div class="points">
             <ion-icon name="star"></ion-icon>
             <span>1000 points</span>
           </div>
           <div class="play-section">
             <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+            <img src="../../assets/icon/obailu.svg" alt="" />
           </div>
         </div>
       </div>

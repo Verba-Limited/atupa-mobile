@@ -88,14 +88,12 @@
         <div
           *ngFor="let item of overlayItems"
           class="image-container"
-          (click)="useSuggestion(item.title)"
-        >
+          (click)="useSuggestion(item.title)">
           <!-- Background Image -->
           <img
             class="background-image"
             src="../../assets/icon/Rectangle 73.svg"
-            alt="Background"
-          />
+            alt="Background"/>
 
           <!-- Overlay Content - Mapped Dynamically -->
           <div class="overlay-content">

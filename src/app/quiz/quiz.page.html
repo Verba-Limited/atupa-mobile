@@ -1,123 +1,125 @@
 <ion-content>
-  <div class="framer">
-    <div class="quiz">
-      <img src="../../assets/icon/Rectangle 42.svg" alt="" />
-      <p class="quiz-text">QUIZ</p>
+  <div class="container-wrap">
+    <div class="framer">
+      <div class="quiz">
+        <img src="../../assets/icon/Rectangle 42.svg" alt="" />
+        <p class="quiz-text">QUIZ</p>
+      </div>
+      <p class="quiz-description">
+        Select the category of quiz you <br />
+        want to play
+      </p>
     </div>
-    <p class="quiz-description">
-      Select the category of quiz you <br />
-      want to play
-    </p>
-  </div>
-  <div class="container">
-    <div class="first">
-      <div (click)="levelsPage()" class="quiz-card green">
-        <div class="card-content">
-          <h2>Onka</h2>
-          <div class="points">
-            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-            <span>1000 points</span>
-          </div>
-          <div class="play-section">
-            <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
-            <img src="../../assets/icon/Rectangle 22.svg" alt="" style="margin-top: 15px" />
+    <div class="container">
+      <div class="first">
+        <div (click)="levelsPage('onka')" class="quiz-card green">
+          <div class="card-content">
+            <h2>Onka</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>1000 points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
+              <img src="../../assets/icon/Rectangle 22.svg" alt="" style="margin-top: 15px" />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div (click)="erankoPage()" class="quiz-card orange">
-        <div class="card-content">
-          <h2>Eranko</h2>
-          <div class="points">
-            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-            <span>1200 points</span>
-          </div>
-          <div class="play-section">
-            <img src="../../assets/icon/Rectangle 19.svg" alt="" />
-            <img src="../../assets/icon/flat.svg" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="first">
-      <div (click)="owePage()" class="quiz-card sky">
-        <div class="card-content">
-          <h2>Owe</h2>
-          <div class="points">
-            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-            <span>1000 points</span>
-          </div>
-          <div class="play-section">
-            <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
-            <img src="../../assets/icon/Rectangle 22.svg" alt="" style="margin-top: 15px" />
+        <div (click)="levelsPage('eranko')" class="quiz-card orange">
+          <div class="card-content">
+            <h2>Eranko</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>1200 points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+              <img src="../../assets/icon/flat.svg" alt="" />
+            </div>
           </div>
         </div>
       </div>
+      <br />
+      <div class="first">
+        <div (click)="levelsPage('owe')" class="quiz-card sky">
+          <div class="card-content">
+            <h2>Owe</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>1000 points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
+              <img src="../../assets/icon/Rectangle 22.svg" alt="" style="margin-top: 15px" />
+            </div>
+          </div>
+        </div>
 
-      <div class="quiz-card light">
-        <div class="card-content">
-          <h2>Oba Ilu</h2>
-          <div class="points">
-            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-            <span>1200 points</span>
-          </div>
-          <div class="play-section">
-            <img src="../../assets/icon/Rectangle 19.svg" alt="" />
-            <img src="../../assets/icon/obailu.svg" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="first">
-      <div class="quiz-card sea">
-        <div class="card-content">
-          <h2>Ilu</h2>
-          <div class="points">
-            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-            <span>1000 points</span>
-          </div>
-          <div class="play-section">
-            <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
-            <img src="../../assets/icon/Rectangle 22.svg" alt="" style="margin-top: 15px" />
+        <div (click)="levelsPage('oba-ilu')" class="quiz-card light">
+          <div class="card-content">
+            <h2>Oba Ilu</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>1200 points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+              <img src="../../assets/icon/obailu.svg" alt="" />
+            </div>
           </div>
         </div>
       </div>
+      <br />
+      <div class="first">
+        <div (click)="levelsPage('ilu')" class="quiz-card sea">
+          <div class="card-content">
+            <h2>Ilu</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>1000 points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
+              <img src="../../assets/icon/Rectangle 22.svg" alt="" style="margin-top: 15px" />
+            </div>
+          </div>
+        </div>
 
-      <div class="quiz-card brown">
-        <div class="card-content">
-          <h2>Akanlo Ede</h2>
-          <div class="points">
-            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-            <span>1200 points</span>
-          </div>
-          <div class="play-section">
-            <img src="../../assets/icon/Rectangle 19.svg" alt="" />
-            <img src="../../assets/icon/flat.svg" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="first">
-      <div class="quiz-card orange">
-        <div class="card-content">
-          <h2>Apejuwe</h2>
-          <div class="points">
-            <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-            <span>1200 points</span>
-          </div>
-          <div class="play-section">
-            <img src="../../assets/icon/Rectangle 19.svg" alt="" />
-            <img src="../../assets/icon/flat.svg" alt="" />
+        <div (click)="levelsPage('akanlo-ede')" class="quiz-card brown">
+          <div class="card-content">
+            <h2>Akanlo Ede</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>1200 points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+              <img src="../../assets/icon/flat.svg" alt="" />
+            </div>
           </div>
         </div>
       </div>
-      <div class="quiz-card">
-        &nbsp;
+      <br />
+      <div class="first">
+        <div (click)="levelsPage('apejuwe')" class="quiz-card orange">
+          <div class="card-content">
+            <h2>Apejuwe</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>1200 points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+              <img src="../../assets/icon/flat.svg" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="quiz-card">
+          &nbsp;
+        </div>
       </div>
+      <br />
     </div>
-    <br />
   </div>
 </ion-content>

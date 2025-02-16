@@ -1,5 +1,6 @@
 .container {
     padding: 16px;
+    background-color: #FFFFFF;
 
     .back-arrow {
         position: absolute;
@@ -121,7 +122,8 @@
 
     // owe-page.page.scss
     .custom-list {
-        padding: 16px;
+        padding: 16px 0;
+        background-color: #FFFFFF;
     }
 
     .radio-container {

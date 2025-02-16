@@ -232,6 +232,37 @@ export class QuizPagePage {
     eyoOwo: false,
     ami: false,
   };
+
+  overlayItems: any = [
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Ileke',
+      slug: 'ileke',
+      subtitle: 'yaa meji',
+      badge: '3',
+    },
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Obi',
+      slug: 'obi',
+      subtitle: 'yaa onka',
+      badge: '2',
+    },
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Eyo Owo',
+      slug: 'eyoOwo',
+      subtitle: 'idahun',
+      badge: '1',
+    },
+    {
+      icon: '../../assets/icon/dots.svg',
+      title: 'Ami',
+      slug: 'ami',
+      subtitle: 'alaye',
+      badge: '4',
+    },
+  ];
   
   isBgSoundPlaying: boolean = true;
 
@@ -414,6 +445,10 @@ export class QuizPagePage {
         alert(`Hint: ${this.currentQuestion.explanation}`);
         break;
     }
+  }
+
+  disableSuggestion(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
+    return this.usedSuggestions[slug] || this.userCumulativePoint < this.suggestionCosts[slug]
   }
   
   removeIncorrectOptions(count: number) {

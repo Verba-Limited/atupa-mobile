@@ -6,7 +6,16 @@
       class="back-arrow"></ion-icon>
     <div class="framer">
       <h2 class="onka">Onka</h2>
-      <h3 class="cumuscore">{{ userCumulativePoint }}</h3>
+      <!-- <h3 class="cumuscore">{{ userCumulativePoint }}</h3> -->
+      
+      <div class="star">
+        <div class="star-color">
+          <img src="../../assets/icon/Vector.svg" alt="" />
+        </div>
+        <div><p style="font-size: 14px">{{ userCumulativePoint }}</p></div>
+      </div>
+
+
       <div
         class="audio-size"
         (click)="stopBackgroundAudio()"
@@ -23,8 +32,8 @@
 
       <div class="timer">
         <img src="../../assets/icon/stopwatch 1.svg" alt="" />
-        <ion-text color="danger" *ngIf="timer <= 5">{{ timer }}s</ion-text>
-        <ion-text *ngIf="timer > 5">{{ timer }}s</ion-text>
+        <p color="danger" *ngIf="timer <= 5">{{ timer }}s</p>
+        <p *ngIf="timer > 5">{{ timer }}s</p>
       </div>
     </div>
     <div *ngIf="currentQuestion">
@@ -68,7 +77,7 @@
         </div>
       </div>
 
-      <div class="quiz-button" *ngIf="!isOptionSelected">
+      <!-- <div class="quiz-button" *ngIf="!isOptionSelected">
         <div class="button">
           <button
             (click)="useSuggestion('ileke')"
@@ -91,6 +100,31 @@
             <img src="../../assets/icon/Group 41.svg" alt="" />
           </button>
         </div>
+      </div> -->
+
+      <!-- Quiz Button (Hidden when an option is selected) -->
+      <div class="quiz-button" *ngIf="!isOptionSelected">
+        <div class="overlay-container" *ngIf="!isOptionSelected">
+          <button
+            *ngFor="let item of overlayItems"
+            class="image-container"
+            (click)="useSuggestion(item.slug)"
+            [disabled]="disableSuggestion(item.slug)">
+            <!-- Background Image -->
+            <img class="background-image" src="../../assets/icon/Rectangle 73.svg" alt="Background"/>
+            <!-- Overlay Content - Mapped Dynamically -->
+            <div class="overlay-content">
+              <img class="icon" [src]="item.icon" alt="Icon" />
+              <div style="margin-top: 3px">
+                <p class="title">{{ item.title }}</p>
+              </div>
+              <div style="margin-top: 10px">
+                <small class="subtitle">{{ item.subtitle }}</small>
+              </div>
+              <div class="badge">{{item.badge}}</div>
+            </div>
+          </button>
+        </div>
       </div>
 
       <div class="new-content" *ngIf="isOptionSelected">
@@ -104,7 +138,6 @@
         </div>
 
         <div>
-          <!-- <ion-button expand="block" class="create-account" (click)="loadNextQuestion()" *ngIf="selectedAnswer && !questionCompleted"> Next </ion-button> -->
           <ion-button
             expand="block"
             class="create-account"

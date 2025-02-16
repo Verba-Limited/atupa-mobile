@@ -4,8 +4,7 @@
     <ion-icon
       (click)="navigateBack()"
       name="arrow-back-outline"
-      class="back-arrow"
-    ></ion-icon>
+      class="back-arrow"></ion-icon>
     <div class="framer">
       <h2>Levels</h2>
       <p>
@@ -17,22 +16,22 @@
     <!-- Levels List -->
     <div class="levels-list">
       <!-- Unlocked Levels -->
-      <button (click)="quizPage()" class="level-btn unlocked">
+      <button (click)="goToPage(pageFrom)" class="level-btn unlocked">
         <ion-icon name="checkmark-circle"></ion-icon>
         <span>Level 1</span>
       </button>
 
       <button class="level-btn unlocked">
-        <ion-icon name="checkmark-circle"></ion-icon>
+        <ion-icon name="play-circle"></ion-icon>
         <span>Level 2</span>
       </button>
 
-      <button class="level-btn unlocked">
-        <ion-icon name="play-circle"></ion-icon>
+      <!-- Locked Levels -->
+      <button class="level-btn locked" disabled>
+        <ion-icon name="lock-closed"></ion-icon>
         <span>Level 3</span>
       </button>
 
-      <!-- Locked Levels -->
       <button class="level-btn locked" disabled>
         <ion-icon name="lock-closed"></ion-icon>
         <span>Level 4</span>

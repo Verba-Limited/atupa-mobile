@@ -12,13 +12,14 @@ import { IonicModule } from '@ionic/angular';
 export class QuizPage {
   constructor(private router: Router) {}
 
-  levelsPage() {
-    this.router.navigate(['/levels']);
+  levelsPage(pageName: string) {
+    this.router.navigate(['/levels', { page: pageName }]);
   }
-  erankoPage() {
-    this.router.navigate(['/eranko-quiz']);
-  }
-  owePage() {
-    this.router.navigate(['/owe-page']);
-  }
+  // erankoPage() {
+  //   this.router.navigate(['/eranko-quiz']);
+  // }
+  // owePage() {
+  //   this.router.navigate(['/owe-page']);
+  // }
+
 }

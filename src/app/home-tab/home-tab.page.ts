@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -9,5 +10,9 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule],
 })
 export class HomeTabPage {
-  constructor() {}
+  constructor(private router: Router) {}
+
+  levelsPage(pageName: string) {
+    this.router.navigate(['/levels', { page: pageName }]);
+  }
 }
