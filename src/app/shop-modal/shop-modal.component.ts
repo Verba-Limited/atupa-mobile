@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
+import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
 
 interface BoardItem {
   amount: number;
@@ -38,4 +39,23 @@ export class ShopModalComponent {
     { point: 'x5', title: 'Eyo Owo', icon: '../../assets/icon/coweries.svg' },
     { point: 'x5', title: 'Ami', icon: '../../assets/icon/more 1.svg' },
   ];
+
+  async openPaymentModal() {
+    const modal = await this.modalController.create({
+      component: PaymentModalComponent,
+      cssClass: 'payment-method-modal',
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+      handleBehavior: 'none',
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data) {
+        // Handle the selected payment method
+        console.log('Selected payment method:', result.data);
+      }
+    });
+
+    return await modal.present();
+  }
 }

@@ -1,0 +1,29 @@
+<div class="payment-modal">
+  <div class="modal-header">
+    <h2>Choose Payment Method</h2>
+    <ion-icon name="close-outline" (click)="dismiss()"></ion-icon>
+  </div>
+
+  <div class="payment-options">
+    <div
+      *ngFor="let method of paymentMethods"
+      class="payment-option"
+      [class.selected]="selectedMethod === method.id"
+      (click)="selectMethod(method.id)"
+    >
+      <div class="radio-button">
+        <div class="inner-circle" *ngIf="selectedMethod === method.id"></div>
+      </div>
+      <img [src]="method.icon" [alt]="method.name" />
+      <span>{{ method.name }}</span>
+    </div>
+  </div>
+
+  <button
+    class="continue-btn"
+    [class.active]="selectedMethod"
+    (click)="continue()"
+  >
+    Continue
+  </button>
+</div>

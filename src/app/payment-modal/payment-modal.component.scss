@@ -1,0 +1,82 @@
+  .payment-modal {
+      padding: 20px;
+      background: white;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      width: 100%;
+  }
+
+  .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+  }
+
+  .modal-header h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #333;
+  }
+
+  .payment-options {
+      margin-bottom: 20px;
+  }
+
+  .payment-option {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      cursor: pointer;
+  }
+
+  .radio-button {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #666;
+      border-radius: 50%;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+
+  .inner-circle {
+      width: 12px;
+      height: 12px;
+      background: #8B4513;
+      border-radius: 50%;
+  }
+
+  .payment-option.selected {
+      border-color: #8B4513;
+  }
+
+  .payment-option.selected .radio-button {
+      border-color: #8B4513;
+  }
+
+  .payment-option img {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+  }
+
+  .continue-btn {
+      width: 100%;
+      padding: 12px;
+      background: #8B4513;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      opacity: 0.5;
+  }
+
+  .continue-btn.active {
+      opacity: 1;
+  }

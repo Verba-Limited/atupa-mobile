@@ -49,3 +49,33 @@
     --width: 338px !important;
     --border-radius: 30px;
 }
+
+// Add to global.scss or app.scss
+.payment-method-modal {
+    --height: 308px;
+    --width: 375px;
+    --backdrop-opacity: 0.5;
+}
+
+.payment-method-modal::part(content) {
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+}
+
+.payment-method-modal .modal-wrapper {
+    position: absolute;
+    bottom: 0;
+    height: 308px;
+    width: 375px;
+    background: white;
+    border-top-left-radius: 24px !important;
+    border-top-right-radius: 24px !important;
+    overflow: hidden;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.payment-method-modal ion-content {
+    --background: white;
+}
