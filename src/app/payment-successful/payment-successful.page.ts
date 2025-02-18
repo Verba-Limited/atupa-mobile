@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -8,8 +9,10 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./payment-successful.page.scss'],
   imports: [IonicModule, CommonModule],
 })
-export class PaymentSuccessfulPage implements OnInit {
-  constructor() {}
+export class PaymentSuccessfulPage {
+  constructor(private router: Router) {}
 
-  ngOnInit() {}
+  goToFailPayment() {
+    this.router.navigate(['/payment-failed']);
+  }
 }

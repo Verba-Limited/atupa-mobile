@@ -86,6 +86,10 @@ const routes: Routes = [
     path: 'payment-successful',
     loadChildren: () => import('./payment-successful/payment-successful.module').then( m => m.PaymentSuccessfulPageModule)
   },
+  {
+    path: 'payment-failed',
+    loadChildren: () => import('./payment-failed/payment-failed.module').then( m => m.PaymentFailedPageModule)
+  },
 ];
 
 @NgModule({

@@ -4,17 +4,19 @@
       <div class="success-icon">
         <img src="../../assets/icon/Group 590.svg" alt="" />
       </div>
+
+      <h2>Payment Successful</h2>
+      <p>
+        You have successfully purchased <span>3 Eleke,</span> <br />
+        use it to help you with answers to quiz <br />
+        questions
+      </p>
     </div>
 
-    <h2>Payment Successful</h2>
-    <p>
-      You have successfully purchased <span>3 Eleke,</span> <br />
-      use it to help you with answers to quiz <br />
-      questions
-    </p>
-
     <div class="button-container">
-      <ion-button expand="block" class="back-quiz"> Back to Quiz </ion-button>
+      <ion-button expand="block" (click)="goToFailPayment()" class="back-quiz">
+        Back to Quiz
+      </ion-button>
       <ion-button expand="block" class="back-home">
         Back to Homepage
       </ion-button>
