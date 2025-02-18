@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+
+interface iconTypes {
+  icon: string;
+  title: string;
+  chevron: string;
+}
 
 @Component({
   selector: 'app-profile',
@@ -8,8 +14,14 @@ import { IonicModule } from '@ionic/angular';
   standalone: true,
   imports: [IonicModule],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
   constructor() {}
 
-  ngOnInit() {}
+  menuItems: iconTypes[] = [
+    {
+      title: '../../assets/icon/chart-simple 1.svg',
+      chevron: '',
+      icon: '',
+    },
+  ];
 }
