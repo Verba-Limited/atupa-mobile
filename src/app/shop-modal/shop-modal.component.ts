@@ -41,6 +41,8 @@ export class ShopModalComponent {
   ];
 
   async openPaymentModal() {
+    this.modalController.dismiss();
+
     const modal = await this.modalController.create({
       component: PaymentModalComponent,
       cssClass: 'payment-method-modal',

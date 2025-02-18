@@ -15,8 +15,9 @@
 
   .modal-header h2 {
       margin: 0;
-      font-size: 18px;
-      color: #333;
+      font-size: 16px;
+      color: #2E2E2E;
+      font-weight: 700;
   }
 
   .payment-options {
@@ -66,8 +67,8 @@
   }
 
   .continue-btn {
-      width: 100%;
-      padding: 12px;
+      width: 137px;
+      height: 40px;
       background: #8B4513;
       color: white;
       border: none;
@@ -75,6 +76,8 @@
       font-size: 16px;
       cursor: pointer;
       opacity: 0.5;
+      display: block;
+      margin: 0 auto;
   }
 
   .continue-btn.active {
