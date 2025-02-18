@@ -1,0 +1,15 @@
+.profile-content {
+    --background: #7B462F;
+
+
+    .profile-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .profile {
+            text-align: center;
+
+        }
+    }
+}
