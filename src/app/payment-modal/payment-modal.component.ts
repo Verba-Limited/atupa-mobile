@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule, ModalController } from '@ionic/angular';
 interface PaymentMethod {
   id: string;
@@ -14,7 +15,7 @@ interface PaymentMethod {
   imports: [IonicModule, CommonModule],
 })
 export class PaymentModalComponent {
-  constructor(private modalCtrl: ModalController) {}
+  constructor(private modalCtrl: ModalController, private router: Router) {}
 
   paymentMethods: PaymentMethod[] = [
     {
@@ -38,6 +39,7 @@ export class PaymentModalComponent {
   continue() {
     if (this.selectedMethod) {
       this.modalCtrl.dismiss(this.selectedMethod);
+      this.router.navigate(['/payment-successful']);
     }
   }
 

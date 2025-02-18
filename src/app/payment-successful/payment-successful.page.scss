@@ -1,0 +1,79 @@
+  .payment-success-content {
+      --background: white;
+      --padding-top: 48px;
+      --padding-start: 24px;
+      --padding-end: 24px;
+      --padding-bottom: 24px;
+  }
+
+  .success-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+  }
+
+  .icon-container {
+      margin-bottom: 24px;
+  }
+
+  .success-icon {
+      width: 64px;
+      height: 64px;
+      background: #98CD4E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+  }
+
+  .success-icon ion-icon {
+      font-size: 32px;
+      color: white;
+  }
+
+  h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 16px;
+  }
+
+  p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #666;
+      margin-bottom: 48px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  .button-container {
+      width: 100%;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+  }
+
+  .back-quiz {
+      --background: #7B462F;
+      --color: white;
+      height: 52px;
+      text-transform: none;
+      --border-radius: 10px;
+      font-weight: 700;
+      --box-shadow: none;
+  }
+
+  .back-home {
+      --background: #F6EBDD;
+      --color: #8B4513;
+      height: 52px;
+      text-transform: none;
+      --border-radius: 10px;
+      font-weight: 700;
+      --box-shadow: none;
+  }

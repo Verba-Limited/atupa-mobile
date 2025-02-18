@@ -50,27 +50,41 @@ const routes: Routes = [
   },
   {
     path: 'levels',
-    loadChildren: () => import('./levels/levels.module').then( m => m.LevelsPageModule)
+    loadChildren: () =>
+      import('./levels/levels.module').then((m) => m.LevelsPageModule),
   },
   {
     path: 'quiz-page',
-    loadChildren: () => import('./quiz-page/quiz-page.module').then( m => m.QuizPagePageModule)
+    loadChildren: () =>
+      import('./quiz-page/quiz-page.module').then((m) => m.QuizPagePageModule),
   },
   {
     path: 'eranko-quiz',
-    loadChildren: () => import('./eranko-quiz/eranko-quiz.module').then( m => m.ErankoQuizPageModule)
+    loadChildren: () =>
+      import('./eranko-quiz/eranko-quiz.module').then(
+        (m) => m.ErankoQuizPageModule
+      ),
   },
   {
     path: 'owe-page',
-    loadChildren: () => import('./owe-page/owe-page.module').then( m => m.OwePagePageModule)
+    loadChildren: () =>
+      import('./owe-page/owe-page.module').then((m) => m.OwePagePageModule),
   },
   {
     path: 'completed-level',
-    loadChildren: () => import('./completed-level/completed-level.module').then( m => m.CompletedLevelPageModule)
+    loadChildren: () =>
+      import('./completed-level/completed-level.module').then(
+        (m) => m.CompletedLevelPageModule
+      ),
   },
   {
     path: 'all-level',
-    loadChildren: () => import('./all-level/all-level.module').then( m => m.AllLevelPageModule)
+    loadChildren: () =>
+      import('./all-level/all-level.module').then((m) => m.AllLevelPageModule),
+  },
+  {
+    path: 'payment-successful',
+    loadChildren: () => import('./payment-successful/payment-successful.module').then( m => m.PaymentSuccessfulPageModule)
   },
 ];
 
