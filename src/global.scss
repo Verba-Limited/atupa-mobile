@@ -79,3 +79,15 @@
 .payment-method-modal ion-content {
     --background: white;
 }
+
+
+ion-content {
+    --keyboard-offset: 0 !important;
+}
+
+ion-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
+}
