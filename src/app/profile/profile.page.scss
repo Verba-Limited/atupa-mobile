@@ -1,15 +1,160 @@
 .profile-content {
     --background: #7B462F;
-
+    position: relative;
 
     .profile-section {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
 
         .profile {
             text-align: center;
 
+        }
+
+        .pro {
+            color: #F6EBDD;
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        .mise {
+            font-weight: 700;
+            font-size: 20px;
+            color: #F6EBDD;
+            margin: 0;
+        }
+
+    }
+
+    .points-section {
+        margin-top: 20px;
+        width: 226px;
+        height: 86px;
+        background: #F8F1E6;
+        border-radius: 12px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        // padding-bottom: 350px;
+    }
+
+    .points-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        // padding: 10px 20px;
+    }
+
+    .points-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #C16F30;
+        margin: 21px;
+        margin-top: 43px;
+    }
+
+    .points-item h2 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .points-value {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+
+    }
+
+    .star {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+    }
+
+    .star-color {
+        background-color: #7B462F;
+        border-radius: 100%;
+        width: 17px;
+        height: 17px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .divider {
+        width: 2px;
+        height: 63px;
+        background: #C16F30;
+    }
+
+    .rank {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin: 12px;
+    }
+
+    .white-section {
+        background: #ffffff;
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        width: 100%;
+        margin-top: 20px;
+        padding: 20px;
+        height: auto; // Ensures white section extends to bottom
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 10px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+
+            &:active {
+                background-color: #f5f5f5;
+            }
+
+            .icon-container {
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 12px;
+
+                ion-icon {
+                    font-size: 24px;
+                    color: #7B462F;
+                }
+            }
+
+            span {
+                flex: 1;
+                font-size: 16px;
+                color: #333333;
+                font-weight: 500;
+            }
+
+            .chevron {
+                color: #999999;
+                font-size: 20px;
+            }
         }
     }
 }
