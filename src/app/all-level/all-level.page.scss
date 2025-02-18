@@ -1,254 +1,258 @@
-.framer {
-    color: #505050;
-    text-align: center;
+ion-content {
+    --background: #fff;
+    .framer {
+        color: #505050;
+        text-align: center;
 
-    .quiz {
-        position: relative;
-        display: inline-block;
+        .quiz {
+            position: relative;
+            display: inline-block;
 
-        .quiz-labels {
-            position: absolute;
-            top: 68%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
+            .quiz-labels {
+                position: absolute;
+                top: 68%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+        }
+
+        .quiz img {
+            width: 182px;
+        }
+
+        .quiz-text {
+            color: #F6EBDD;
+            font-size: 16px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #F6EBDD; // Adjust the color if necessary
+            font-size: 20px; // You can modify the font-size as desired
+            margin: 0;
+            font-weight: 800;
+
+        }
+
+        .quiz-description {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 21.82px;
         }
     }
 
-    .quiz img {
-        width: 182px;
-    }
-
-    .quiz-text {
-        color: #F6EBDD;
-        font-size: 16px;
-        font-weight: 800;
-        margin: 0;
-    }
-
-    .subtitle {
-        color: #F6EBDD; // Adjust the color if necessary
-        font-size: 20px; // You can modify the font-size as desired
-        margin: 0;
-        font-weight: 800;
-
-    }
-
-    .quiz-description {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 21.82px;
-    }
-}
-
-.quiz-wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20%;
-}
-
-// Star icons
-.stars {
-    position: absolute;
-    top: 41px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    z-index: 1;
-}
-
-
-.stars img {
-    width: 177.01px;
-    height: 78px;
-}
-
-.rank {
-    font-weight: 700;
-    font-size: 16px;
-    color: #505050;
-}
-
-.five {
-    color: #C16F30;
-    font-weight: 700;
-    font-size: 20px;
-}
-
-// Quiz result container
-.quiz-result {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background: #f8f0e5;
-    max-width: 272px;
-    // padding: 20px;
-    border-radius: 134px;
-    margin: auto;
-    height: 390px;
-    position: relative;
-    // padding-top: 30px;
-}
-
-// Score circle
-.score-container {
-    display: flex;
-    align-items: center;
-    // margin-top: 20px;
-
-    .progress-circle {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        border: 4px solid #C16F30;
-        border-right-color: #C16F302B;
+    .quiz-wrapper {
+        position: relative;
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20%;
+    }
+
+    // Star icons
+    .stars {
+        position: absolute;
+        top: 41px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        z-index: 1;
+    }
+
+
+    .stars img {
+        width: 177.01px;
+        height: 78px;
+    }
+
+    .rank {
+        font-weight: 700;
+        font-size: 16px;
+        color: #505050;
+    }
+
+    .five {
+        color: #C16F30;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    // Quiz result container
+    .quiz-result {
+        display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        transform: rotate(-45deg);
-
-        .progress-text {
-            transform: rotate(45deg);
-            color: #2E2E2E;
-            font-size: 14px;
-            font-weight: 500;
-        }
+        text-align: center;
+        background: #f8f0e5;
+        max-width: 272px;
+        // padding: 20px;
+        border-radius: 134px;
+        margin: auto;
+        height: 390px;
+        position: relative;
+        // padding-top: 30px;
     }
-}
 
-.score-circle {
-    width: 52px;
-    height: 50px;
-    background: #d87f3c;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-}
-
-.score-text {
-    font-size: 14px;
-    margin-top: 5px;
-    color: #505050;
-    font-weight: 700;
-}
-
-// Congratulations text
-.congratulations {
-    font-size: 16px;
-    font-weight: 700;
-    margin-top: 16px;
-    color: #505050;
-    line-height: 21.82px;
-}
-
-// Reward section
-.reward-title {
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.reward-box {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: white;
-    padding: 5px 15px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-}
-
-.reward-box img {
-    width: 20px;
-}
-
-.star {
-    width: 128px;
-    height: 48px;
-    background-color: white;
-    border-radius: 8px;
-
-    .star-level {
+    // Score circle
+    .score-container {
         display: flex;
-        gap: 10px;
         align-items: center;
-        margin-left: 4px;
+        // margin-top: 20px;
 
-        .star-color {
-            background-color: #7B462F;
-            border-radius: 100%;
-            width: 17px;
-            height: 17px;
+        .progress-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 4px solid #C16F30;
+            border-right-color: #C16F302B;
             display: flex;
             align-items: center;
             justify-content: center;
+            transform: rotate(-45deg);
+
+            .progress-text {
+                transform: rotate(45deg);
+                color: #2E2E2E;
+                font-size: 14px;
+                font-weight: 500;
+            }
         }
     }
-}
 
-.share-container {
-    display: flex;
-    justify-content: space-around;
-
-    .share {
+    .score-circle {
+        width: 52px;
+        height: 50px;
+        background: #d87f3c;
+        border-radius: 50%;
         display: flex;
-        gap: 2px;
+        justify-content: center;
         align-items: center;
+        color: white;
+        font-weight: bold;
+    }
 
-        img {
-            width: "12.25px";
-            height: "14px";
-        }
+    .score-text {
+        font-size: 14px;
+        margin-top: 5px;
+        color: #505050;
+        font-weight: 700;
+    }
 
-        p {
-            color: #505050;
-            font-size: 14px;
-            font-weight: 700;
+    // Congratulations text
+    .congratulations {
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 16px;
+        color: #505050;
+        line-height: 21.82px;
+    }
+
+    // Reward section
+    .reward-title {
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .reward-box {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: white;
+        padding: 5px 15px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+    }
+
+    .reward-box img {
+        width: 20px;
+    }
+
+    .star {
+        width: 128px;
+        height: 48px;
+        background-color: white;
+        border-radius: 8px;
+
+        .star-level {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-left: 4px;
+
+            .star-color {
+                background-color: #7B462F;
+                border-radius: 100%;
+                width: 17px;
+                height: 17px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
     }
 
+    .share-container {
+        display: flex;
+        justify-content: space-around;
+
+        .share {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+
+            img {
+                width: "12.25px";
+                height: "14px";
+            }
+
+            p {
+                color: #505050;
+                font-size: 14px;
+                font-weight: 700;
+            }
+        }
 
 
-}
+
+    }
 
 
-.button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 40px;
-    padding-bottom: 20px;
-}
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 40px;
+        padding-bottom: 20px;
+    }
 
-.create-account {
-    --background: #7B462F;
-    --color: white;
-    height: 52px;
-    text-transform: none;
-    --border-radius: 10px;
-    font-weight: 700;
-    --box-shadow: none;
-    width: 343px;
-}
+    .create-account {
+        --background: #7B462F;
+        --color: white;
+        height: 52px;
+        text-transform: none;
+        --border-radius: 10px;
+        font-weight: 700;
+        --box-shadow: none;
+        width: 343px;
+    }
 
-.login {
-    --background: #F6EBDD;
-    --color: #8B4513;
-    height: 52px;
-    text-transform: none;
-    --border-radius: 10px;
-    font-weight: 700;
-    --box-shadow: none;
-    width: 343px;
+    .login {
+        --background: #F6EBDD;
+        --color: #8B4513;
+        height: 52px;
+        text-transform: none;
+        --border-radius: 10px;
+        font-weight: 700;
+        --box-shadow: none;
+        width: 343px;
+    }
+
 }
