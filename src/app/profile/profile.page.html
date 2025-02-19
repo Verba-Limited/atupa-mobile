@@ -19,7 +19,7 @@
               <div class="star-color">
                 <img src="../../assets/icon/Vector.svg" alt="" />
               </div>
-              <p>1000</p>
+              <p style="font-size: 14px">1000</p>
             </div>
           </div>
         </div>
@@ -35,35 +35,16 @@
 
     <div class="white-section">
       <div class="menu-items">
-        <div class="menu-item">
+        <div
+          class="menu-item"
+          *ngFor="let item of menuItems"
+          [routerLink]="item.link"
+        >
           <div class="icon-container">
-            <ion-icon src="../../assets/icon/chart-simple 1.svg"></ion-icon>
+            <ion-icon [src]="item.icon"></ion-icon>
           </div>
-          <span>Leaderboard</span>
-          <ion-icon name="chevron-forward-outline" class="chevron"></ion-icon>
-        </div>
+          <span>{{ item.title }}</span>
 
-        <div class="menu-item">
-          <div class="icon-container">
-            <ion-icon src="../../assets/icon/trophy 1.svg"></ion-icon>
-          </div>
-          <span>Achievement</span>
-          <ion-icon name="chevron-forward-outline" class="chevron"></ion-icon>
-        </div>
-
-        <div class="menu-item">
-          <div class="icon-container">
-            <ion-icon src="../../assets/icon/shop 1.svg"></ion-icon>
-          </div>
-          <span>Store</span>
-          <ion-icon name="chevron-forward-outline" class="chevron"></ion-icon>
-        </div>
-
-        <div class="menu-item">
-          <div class="icon-container">
-            <ion-icon src="../../assets/icon/gear 1.svg"></ion-icon>
-          </div>
-          <span>Settings</span>
           <ion-icon name="chevron-forward-outline" class="chevron"></ion-icon>
         </div>
       </div>
