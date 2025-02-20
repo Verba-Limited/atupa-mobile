@@ -1,13 +1,62 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>leaderboard</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="levels-container">
+    <!-- Header -->
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Leaderboard</h2>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">leaderboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="leaderboard-container">
+      <!-- Time Filter -->
+      <ion-segment [(ngModel)]="currentFilter" mode="md" class="time-filter">
+        <ion-segment-button *ngFor="let filter of timeFilters" [value]="filter">
+          <ion-label>{{filter}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- Top 3 Winners -->
+      <!-- <div class="top-winners">
+          <div class="winner second-place" *ngIf="topThree[1]">
+            <div class="position">2</div>
+            <img [src]="topThree[1].avatar" [alt]="topThree[1].name" class="avatar"/>
+            <div class="name">{{topThree[1].name}}</div>
+            <div class="points">{{topThree[1].points}} Points</div>
+          </div>
+
+          <div class="winner first-place" *ngIf="topThree[0]">
+            <div class="crown">👑</div>
+            <div class="position">1</div>
+            <img [src]="topThree[0].avatar" [alt]="topThree[0].name" class="avatar"/>
+            <div class="name">{{topThree[0].name}}</div>
+            <div class="points">{{topThree[0].points}} Points</div>
+          </div>
+
+          <div class="winner third-place" *ngIf="topThree[2]">
+            <div class="position">3</div>
+            <img [src]="topThree[2].avatar" [alt]="topThree[2].name" class="avatar"/>
+            <div class="name">{{topThree[2].name}}</div>
+            <div class="points">{{topThree[2].points}} Points</div>
+          </div>
+        </div> -->
+
+      <!-- Rest of Leaderboard -->
+      <!-- <div class="leaderboard-list">
+          <div 
+            *ngFor="let user of otherUsers" 
+            class="leaderboard-item"
+            [class.current-user]="user.isCurrentUser">
+            <img [src]="user.avatar" [alt]="user.name" class="avatar"/>
+            <div class="user-info">
+              <div class="name">{{user.name}}</div>
+              <div class="points">{{user.points}} Points</div>
+            </div>
+            <div class="position">{{user.position}}</div>
+          </div>
+        </div> -->
+    </div>
+  </div>
 </ion-content>
