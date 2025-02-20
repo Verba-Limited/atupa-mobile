@@ -9,6 +9,7 @@
     <div class="framer">
       <h2>Leaderboard</h2>
     </div>
+    <br />
 
     <div class="leaderboard-container">
       <!-- Time Filter -->
@@ -19,29 +20,43 @@
       </ion-segment>
 
       <!-- Top 3 Winners -->
-      <!-- <div class="top-winners">
-          <div class="winner second-place" *ngIf="topThree[1]">
-            <div class="position">2</div>
-            <img [src]="topThree[1].avatar" [alt]="topThree[1].name" class="avatar"/>
-            <div class="name">{{topThree[1].name}}</div>
-            <div class="points">{{topThree[1].points}} Points</div>
-          </div>
+      <div class="top-winners">
+        <div class="winner second-place" *ngIf="topThree[1]">
+          <!-- <div class="position">2</div> -->
+          <img
+            [src]="topThree[1].avatar"
+            [alt]="topThree[1].name"
+            class="avatar"
+          />
+          <div class="name">{{topThree[1].name}}</div>
+          <div class="points">{{topThree[1].points}} Points</div>
+        </div>
 
-          <div class="winner first-place" *ngIf="topThree[0]">
-            <div class="crown">👑</div>
-            <div class="position">1</div>
-            <img [src]="topThree[0].avatar" [alt]="topThree[0].name" class="avatar"/>
-            <div class="name">{{topThree[0].name}}</div>
-            <div class="points">{{topThree[0].points}} Points</div>
+        <div class="winner first-place" *ngIf="topThree[0]">
+          <div class="crown">
+            <img src="../../assets/icon/crown 1.svg" alt="" />
           </div>
+          <img
+            [src]="topThree[0].avatar"
+            [alt]="topThree[0].name"
+            class="avatar"
+          />
+          <div class="name">{{topThree[0].name}}</div>
+          <div class="points">{{topThree[0].points}} Points</div>
+        </div>
 
-          <div class="winner third-place" *ngIf="topThree[2]">
-            <div class="position">3</div>
-            <img [src]="topThree[2].avatar" [alt]="topThree[2].name" class="avatar"/>
+        <div class="winner" *ngIf="topThree[2]">
+          <img
+            [src]="topThree[2].avatar"
+            [alt]="topThree[2].name"
+            class="avatar"
+          />
+          <div class="third-place winner">
             <div class="name">{{topThree[2].name}}</div>
             <div class="points">{{topThree[2].points}} Points</div>
           </div>
-        </div> -->
+        </div>
+      </div>
 
       <!-- Rest of Leaderboard -->
       <!-- <div class="leaderboard-list">

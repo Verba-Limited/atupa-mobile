@@ -34,11 +34,11 @@
         ion-segment-button {
             --background: transparent;
             --background-checked: #7B462F;
-            --color: #7B462F;
+            --color: #2E2E2E;
             --color-checked: #ffffff;
             --indicator-color: transparent;
             min-height: 35px;
-            font-size: 14px;
+            font-size: 16px;
             text-transform: none;
             border-radius: 8px;
             margin: 0;
@@ -121,6 +121,7 @@
             padding: 12px;
             margin-bottom: 12px;
             background: white;
+
 
             .avatar {
                 width: 48px;
