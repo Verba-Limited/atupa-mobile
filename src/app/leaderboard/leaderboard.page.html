@@ -19,6 +19,8 @@
         </ion-segment-button>
       </ion-segment>
 
+      <br />
+
       <!-- Top 3 Winners -->
       <div class="top-winners">
         <div class="winner" *ngIf="topThree[1]">
@@ -45,6 +47,8 @@
             class="avatar"
           />
           <div class="winner first-place">
+            <div class="position">1</div>
+
             <div class="name">{{topThree[0].name}}</div>
             <div class="points">{{topThree[0].points}} Points</div>
           </div>
@@ -57,26 +61,31 @@
             class="avatar"
           />
           <div class="third-place winner">
+            <div class="position">3</div>
+
             <div class="name">{{topThree[2].name}}</div>
             <div class="points">{{topThree[2].points}} Points</div>
           </div>
         </div>
       </div>
 
+      <br />
+
       <!-- Rest of Leaderboard -->
-      <!-- <div class="leaderboard-list">
-          <div 
-            *ngFor="let user of otherUsers" 
-            class="leaderboard-item"
-            [class.current-user]="user.isCurrentUser">
-            <img [src]="user.avatar" [alt]="user.name" class="avatar"/>
-            <div class="user-info">
-              <div class="name">{{user.name}}</div>
-              <div class="points">{{user.points}} Points</div>
-            </div>
-            <div class="position">{{user.position}}</div>
+      <div class="leaderboard-list">
+        <div
+          *ngFor="let user of otherUsers"
+          class="leaderboard-item"
+          [class.current-user]="user.isCurrentUser"
+        >
+          <img [src]="user.avatar" [alt]="user.name" class="avatar" />
+          <div class="user-info">
+            <div class="name">{{user.name}}</div>
+            <div class="points">{{user.points}} Points</div>
           </div>
-        </div> -->
+          <div class="position-num">{{user.position}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

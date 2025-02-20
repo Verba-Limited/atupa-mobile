@@ -46,7 +46,7 @@ export class LeaderboardPage {
     },
     {
       id: 3,
-      name: 'You',
+      name: 'Kunle',
       points: 1300,
       avatar: '../../assets/icon/Group 597.svg',
       position: 3,
@@ -59,17 +59,37 @@ export class LeaderboardPage {
       id: 4,
       name: 'John',
       points: 1600,
-      avatar: '../../assets/avatars/avatar4.jpg',
+      avatar: '../../assets/icon/Group 596.svg',
       position: 4,
     },
     {
       id: 5,
       name: 'John',
       points: 1600,
-      avatar: '../../assets/avatars/avatar5.jpg',
+      avatar: '../../assets/icon/Group 596.svg',
       position: 5,
     },
-    // Add more users as needed
+    {
+      id: 5,
+      name: 'John',
+      points: 1600,
+      avatar: '../../assets/icon/Group 596.svg',
+      position: 5,
+    },
+    {
+      id: 5,
+      name: 'John',
+      points: 1600,
+      avatar: '../../assets/icon/Group 596.svg',
+      position: 5,
+    },
+    {
+      id: 5,
+      name: 'John',
+      points: 1600,
+      avatar: '../../assets/icon/Group 596.svg',
+      position: 5,
+    },
   ];
 
   setFilter(filter: string) {
