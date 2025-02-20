@@ -21,18 +21,21 @@
 
       <!-- Top 3 Winners -->
       <div class="top-winners">
-        <div class="winner second-place" *ngIf="topThree[1]">
-          <!-- <div class="position">2</div> -->
+        <div class="winner" *ngIf="topThree[1]">
           <img
             [src]="topThree[1].avatar"
             [alt]="topThree[1].name"
             class="avatar"
           />
-          <div class="name">{{topThree[1].name}}</div>
-          <div class="points">{{topThree[1].points}} Points</div>
+          <div class="winner second-place">
+            <div class="position">2</div>
+
+            <div class="name">{{topThree[1].name}}</div>
+            <div class="points">{{topThree[1].points}} Points</div>
+          </div>
         </div>
 
-        <div class="winner first-place" *ngIf="topThree[0]">
+        <div class="winner" *ngIf="topThree[0]">
           <div class="crown">
             <img src="../../assets/icon/crown 1.svg" alt="" />
           </div>
@@ -41,8 +44,10 @@
             [alt]="topThree[0].name"
             class="avatar"
           />
-          <div class="name">{{topThree[0].name}}</div>
-          <div class="points">{{topThree[0].points}} Points</div>
+          <div class="winner first-place">
+            <div class="name">{{topThree[0].name}}</div>
+            <div class="points">{{topThree[0].points}} Points</div>
+          </div>
         </div>
 
         <div class="winner" *ngIf="topThree[2]">
