@@ -32,16 +32,16 @@
         margin-bottom: 32px;
 
         ion-segment-button {
-            --background: transparent;
+            -background: transparent;
             --background-checked: #7B462F;
             --color: #2E2E2E;
             --color-checked: #ffffff;
             --indicator-color: transparent;
-            min-height: 35px;
+            min-height: 40px;
             font-size: 16px;
             text-transform: none;
             border-radius: 8px;
-            margin: 0;
+            margin: -4px;
 
             &::part(indicator) {
                 display: none;
