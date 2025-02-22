@@ -1,0 +1,53 @@
+.container {
+    padding: 14px;
+    width: 100%;
+
+    .back-arrow {
+        position: absolute;
+        top: 61px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+
+    .framer {
+        color: #2E2E2E;
+        text-align: center;
+
+
+        h2 {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+    }
+
+    ion-segment.time-filter {
+        background: #F8F1E6;
+        border-radius: 12px;
+        padding: 11px;
+        margin-bottom: 32px;
+        display: flex;
+        white-space: nowrap;
+
+        ion-segment-button {
+            -background: transparent;
+            --background-checked: #7B462F;
+            --color: #2E2E2E;
+            --color-checked: #ffffff;
+            --indicator-color: transparent;
+            min-height: 40px;
+            font-size: 16px;
+            text-transform: none;
+            border-radius: 8px;
+            margin: -4px;
+            flex: 0 0 auto;
+
+            &::part(indicator) {
+                display: none;
+            }
+        }
+    }
+}

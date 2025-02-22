@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-store',
   templateUrl: './store.page.html',
   styleUrls: ['./store.page.scss'],
-  imports: [IonicModule, RouterModule, CommonModule],
+  imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
-export class StorePage implements OnInit {
-  constructor() {}
+export class StorePage {
+  constructor(private navCtrl: NavController) {}
 
-  ngOnInit() {}
+  timeFilters = ['Ekele', 'Obi', 'Eyo Owo', 'Ami'];
+  currentFilter = 'Ekele';
+
+  navigateBack() {
+    this.navCtrl.back();
+  }
 }

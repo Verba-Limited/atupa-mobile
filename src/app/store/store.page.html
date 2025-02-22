@@ -1,13 +1,31 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>store</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div>
+    <img style="width: 100%" src="../../assets/icon/Group 501.svg" alt="" />
+  </div>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Store</h2>
+    </div>
+    <br />
+    <!-- <ion-segment [(ngModel)]="currentFilter" mode="md" class="time-filter">
+      <ion-segment-button *ngFor="let filter of timeFilters" [value]="filter">
+        <ion-label>{{filter}}</ion-label>
+      </ion-segment-button>
+    </ion-segment> -->
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">store</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Buy section -->
+
+    <!-- <div class="shop-content">
+      <p class="paragra">Available Eleke: <span>0</span></p>
+      <p>
+        Buy eleke to have options to remove <br />
+        two incorrect answer
+      </p>
+    </div> -->
+  </div>
 </ion-content>
