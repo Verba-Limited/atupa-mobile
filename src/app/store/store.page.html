@@ -12,20 +12,63 @@
       <h2>Store</h2>
     </div>
     <br />
-    <!-- <ion-segment [(ngModel)]="currentFilter" mode="md" class="time-filter">
+    <ion-segment [(ngModel)]="currentFilter" mode="md" class="time-filter">
       <ion-segment-button *ngFor="let filter of timeFilters" [value]="filter">
         <ion-label>{{filter}}</ion-label>
       </ion-segment-button>
-    </ion-segment> -->
+    </ion-segment>
 
     <!-- Buy section -->
 
-    <!-- <div class="shop-content">
+    <div class="shop-content">
       <p class="paragra">Available Eleke: <span>0</span></p>
-      <p>
+      <p class="buy">
         Buy eleke to have options to remove <br />
         two incorrect answer
       </p>
-    </div> -->
+    </div>
+    <br />
+
+    <div class="board-container">
+      <div class="row" *ngFor="let item of boardItems">
+        <div class="image-container">
+          <img
+            class="background-ibundlePackmage"
+            src="../../assets/icon/Rectangle 73.svg"
+            alt="Background"
+          />
+          <div class="content">
+            <img class="icon" src="../../assets/icon/dots.svg" alt="Icon" />
+            <p class="title">Ekele</p>
+          </div>
+          <div class="badge" *ngIf="item.hasVideo">
+            <img src="../../assets/icon/video 1.svg" alt="video-icon" />
+          </div>
+        </div>
+        <p class="amount">{{ item.amount }}</p>
+        <button class="buy-btn">{{ item.buttonText }}</button>
+      </div>
+    </div>
+
+    <div style="padding: 10px">
+      <div class="bundle-card">
+        <!-- Top Header / Banner -->
+        <div class="bundle-header">
+          <p>Bundle Pack</p>
+        </div>
+
+        <!-- Items List -->
+        <div class="bundle-items">
+          <div class="bundle-item" *ngFor="let item of bundlePack">
+            <img [src]="item.icon" [alt]="item.title" />
+            <span>{{ item.title }}</span>
+            <span>x5</span>
+          </div>
+        </div>
+
+        <!-- Price/Buy Button -->
+        <button class="bundle-buy">₦20000 Buy</button>
+      </div>
+    </div>
   </div>
 </ion-content>
