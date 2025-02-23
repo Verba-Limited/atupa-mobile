@@ -4,42 +4,73 @@
       <h1 class="header">Lesson</h1>
     </div>
 
-    <!-- <div class="scroll-container">
-      <div class="lesson-wrap">
-        <div class="proverb-card">
-          <div class="proverb-wrapper">
-            <h2 class="title proverb-text">Owe</h2>
-            <div class="proverb-image">
-              <img src="../../assets/icon/Rectangle 24.svg" alt="" />
-            </div>
+    <div class="container">
+      <div class="sub-header">
+        <p class="title">Popular Lessons</p>
+        <p class="view-title">View all</p>
+      </div>
 
-            <div class="proverb-content">
-              <p class="know-small">
-                Know about different <br />
-                proverb in yoruba and <br />
-                when to use it
-              </p>
-            </div>
-          </div>
-        </div>
+      <div class="scroll-container">
+        <div class="lesson-wrap">
+          <div class="proverb-card">
+            <div
+              class="proverb-wrapper"
+              *ngFor="let item of lessonItem"
+              [style.background-color]="item.bgColor"
+            >
+              <div class="proverb-image">
+                <img [src]="item.image" alt="" />
+              </div>
 
-        <div class="proverb-card">
-          <div class="proverb-wrapper ilu-wrapper">
-            <h2 class="title proverb-text">Ilu</h2>
-            <div class="proverb-image">
-              <img src="../../assets/icon/ilu-image.svg" alt="" />
-            </div>
+              <div class="proverb-content">
+                <h2 class="owe">{{item.name}}</h2>
 
-            <div class="proverb-content">
-              <p class="ilu-small">
-                Learn about different <br />
-                cities in yoruba and <br />
-                how to pronounce it
-              </p>
+                <p class="know-small">
+                  {{item.hour}} hours
+                  <span
+                    ><img src="../../assets/icon/Ellipse 37.svg" alt=""
+                  /></span>
+                  16 sessions
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div> -->
+
+      <div>
+        <div class="sub-header">
+          <p class="title">Category</p>
+          <p class="view-title">View all</p>
+        </div>
+           <div class="scroll-container">
+        <div class="lesson-wrap">
+          <div class="proverb">
+            <div
+              class="proverb-wrap"
+              *ngFor="let item of catgoryItem"
+              [style.background-color]="item.bgColor"
+            >
+              <div class="proverb-img">
+                <img [src]="item.image" alt="" />
+              </div>
+
+              <div class="proverb-content">
+                <h2 class="owe">{{item.name}}</h2>
+
+                <p class="know-smalll">
+                  {{item.hour}} hours
+                  <span
+                    ><img src="../../assets/icon/Ellipse 37.svg" alt=""
+                  /></span>
+                  16 sessions
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
   </div>
 </ion-content>
