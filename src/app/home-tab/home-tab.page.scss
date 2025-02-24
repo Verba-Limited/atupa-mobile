@@ -82,9 +82,9 @@
     overflow-x: auto;
     gap: 16px;
     margin-top: 15px;
-    padding-bottom: 16px; // Space for the scrollbar
-    scroll-behavior: smooth; // Smooth scrolling effect
-    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+    padding-bottom: 16px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 
     /* Hide scrollbar for Chrome, Safari and Opera */
     &::-webkit-scrollbar {
@@ -190,12 +190,14 @@
     position: relative;
     float: left;
     padding-right: 10px;
+
     .proverb-wrapper {
         position: relative;
         width: 166px;
         background: #E19F65;
         padding-bottom: 5px;
         border-radius: 20px;
+
         .proverb-text {
             font-size: 1.2rem;
             text-align: center;
@@ -203,20 +205,24 @@
             padding-top: 10px;
             width: 100%;
         }
+
         .proverb-image {
             width: 166px;
             border-radius: 20px;
         }
     }
+
     .know-small {
         padding-left: 10px;
         font-size: 12px;
     }
+
     .ilu-small {
         margin-top: 5px;
         padding-left: 10px;
         font-size: 12px;
     }
+
     .ilu-wrapper {
         background: #C5BE66;
     }
