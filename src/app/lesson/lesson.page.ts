@@ -39,8 +39,8 @@ export class LessonPage {
       bgColor: '#C5BE66',
     },
     {
-      image: '../../assets/icon/Rectangle 52.svg',
-      name: 'Alufa',
+      image: '../../assets/icon/alufabeti.svg',
+      name: 'Alufabeti',
       hour: 6,
       bgColor: '#F2E1CB',
     },

@@ -258,6 +258,24 @@ ion-content {
         width: 24px;
     }
 
+    .timer2 {
+        width: 40px;
+        display: flex;
+        position: absolute;
+        bottom: -5px;
+        left: 20px;
+        z-index: 10;
+        img {
+            width: 18px;
+            margin-right: 5px;
+        }
+        p {
+            color: #C23327;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    }
+
     .options-container {
         display: grid;
         grid-template-columns: 1fr 1fr;

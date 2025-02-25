@@ -30,11 +30,11 @@
         <ion-icon name="mic-circle-outline"></ion-icon>
       </div>
 
-      <div class="timer">
+      <!-- <div class="timer">
         <img src="../../assets/icon/stopwatch 1.svg" alt="" />
         <p color="danger" *ngIf="timer <= 5">{{ timer }}s</p>
         <p *ngIf="timer > 5">{{ timer }}s</p>
-      </div>
+      </div> -->
     </div>
     <div *ngIf="currentQuestion">
       <div class="quiz-container">
@@ -54,6 +54,11 @@
                 alt=""/>
             </div>
             <div>
+              <div class="timer2">
+                <img src="../../assets/icon/stopwatch 1.svg" alt="" />
+                <p color="danger" *ngIf="timer <= 5">{{ timer }}s</p>
+                <p *ngIf="timer > 5">{{ timer }}s</p>
+              </div>
               <img class="second" src="../../assets/icon/Group 30.svg" alt="" />
             </div>
           </div>

@@ -16,8 +16,7 @@
             <div
               class="proverb-wrapper"
               *ngFor="let item of lessonItem"
-              [style.background-color]="item.bgColor"
-            >
+              [style.background-color]="item.bgColor">
               <div class="proverb-image">
                 <img [src]="item.image" alt="" />
               </div>
@@ -27,9 +26,7 @@
 
                 <p class="know-small">
                   {{item.hour}} hours
-                  <span
-                    ><img src="../../assets/icon/Ellipse 37.svg" alt=""
-                  /></span>
+                  <span><img src="../../assets/icon/Ellipse 37.svg" alt=""/></span>
                   16 sessions
                 </p>
               </div>
