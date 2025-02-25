@@ -16,7 +16,8 @@
             <div
               class="proverb-wrapper"
               *ngFor="let item of lessonItem"
-              [style.background-color]="item.bgColor">
+              [style.background-color]="item.bgColor"
+            >
               <div class="proverb-image">
                 <img [src]="item.image" alt="" />
               </div>
@@ -25,37 +26,6 @@
                 <h2 class="owe">{{item.name}}</h2>
 
                 <p class="know-small">
-                  {{item.hour}} hours
-                  <span><img src="../../assets/icon/Ellipse 37.svg" alt=""/></span>
-                  16 sessions
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div>
-        <div class="sub-header">
-          <p class="title">Category</p>
-          <p class="view-title">View all</p>
-        </div>
-           <div class="scroll-container">
-        <div class="lesson-wrap">
-          <div class="proverb">
-            <div
-              class="proverb-wrap"
-              *ngFor="let item of catgoryItem"
-              [style.background-color]="item.bgColor"
-            >
-              <div class="proverb-img">
-                <img [src]="item.image" alt="" />
-              </div>
-
-              <div class="proverb-content">
-                <h2 class="owe">{{item.name}}</h2>
-
-                <p class="know-smalll">
                   {{item.hour}} hours
                   <span
                     ><img src="../../assets/icon/Ellipse 37.svg" alt=""
@@ -67,7 +37,86 @@
           </div>
         </div>
       </div>
-      </div> -->
+
+      <div>
+        <div class="sub-header">
+          <p class="title">Category</p>
+          <p class="view-title">View all</p>
+        </div>
+        <div class="scroll-container">
+          <div class="lesson-wrap">
+            <div class="proverb-card">
+              <div
+                class="proverb-wrapper"
+                *ngFor="let item of catgoryItem"
+                [style.background-color]="item.bgColor"
+              >
+                <div class="proverb-image">
+                  <img [src]="item.image" alt="" />
+                </div>
+
+                <div class="proverb-content">
+                  <h2 class="owe">{{item.name}}</h2>
+
+                  <p class="know-small">
+                    {{item.hour}} hours
+                    <span
+                      ><img src="../../assets/icon/Ellipse 37.svg" alt=""
+                    /></span>
+                    16 sessions
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <div class="sub-header">
+          <p class="title">My Lessons</p>
+          <p class="view-title">View all</p>
+        </div>
+        <div class="latest">
+          <div class="quiz-container">
+            <!-- Left: Image -->
+            <div class="icon">
+              <img src="../../assets/icon/Group 627.svg" alt="Eranko icon" />
+            </div>
+
+            <!-- Middle: Title and Button -->
+            <div class="quiz-info">
+              <h3 class="title">Girama - Session 7</h3>
+              <button class="continue-btn">Continue</button>
+            </div>
+
+            <!-- Right: Progress Circle -->
+            <div class="progress-circle">
+              <span class="progress-text">5/10</span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="latest">
+          <div class="quiz-container">
+            <!-- Left: Image -->
+            <div class="icon2">
+              <img src="../../assets/icon/Group 624.svg" alt="Eranko icon" />
+            </div>
+
+            <!-- Middle: Title and Button -->
+            <div class="quiz-info">
+              <h3 class="title">Alufabeti - Session 7</h3>
+              <button class="continue-btn">Continue</button>
+            </div>
+
+            <!-- Right: Progress Circle -->
+            <div class="progress-circle2">
+              <span class="progress-text">6/10</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

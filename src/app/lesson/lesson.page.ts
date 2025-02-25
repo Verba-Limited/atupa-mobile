@@ -48,22 +48,22 @@ export class LessonPage {
 
   catgoryItem: categoryTypes[] = [
     {
-      image: '../../assets/icon/abc.svg',
-      name: 'Owe',
-      hour: 6,
-      bgColor: '#E19F65',
-    },
-    {
-      image: '../../assets/images/cat.jpeg',
-      name: 'Ilu',
-      hour: 8,
-      bgColor: '#C5BE66',
-    },
-    {
-      image: '../../assets/icon/Rectangle 52.svg',
-      name: 'Alufa',
+      image: '../../assets/icon/Rectangle 24.svg',
+      name: 'Alufabeti',
       hour: 6,
       bgColor: '#F2E1CB',
+    },
+    {
+      image: '../../assets/icon/ilu-image.svg',
+      name: 'Girama',
+      hour: 8,
+      bgColor: '#D2CFB0',
+    },
+    {
+      image: '../../assets/icon/alufabeti.svg',
+      name: 'Alufa',
+      hour: 6,
+      bgColor: '#FBF4E4',
     },
   ];
 }
