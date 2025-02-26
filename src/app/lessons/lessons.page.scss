@@ -100,3 +100,65 @@
     line-height: 24px;
     width: 343px;
 }
+
+.setion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inti {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2E2E2E;
+}
+
+.left-block {
+    display: flex;
+    gap: 10px;
+    /* Adjust gap to your liking */
+    align-items: center;
+}
+
+.keys {
+    width: 34px;
+    height: 34px;
+    padding: 4px;
+    border-radius: 50%;
+    border: 2px solid #DFE0E0;
+    text-align: center;
+    line-height: 26px;
+    /* to vertically center the text */
+    font-size: 16px;
+    color: #2E2E2E;
+}
+
+/* "View" button/pill */
+.view-btn {
+    display: inline-block;
+    background-color: #FAF3EB;
+    /* Light peach tone */
+    color: #7A5230;
+    /* Darker brown text */
+    padding: 8px 16px;
+    border-radius: 8px;
+    /* Rounded corners for pill shape */
+    font-weight: 600;
+    cursor: pointer;
+    /* If you want no border, you can do: border: none; */
+}
+
+.view-btn:hover {
+    background-color: #F5E9DF;
+    /* Slightly darker on hover */
+}
+
+.create-account {
+    --background: #7B462F;
+    --color: white;
+    height: 52px;
+    text-transform: none;
+    --border-radius: 10px;
+    font-weight: 700;
+    --box-shadow: none;
+}

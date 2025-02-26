@@ -3,6 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
+interface sectioType {
+  id: number;
+  icon: string | number;
+  title: string;
+  durations: number;
+  view: string;
+}
 
 @Component({
   selector: 'app-lessons',
@@ -16,4 +23,29 @@ export class LessonsPage {
   navigateBack() {
     this.navCtrl.back();
   }
+
+  sectionItem: sectioType[] = [
+    {
+      id: 1,
+      icon: 1,
+      durations: 1,
+      title: 'Basic of owe',
+      view: 'view',
+    },
+
+    {
+      id: 2,
+      icon: 2,
+      durations: 2,
+      title: 'Foundational of owe',
+      view: 'view',
+    },
+    {
+      id: 3,
+      icon: 3,
+      durations: 3,
+      title: 'Basic of owe',
+      view: 'view',
+    },
+  ];
 }
