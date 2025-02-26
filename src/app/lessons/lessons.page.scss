@@ -136,21 +136,27 @@
 /* "View" button/pill */
 .view-btn {
     display: inline-block;
-    background-color: #FAF3EB;
-    /* Light peach tone */
-    color: #7A5230;
-    /* Darker brown text */
+    background-color: #fae9dd;
+    /* Light peach */
+    color: #7a5230;
+    /* Brown text */
     padding: 8px 16px;
     border-radius: 8px;
-    /* Rounded corners for pill shape */
     font-weight: 600;
     cursor: pointer;
-    /* If you want no border, you can do: border: none; */
 }
 
-.view-btn:hover {
-    background-color: #F5E9DF;
-    /* Slightly darker on hover */
+.locked-btn {
+    display: inline-block;
+    background-color: #e0e0e0;
+    /* Gray background */
+    color: #666;
+    /* Darker gray text */
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: not-allowed;
+    /* "Disabled" cursor */
 }
 
 .create-account {

@@ -60,15 +60,21 @@
       <div class="setion" *ngFor="let item of sectionItem">
         <!-- Left side (Number + Text) -->
         <div class="left-block">
-          <p class="keys">{{item.icon}}</p>
+          <p class="keys">
+            <ng-container *ngIf="item.locked; else showNumber">
+              <ion-icon src="../../assets/icon/lock.svg"></ion-icon>
+            </ng-container>
+            <ng-template #showNumber> {{ item.icon }} </ng-template>
+          </p>
           <div>
             <h1 class="inti">{{item.title}}</h1>
             <p class="duration">1 hrs 30 mins</p>
           </div>
         </div>
 
-        <!-- Right side (View button) -->
-        <span class="view-btn">{{item.view}}</span>
+        <span [ngClass]="item.locked ? 'locked-btn' : 'view-btn'">
+          {{ item.locked ? 'view' : item.view }}
+        </span>
       </div>
 
       <ion-button expand="block" class="create-account"> Enroll </ion-button>

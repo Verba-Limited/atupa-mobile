@@ -9,6 +9,7 @@ interface sectioType {
   title: string;
   durations: number;
   view: string;
+  locked?: boolean;
 }
 
 @Component({
@@ -23,7 +24,6 @@ export class LessonsPage {
   navigateBack() {
     this.navCtrl.back();
   }
-
   sectionItem: sectioType[] = [
     {
       id: 1,
@@ -31,14 +31,15 @@ export class LessonsPage {
       durations: 1,
       title: 'Basic of owe',
       view: 'view',
+      locked: false, // <-- Unlocked
     },
-
     {
       id: 2,
       icon: 2,
       durations: 2,
       title: 'Foundational of owe',
       view: 'view',
+      locked: true, // <-- Locked
     },
     {
       id: 3,
@@ -46,6 +47,7 @@ export class LessonsPage {
       durations: 3,
       title: 'Basic of owe',
       view: 'view',
+      locked: true, // <-- Locked
     },
   ];
 }
