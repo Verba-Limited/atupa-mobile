@@ -1,5 +1,7 @@
+import { LessonsPage } from './../lessons/lessons.page';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 interface lessonTypes {
@@ -23,7 +25,7 @@ interface categoryTypes {
   imports: [IonicModule, CommonModule],
 })
 export class LessonPage {
-  constructor() {}
+  constructor(private router: Router) {}
 
   lessonItem: lessonTypes[] = [
     {
@@ -66,4 +68,8 @@ export class LessonPage {
       bgColor: '#FBF4E4',
     },
   ];
+
+  LessonsPage() {
+    this.router.navigate(['/lessons']);
+  }
 }
