@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
-interface sectioType {
+interface sectionType {
   id: number;
   icon: string | number;
   title: string;
@@ -19,12 +19,12 @@ interface sectioType {
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
 export class LessonsPage {
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController, private router: Router) {}
 
   navigateBack() {
     this.navCtrl.back();
   }
-  sectionItem: sectioType[] = [
+  sectionItem: sectionType[] = [
     {
       id: 1,
       icon: 1,
@@ -50,4 +50,8 @@ export class LessonsPage {
       locked: true, // <-- Locked
     },
   ];
+
+  basics() {
+    this.router.navigate(['/basics']);
+  }
 }

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-basics',
@@ -10,8 +10,10 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./basics.page.scss'],
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
-export class BasicsPage implements OnInit {
-  constructor() {}
+export class BasicsPage {
+  constructor(private navCtrl: NavController) {}
 
-  ngOnInit() {}
+  navigateBack() {
+    this.navCtrl.back();
+  }
 }
