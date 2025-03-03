@@ -17,6 +17,7 @@
               class="proverb-wrapper"
               *ngFor="let item of lessonItem"
               [style.background-color]="item.bgColor"
+              [routerLink]="item.link"
             >
               <div class="proverb-image">
                 <img [src]="item.image" alt="" />
@@ -50,6 +51,7 @@
                 class="proverb-wrapper"
                 *ngFor="let item of catgoryItem"
                 [style.background-color]="item.bgColor"
+                [routerLink]="item.link"
               >
                 <div class="proverb-image">
                   <img [src]="item.image" alt="" />

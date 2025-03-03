@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { IonicModule, NavController } from '@ionic/angular';
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
 export class BasicsPage {
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController, private router: Router) {}
 
   navigateBack() {
     this.navCtrl.back();

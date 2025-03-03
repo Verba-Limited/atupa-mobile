@@ -1,7 +1,7 @@
 import { LessonsPage } from './../lessons/lessons.page';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 interface lessonTypes {
@@ -9,12 +9,14 @@ interface lessonTypes {
   name: string;
   hour: number;
   bgColor: string;
+  link?: string;
 }
 interface categoryTypes {
   image: string;
   name: string;
   hour: number;
   bgColor: string;
+  link?: string;
 }
 
 @Component({
@@ -22,7 +24,7 @@ interface categoryTypes {
   templateUrl: './lesson.page.html',
   styleUrls: ['./lesson.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, RouterModule],
 })
 export class LessonPage {
   constructor(private router: Router) {}
@@ -33,6 +35,7 @@ export class LessonPage {
       name: 'Owe',
       hour: 6,
       bgColor: '#E19F65',
+      link: '/popular-lesson',
     },
     {
       image: '../../assets/icon/ilu-image.svg',
@@ -54,6 +57,7 @@ export class LessonPage {
       name: 'Alufabeti',
       hour: 6,
       bgColor: '#F2E1CB',
+      link: '/category',
     },
     {
       image: '../../assets/icon/ilu-image.svg',
@@ -71,5 +75,8 @@ export class LessonPage {
 
   LessonsPage() {
     this.router.navigate(['/lessons']);
+  }
+  category() {
+    this.router.navigate(['/category']);
   }
 }
