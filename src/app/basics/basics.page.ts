@@ -16,4 +16,8 @@ export class BasicsPage {
   navigateBack() {
     this.navCtrl.back();
   }
+
+  testPage() {
+    this.router.navigate(['/test']);
+  }
 }

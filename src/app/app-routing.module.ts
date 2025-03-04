@@ -122,6 +122,10 @@ const routes: Routes = [
     path: 'popular-lesson',
     loadChildren: () => import('./popular-lesson/popular-lesson.module').then( m => m.PopularLessonPageModule)
   },
+  {
+    path: 'test',
+    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
+  },
 ];
 
 @NgModule({
