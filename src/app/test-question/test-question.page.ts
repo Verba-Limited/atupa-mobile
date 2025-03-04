@@ -1,23 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.page.html',
-  styleUrls: ['./test.page.scss'],
+  selector: 'app-test-question',
+  templateUrl: './test-question.page.html',
+  styleUrls: ['./test-question.page.scss'],
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
-export class TestPage {
+export class TestQuestionPage {
+  selectedOption: string = '';
   constructor(private navCtrl: NavController, private router: Router) {}
 
   navigateBack() {
     this.navCtrl.back();
   }
-
-  testQuestion() {
-    this.router.navigate(['/test-question']);
+  onSelectionChange(event: any) {
+    this.selectedOption = event.detail.value;
   }
 }

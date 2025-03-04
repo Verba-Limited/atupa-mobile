@@ -1,0 +1,96 @@
+.container {
+    padding: 16px;
+
+    .back-arrow {
+        position: absolute;
+        top: 31px;
+        left: 16px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+        border: 1px solid #F1F1F1;
+        padding: 4px;
+        border-radius: 50px;
+    }
+
+
+    .framer {
+        color: #505050;
+        text-align: center;
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+
+
+
+    .progress-text {
+        color: #505050;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    /* Progress Bar Container */
+    .progress-container {
+        width: 200px;
+        background-color: #f0ddd0;
+        /* Light/cream background for the bar */
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Progress Fill */
+    .progress-bar {
+        height: 6px;
+        /* Thinner bar */
+        width: 0;
+        /* Default to 0; will be set inline via "style" */
+        background-color: #c37849;
+        /* Warm/brown color for the filled portion */
+        transition: width 0.5s ease-in-out;
+    }
+
+    .story {
+        font-size: 20px;
+        line-height: 28px;
+        font-weight: 600;
+        width: 343px;
+        text-align: left;
+    }
+
+    // owe-page.page.scss
+    .custom-list {
+        padding: 16px 0;
+        background-color: #FFFFFF;
+    }
+
+    .radio-container {
+        display: flex;
+        align-items: flex-start;
+        padding: 16px;
+        margin-bottom: 8px;
+        background: #f8f8f8;
+        border-radius: 8px;
+        border: 2px solid transparent; // Add transparent border by default
+        transition: border-color 0.2s ease; // Smooth transition for border color
+    }
+
+    ion-radio {
+        margin-right: 16px;
+        --color: #666;
+        --color-checked: #7EA421;
+        margin-top: 13px;
+    }
+
+    .content {
+        flex: 1;
+        line-height: 1.4;
+        color: #000;
+        font-size: 16px;
+        text-align: left;
+        display: block;
+    }
+}

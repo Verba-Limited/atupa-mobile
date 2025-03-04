@@ -126,6 +126,10 @@ const routes: Routes = [
     path: 'test',
     loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
   },
+  {
+    path: 'test-question',
+    loadChildren: () => import('./test-question/test-question.module').then( m => m.TestQuestionPageModule)
+  },
 ];
 
 @NgModule({
