@@ -1,13 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>test</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Test</h2>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">test</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="question">
+      <h3 class="title">6 Question and 40 mins Duration</h3>
+      <img src="../../assets/icon/Group 632.svg" alt="" />
+      <p class="title">Test your knowledge on how well you understand owe</p>
+      <ion-button expandx="block" class="create-account"> Enroll </ion-button>
+    </div>
+  </div>
 </ion-content>
