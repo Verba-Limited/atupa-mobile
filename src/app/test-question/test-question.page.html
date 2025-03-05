@@ -45,21 +45,40 @@
           way back home and later disrespect the elders in front of everyone?
         </p>
       </div>
-
       <ion-list class="custom-list">
         <ion-radio-group
           [(ngModel)]="selectedOption"
           (ionChange)="onSelectionChange($event)"
         >
-          <div class="radio-container">
-            <ion-radio value="option"></ion-radio>
-            <div class="content">
-              Kò sí ení tí ó ma gùn eṣin tí kò ní ju ìpàkó. Bí kó fẹ ju ìpàkó,
-              eṣin tí ó ńgùn.
-            </div>
+          <div class="radio-container" *ngFor="let proverb of yorubaProverbs">
+            <!-- Bind each ion-radio's value to proverb.value -->
+            <ion-radio [value]="proverb.value"></ion-radio>
+
+            <!-- Display the label text -->
+            <div class="content">{{ proverb.label }}</div>
           </div>
         </ion-radio-group>
       </ion-list>
+
+      <div class="nav-container">
+        <!-- Back Button -->
+        <button class="nav-button">
+          <!-- Left arrow (using Unicode) -->
+          <span class="arrow-left"
+            ><img src="../../assets/icon/angle-left.svg" alt=""
+          /></span>
+          Back
+        </button>
+
+        <!-- Next Button -->
+        <button class="nav-button">
+          Next
+          <!-- Right arrow (using Unicode) -->
+          <span class="arrow-right"
+            ><img src="../../assets/icon/angle-right.svg" alt=""
+          /></span>
+        </button>
+      </div>
     </div>
   </div>
 </ion-content>

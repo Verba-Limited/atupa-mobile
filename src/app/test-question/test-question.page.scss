@@ -61,10 +61,8 @@
         text-align: left;
     }
 
-    // owe-page.page.scss
     .custom-list {
-        padding: 16px 0;
-        background-color: #FFFFFF;
+        background-color: #ffffff;
     }
 
     .radio-container {
@@ -74,14 +72,16 @@
         margin-bottom: 8px;
         background: #f8f8f8;
         border-radius: 8px;
-        border: 2px solid transparent; // Add transparent border by default
-        transition: border-color 0.2s ease; // Smooth transition for border color
+        border: 2px solid transparent;
+        /* Add transparent border by default */
+        transition: border-color 0.2s ease;
+        /* Smooth transition for border color */
     }
 
     ion-radio {
         margin-right: 16px;
         --color: #666;
-        --color-checked: #7EA421;
+        --color-checked: #7ea421;
         margin-top: 13px;
     }
 
@@ -92,5 +92,42 @@
         font-size: 16px;
         text-align: left;
         display: block;
+    }
+
+
+
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 2rem auto;
+    }
+
+    .nav-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 12px 24px;
+        border: 1px solid #7a5230;
+        background-color: #fff;
+        color: #7a5230;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        min-width: 110px;
+    }
+
+    /* Hover effect */
+    .nav-button:hover {
+        background-color: #f9f1eb;
+    }
+
+    /* Arrow styling */
+    .arrow-left,
+    .arrow-right {
+        font-size: 1rem;
     }
 }
