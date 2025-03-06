@@ -1,0 +1,115 @@
+/* subscription.page.scss */
+.subscription-container {
+    padding: 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+
+
+}
+
+.back-arrow {
+    --padding-start: 0;
+    --padding-end: 0;
+    margin: 0;
+    height: 36px;
+    font-size: 22px;
+    color: black;
+    cursor: pointer;
+    border: 1px solid #F1F1F1;
+    padding: 4px;
+    border-radius: 50px;
+}
+
+.illustration-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+
+    img {
+        width: 180px;
+        height: auto;
+    }
+}
+
+.title-container {
+    text-align: center;
+    margin-bottom: 24px;
+
+    h2 {
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+    }
+}
+
+.plans-container {
+    margin-bottom: 24px;
+
+    .plan-card {
+        margin-bottom: 16px;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        &.selected {
+            border: 1px solid #ddd;
+            background-color: #FAF5EB;
+        }
+
+        ion-card-content {
+            padding: 16px;
+        }
+    }
+
+    .plan-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4px;
+    }
+
+    .plan-name {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .plan-price {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .plan-description {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .selection-indicator {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+
+        ion-icon {
+            font-size: 20px;
+        }
+    }
+}
+
+.action-container {
+    margin-top: auto;
+    padding-bottom: 16px;
+
+    .trial-button {
+        --background: #8B5A2B;
+        --background-activated: #6B4621;
+        --border-radius: 8px;
+        --color: white;
+        font-weight: 500;
+        height: 48px;
+        text-transform: none;
+    }
+}

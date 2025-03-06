@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, ModalController, NavController } from '@ionic/angular';
+import { TrailComponent } from '../trail/trail.component';
 
 @Component({
   selector: 'app-test-question',
@@ -13,7 +14,11 @@ import { IonicModule, NavController } from '@ionic/angular';
 export class TestQuestionPage {
   selectedOption: string = '';
   isOptionSelected: boolean = false;
-  constructor(private navCtrl: NavController, private router: Router) {}
+  constructor(
+    private navCtrl: NavController,
+    private router: Router,
+    private modalController: ModalController
+  ) {}
 
   yorubaProverbs = [
     {
@@ -38,5 +43,12 @@ export class TestQuestionPage {
   }
   onSelectionChange(event: any) {
     this.selectedOption = event.detail.value;
+  }
+
+  async trailModal() {
+    const modal = await this.modalController.create({
+      component: TrailComponent,
+    });
+    await modal.present();
   }
 }
