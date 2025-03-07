@@ -18,8 +18,9 @@
     color: black;
     cursor: pointer;
     border: 1px solid #F1F1F1;
-    padding: 4px;
+    padding: 7px;
     border-radius: 50px;
+    margin-top: 20px;
 }
 
 .illustration-container {
@@ -50,15 +51,20 @@
     .plan-card {
         margin-bottom: 16px;
         border-radius: 12px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        --box-shadow: none;
+        position: relative;
 
         &.selected {
-            border: 1px solid #ddd;
-            background-color: #FAF5EB;
+            border: 2px solid #7B462F;
+            background-color: #F6EBDD;
         }
 
         ion-card-content {
-            padding: 16px;
+            background-color: #F6EBDD;
+            border: #F6EBDD;
+            background-color: #F6EBDD;
+            --box-shadow: none;
+            padding: 20px;
         }
     }
 
@@ -70,18 +76,19 @@
 
     .plan-name {
         font-weight: 500;
-        color: #333;
+        color: #505050;
     }
 
     .plan-price {
         font-weight: 600;
-        color: #333;
+        color: #505050;
     }
 
     .plan-description {
         margin: 0;
-        color: #666;
+        color: #505050;
         font-size: 14px;
+        text-wrap: nowrap;
     }
 
     .selection-indicator {
