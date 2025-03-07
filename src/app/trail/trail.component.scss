@@ -53,6 +53,8 @@
         border-radius: 12px;
         --box-shadow: none;
         position: relative;
+        overflow: visible;
+
 
         &.selected {
             border: 2px solid #7B462F;
@@ -76,8 +78,9 @@
     }
 
     .plan-name {
-        font-weight: 500;
+        font-weight: 700;
         color: #505050;
+        font-size: 16px;
     }
 
     .plan-price {
@@ -96,6 +99,7 @@
         position: absolute;
         top: 0;
         right: 0;
+        z-index: 10;
 
         ion-icon {
             font-size: 20px;

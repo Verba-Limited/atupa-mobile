@@ -1,7 +1,34 @@
 <ion-content>
   <div>
-    <div>
-      <h1 class="header">Lesson</h1>
+    <div class="head">
+      <div>
+        <h1 class="header">Lesson</h1>
+      </div>
+      <div class="menu-container">
+        <ion-icon
+          src="../../assets/icon/ellipsis-vertical 1.svg"
+          class="back-arrow"
+          (click)="toggleMenu()"
+        ></ion-icon>
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" [class.show-menu]="isMenuVisible">
+          <div class="menu-item" (click)="navigateToBookmarks()">
+            <ion-icon
+              src="../../assets/icon/Vectorbook.svg"
+              class="menu-icon"
+            ></ion-icon>
+            <span>Bookmarks</span>
+          </div>
+          <div class="menu-item" (click)="manageSubscription()">
+            <ion-icon
+              src="../../assets/icon/Vectorn.svg"
+              class="menu-icon"
+            ></ion-icon>
+            <span>Manage Subscription</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="container">

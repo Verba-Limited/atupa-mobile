@@ -1,6 +1,6 @@
 import { LessonsPage } from './../lessons/lessons.page';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
@@ -27,7 +27,12 @@ interface categoryTypes {
   imports: [IonicModule, CommonModule, RouterModule],
 })
 export class LessonPage {
+  isMenuVisible = false;
   constructor(private router: Router) {}
+
+  toggleMenu() {
+    this.isMenuVisible = !this.isMenuVisible;
+  }
 
   lessonItem: lessonTypes[] = [
     {
@@ -73,6 +78,28 @@ export class LessonPage {
     },
   ];
 
+  navigateToBookmarks() {
+    // Navigate to bookmarks page
+    // this.router.navigate(['/bookmarks']);
+    this.isMenuVisible = false;
+  }
+
+  manageSubscription() {
+    // Navigate to subscription management page
+    // this.router.navigate(['/subscription']);
+    this.isMenuVisible = false;
+  }
+
+  // Close menu when clicking outside
+  @HostListener('document:click', ['$event'])
+  closeMenuOnClickOutside(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const menuContainer = document.querySelector('.menu-container');
+
+    if (menuContainer && !menuContainer.contains(target)) {
+      this.isMenuVisible = false;
+    }
+  }
   LessonsPage() {
     this.router.navigate(['/lessons']);
   }
