@@ -57,6 +57,7 @@
         &.selected {
             border: 2px solid #7B462F;
             background-color: #F6EBDD;
+            --box-shadow: none;
         }
 
         ion-card-content {
@@ -93,8 +94,8 @@
 
     .selection-indicator {
         position: absolute;
-        top: 16px;
-        right: 16px;
+        top: 0;
+        right: 0;
 
         ion-icon {
             font-size: 20px;
@@ -107,12 +108,16 @@
     padding-bottom: 16px;
 
     .trial-button {
-        --background: #8B5A2B;
+        --background: #7B462F;
         --background-activated: #6B4621;
         --border-radius: 8px;
         --color: white;
         font-weight: 500;
-        height: 48px;
+        height: 52px;
         text-transform: none;
+        --box-shadow: none;
+
+
     }
+
 }
