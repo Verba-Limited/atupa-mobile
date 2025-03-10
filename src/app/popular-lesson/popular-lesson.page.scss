@@ -51,12 +51,10 @@
 
     ion-item {
         --padding-start: 16px;
-        --padding-end: 16px;
-        // --padding-top: 2px;
+        /* --padding-end: 16px; */
         --padding-bottom: 12px;
-        /* --border-radius: 12px; */
         --background: #ffffff;
-        margin-bottom: 12px;
+        /* margin-bottom: 12px; */
         --detail-icon-color: #666;
         --detail-icon-opacity: 1;
         --detail-icon-font-size: 20px;
@@ -70,9 +68,12 @@
     ion-thumbnail {
         --size: 48px;
         --border-radius: 8px;
-        background: #f0f0f0;
         padding: 6px;
         margin-right: 12px;
+
+        img {
+            width: 55px;
+        }
     }
 
     ion-label {

@@ -27,7 +27,11 @@ interface categoryTypes {
   imports: [IonicModule, CommonModule, RouterModule],
 })
 export class LessonPage {
-  isMenuVisible = false;
+  isMenuVisible: boolean = false;
+  showSubscription: boolean = false;
+  subscriptionType = 'Monthly subscription';
+  daysLeft = 20;
+  progress = 60;
   constructor(private router: Router) {}
 
   toggleMenu() {
@@ -85,9 +89,12 @@ export class LessonPage {
   }
 
   manageSubscription() {
-    // Navigate to subscription management page
-    // this.router.navigate(['/subscription']);
     this.isMenuVisible = false;
+    this.showSubscription = true;
+  }
+
+  closeSubscripton() {
+    this.showSubscription = false;
   }
 
   // Close menu when clicking outside

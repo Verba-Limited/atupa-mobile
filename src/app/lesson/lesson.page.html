@@ -32,6 +32,22 @@
     </div>
 
     <div class="container">
+      <div *ngIf="showSubscription">
+        <div class="subscription-container">
+          <h1 class="title">Monthly subscription</h1>
+
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress-filled"></div>
+            </div>
+            <div class="days-left">20 days left</div>
+          </div>
+
+          <button (click)="closeSubscripton()" class="manage-button">
+            Manage Subscription
+          </button>
+        </div>
+      </div>
       <div class="sub-header">
         <p class="title">Popular Lessons</p>
         <p class="view-title">View all</p>
