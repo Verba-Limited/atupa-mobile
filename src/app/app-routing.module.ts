@@ -130,6 +130,10 @@ const routes: Routes = [
     path: 'test-question',
     loadChildren: () => import('./test-question/test-question.module').then( m => m.TestQuestionPageModule)
   },
+  {
+    path: 'bookmark',
+    loadChildren: () => import('./bookmark/bookmark.module').then( m => m.BookmarkPageModule)
+  },
 ];
 
 @NgModule({

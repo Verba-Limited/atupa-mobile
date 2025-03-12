@@ -84,7 +84,7 @@ export class LessonPage {
 
   navigateToBookmarks() {
     // Navigate to bookmarks page
-    // this.router.navigate(['/bookmarks']);
+    this.router.navigate(['/bookmark']);
     this.isMenuVisible = false;
   }
 
