@@ -1,0 +1,58 @@
+.container {
+    padding: 16px;
+    text-align: center;
+    // padding-top: 20px;
+    margin-top: 60px;
+}
+
+.score-box {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 59px;
+}
+
+.score-text {
+    font-size: 16px;
+    font-weight: 800;
+    color: #505050;
+}
+
+.congrats-text {
+    font-size: 20px;
+    color: #2E2E2E;
+    // margin-bottom: 24px;
+    font-weight: 700;
+    margin-top: 45px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding-top: 87px;
+    padding-bottom: 20px;
+}
+
+.create-account {
+    --background: #7B462F;
+    --color: white;
+    height: 52px;
+    text-transform: none;
+    --border-radius: 10px;
+    font-weight: 700;
+    --box-shadow: none;
+    width: 343px;
+}
+
+.login {
+    --background: #F6EBDD;
+    --color: #8B4513;
+    height: 52px;
+    text-transform: none;
+    --border-radius: 10px;
+    font-weight: 700;
+    --box-shadow: none;
+    width: 343px;
+}

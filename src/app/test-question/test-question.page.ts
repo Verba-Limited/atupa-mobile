@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule, ModalController, NavController } from '@ionic/angular';
 import { TrailComponent } from '../trail/trail.component';
+import { TotalLessonScoreComponent } from '../total-lesson-score/total-lesson-score.component';
 
 @Component({
   selector: 'app-test-question',
@@ -17,7 +18,7 @@ export class TestQuestionPage {
   constructor(
     private navCtrl: NavController,
     private router: Router,
-    private modalController: ModalController
+    private modalCntrl: ModalController
   ) {}
 
   yorubaProverbs = [
@@ -43,5 +44,12 @@ export class TestQuestionPage {
   }
   onSelectionChange(event: any) {
     this.selectedOption = event.detail.value;
+  }
+
+  async toggleTotalScoreModal() {
+    const modal = await this.modalCntrl.create({
+      component: TotalLessonScoreComponent,
+    });
+    await modal.present();
   }
 }
