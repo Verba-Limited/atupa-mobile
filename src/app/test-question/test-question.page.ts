@@ -44,11 +44,4 @@ export class TestQuestionPage {
   onSelectionChange(event: any) {
     this.selectedOption = event.detail.value;
   }
-
-  async trailModal() {
-    const modal = await this.modalController.create({
-      component: TrailComponent,
-    });
-    await modal.present();
-  }
 }

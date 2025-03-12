@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, NavController, ModalController } from '@ionic/angular';
+import { TrailComponent } from '../trail/trail.component';
 interface sectionType {
   id: number;
   icon: string | number;
@@ -10,6 +11,7 @@ interface sectionType {
   durations: number;
   view: string;
   locked?: boolean;
+  link?: string;
 }
 
 @Component({
@@ -19,7 +21,11 @@ interface sectionType {
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
 export class LessonsPage {
-  constructor(private navCtrl: NavController, private router: Router) {}
+  constructor(
+    private navCtrl: NavController,
+    private router: Router,
+    private modalController: ModalController
+  ) {}
 
   navigateBack() {
     this.navCtrl.back();
@@ -31,7 +37,8 @@ export class LessonsPage {
       durations: 1,
       title: 'Basic of owe',
       view: 'view',
-      locked: false, // <-- Unlocked
+      locked: false,
+      link: '/basics',
     },
     {
       id: 2,
@@ -51,7 +58,23 @@ export class LessonsPage {
     },
   ];
 
-  basics() {
-    this.router.navigate(['/basics']);
+  openSection(item: sectionType) {
+    if (item.locked) {
+      return;
+    }
+
+    if (item.link) {
+      this.router.navigate([item.link]);
+    }
+  }
+  // basics() {
+  //   this.router.navigate(['/basics']);
+  // }
+
+  async trailModal() {
+    const modal = await this.modalController.create({
+      component: TrailComponent,
+    });
+    await modal.present();
   }
 }

@@ -72,12 +72,15 @@
           </div>
         </div>
 
-        <span [ngClass]="item.locked ? 'locked-btn' : 'view-btn'">
+        <span
+          (click)="openSection(item)"
+          [ngClass]="item.locked ? 'locked-btn' : 'view-btn'"
+        >
           {{ item.locked ? 'view' : item.view }}
         </span>
       </div>
 
-      <ion-button (click)="basics()" expand="block" class="create-account">
+      <ion-button (click)="trailModal()" expand="block" class="create-account">
         Enroll
       </ion-button>
     </div>
