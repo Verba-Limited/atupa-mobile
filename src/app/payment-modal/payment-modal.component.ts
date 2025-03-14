@@ -39,7 +39,7 @@ export class PaymentModalComponent {
   continue() {
     if (this.selectedMethod) {
       this.modalCtrl.dismiss(this.selectedMethod);
-      this.router.navigate(['/payment-successful']);
+      this.router.navigate(['/pay-method']);
     }
   }
 

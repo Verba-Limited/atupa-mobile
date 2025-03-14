@@ -142,6 +142,10 @@ const routes: Routes = [
     path: 'lesson-list',
     loadChildren: () => import('./lesson-list/lesson-list.module').then( m => m.LessonListPageModule)
   },
+  {
+    path: 'pay-method',
+    loadChildren: () => import('./pay-method/pay-method.module').then( m => m.PayMethodPageModule)
+  },
 ];
 
 @NgModule({
