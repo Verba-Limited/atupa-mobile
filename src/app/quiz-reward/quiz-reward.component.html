@@ -1,0 +1,27 @@
+<ion-content class="reward-container">
+  <!-- Close Button -->
+  <ion-button fill="clear" class="close-button" (click)="close()">
+    <ion-icon name="close"></ion-icon>
+  </ion-button>
+
+  <div class="reward-content">
+    <!-- Title -->
+    <h1 class="title">Reward Granted</h1>
+
+    <!-- Reward Image with Number Overlay -->
+    <div class="reward-image-container">
+      <img
+        src="../../assets/icon/dots.svg"
+        alt="Reward Dots"
+        class="reward-image"
+      />
+      <div class="reward-text">{{ rewardAmount }}</div>
+    </div>
+
+    <!-- Description -->
+    <p class="description">
+      You have been rewarded <br />
+      with {{ rewardAmount }} Eleke
+    </p>
+  </div>
+</ion-content>

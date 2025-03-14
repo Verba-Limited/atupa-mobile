@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { PaymentModalComponent } from '../payment-modal/payment-modal.component';
+import { QuizRewardComponent } from '../quiz-reward/quiz-reward.component';
 
 interface BoardItem {
   amount: number;
@@ -58,6 +59,15 @@ export class ShopModalComponent {
       }
     });
 
+    return await modal.present();
+  }
+
+  async rewardModal() {
+    this.modalController.dismiss();
+
+    const modal = await this.modalController.create({
+      component: QuizRewardComponent,
+    });
     return await modal.present();
   }
 }
