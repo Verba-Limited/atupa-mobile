@@ -1,0 +1,131 @@
+    .container {
+        padding: 16px;
+
+        .back-arrow {
+            position: absolute;
+            top: 35px;
+            left: 30px;
+            font-size: 22px;
+            color: black;
+            cursor: pointer;
+        }
+
+
+        .framer {
+            color: #505050;
+            text-align: center;
+
+
+            h2 {
+                font-size: 20px;
+                font-weight: 700;
+            }
+
+        }
+
+        .achievement {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            border: 1px solid #DFE0E0;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .completed {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #DFE0E0;
+            width: 100%;
+            height: auto;
+            padding: 10px;
+        }
+
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .badge-card {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+            .badge-image-container {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                background-color: #B7CF8A;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 16px;
+
+                &.gray {
+                    background-color: #E0E0E0;
+                }
+
+                .badge-image {
+                    width: 80%;
+                    height: auto;
+                }
+
+                .question-mark {
+                    font-size: 64px;
+                    color: #666;
+                    font-weight: bold;
+                }
+            }
+
+            .badge-title {
+                font-size: 18px;
+                font-weight: 600;
+                color: #333;
+                margin: 0 0 8px 0;
+            }
+
+            .badge-status {
+                font-size: 16px;
+                color: #666;
+                margin: 0;
+            }
+
+            .progress-container {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                margin-top: 8px;
+
+                .progress-bar {
+                    flex: 1;
+                    height: 5px;
+                    background-color: #F5E6DD;
+                    border-radius: 4px;
+                    overflow: hidden;
+                    margin-right: 8px;
+
+                    .progress-fill {
+                        height: 100%;
+                        background-color: #9B4A35;
+                        border-radius: 4px;
+                    }
+                }
+
+                .progress-text {
+                    font-size: 14px;
+                    color: #333;
+                    font-weight: 500;
+                }
+            }
+        }
+    }

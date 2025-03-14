@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pay-method',
@@ -11,7 +11,14 @@ import { IonicModule } from '@ionic/angular';
 })
 export class PayMethodPage implements OnInit {
   amount = 50000;
-  constructor() {}
+  constructor(
+    private modalController: ModalController,
+    private navCtrl: NavController
+  ) {}
+
+  closeModal() {
+    this.navCtrl.back();
+  }
 
   ngOnInit() {}
 }

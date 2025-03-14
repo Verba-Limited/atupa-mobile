@@ -1,13 +1,55 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>achievement</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">achievement</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Achievement</h2>
+    </div>
+
+    <div>
+      <div class="achievement">
+        <img
+          src="../../assets/icon/medal 1.svg"
+          alt=""
+          width="16px"
+          height="16px"
+        />
+        <p>Total achievement recieive 20/100</p>
+      </div>
+
+      <div class="badges-container">
+        <div class="badge-card" *ngFor="let badge of badges">
+          <div
+            class="badge-image-container"
+            [ngClass]="{'gray': !badge.unlocked}"
+          >
+            <img
+              *ngIf="badge.unlocked"
+              [src]="badge.imageSrc"
+              [alt]="badge.title + ' Badge'"
+              class="badge-image"
+            />
+            <div *ngIf="!badge.unlocked" class="question-mark">?</div>
+          </div>
+          <h3 class="badge-title">{{badge.title}}</h3>
+          <p *ngIf="badge.completed" class="badge-status">Completed</p>
+          <div
+            *ngIf="!badge.completed && badge.progress !== undefined"
+            class="progress-container"
+          >
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                [style.width]="badge.progress + '%'"
+              ></div>
+            </div>
+            <span class="progress-text">{{badge.progress}}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
