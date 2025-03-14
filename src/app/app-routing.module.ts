@@ -138,6 +138,10 @@ const routes: Routes = [
     path: 'all-lessons',
     loadChildren: () => import('./all-lessons/all-lessons.module').then( m => m.AllLessonsPageModule)
   },
+  {
+    path: 'lesson-list',
+    loadChildren: () => import('./lesson-list/lesson-list.module').then( m => m.LessonListPageModule)
+  },
 ];
 
 @NgModule({

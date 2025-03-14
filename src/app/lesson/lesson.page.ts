@@ -113,4 +113,7 @@ export class LessonPage {
   category() {
     this.router.navigate(['/category']);
   }
+  allLessons() {
+    this.router.navigate(['/lesson-list']);
+  }
 }

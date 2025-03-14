@@ -1,0 +1,147 @@
+.container {
+    padding: 16px;
+}
+
+.back-arrow {
+    position: absolute;
+    top: 26px;
+    left: 16px;
+    font-size: 22px;
+    color: black;
+    cursor: pointer;
+    border: 1px solid #F1F1F1;
+    padding: 4px;
+    border-radius: 50px;
+}
+
+
+.framer {
+    color: #505050;
+    text-align: center;
+
+
+    h2 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+}
+
+.heading {
+    color: #2E2E2E;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.latest {
+    // background: #FFF5EB;
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid #D2CFB0;
+}
+
+.quiz-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.icon {
+    background: #EDC78D;
+    width: 58px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+    }
+}
+
+.icon2 {
+    background: #BACA93;
+    width: 58px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+    }
+}
+
+.quiz-info {
+    flex: 1;
+
+    .title {
+        color: #2E2E2E;
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+    }
+
+    .continue-btn {
+        background: transparent;
+        color: #7B462F;
+        padding: 8px 24px;
+        border-radius: 8px;
+        border: 1px solid #7B462F;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background: #6a3b28;
+            color: white;
+        }
+    }
+}
+
+.progress-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 4px solid #D2CFB0;
+    border-right-color: #D2CFB057;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-45deg);
+
+    .progress-text {
+        transform: rotate(45deg);
+        color: #2E2E2E;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
+.progress-circle2 {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 4px solid #F2E1CB;
+    border-right-color: #D2CFB057;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-45deg);
+
+    .progress-text {
+        transform: rotate(45deg);
+        color: #2E2E2E;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}

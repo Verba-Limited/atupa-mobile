@@ -1,0 +1,55 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>My Lesson</h2>
+    </div>
+    <div style="padding-top: 13px">
+      <div class="latest">
+        <div class="quiz-container">
+          <!-- Left: Image -->
+          <div class="icon">
+            <img src="../../assets/icon/Group 627.svg" alt="Eranko icon" />
+          </div>
+
+          <!-- Middle: Title and Button -->
+          <div class="quiz-info">
+            <h3 class="title">Girama - Session 7</h3>
+            <button (click)="LessonsPage()" class="continue-btn">
+              Continue
+            </button>
+          </div>
+
+          <!-- Right: Progress Circle -->
+          <div class="progress-circle">
+            <span class="progress-text">5/10</span>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="latest">
+        <div class="quiz-container">
+          <!-- Left: Image -->
+          <div class="icon2">
+            <img src="../../assets/icon/Group 624.svg" alt="Eranko icon" />
+          </div>
+
+          <!-- Middle: Title and Button -->
+          <div class="quiz-info">
+            <h3 class="title">Alufabeti - Session 7</h3>
+            <button class="continue-btn">Continue</button>
+          </div>
+
+          <!-- Right: Progress Circle -->
+          <div class="progress-circle2">
+            <span class="progress-text">6/10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
