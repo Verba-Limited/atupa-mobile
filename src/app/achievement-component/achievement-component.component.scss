@@ -1,0 +1,130 @@
+/* achievement-component/achievement.component.scss */
+.achievement-content {
+    --background: #F6EBDD;
+
+    .close-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        color: #333;
+        z-index: 10;
+    }
+
+    .achievement-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        // height: 100%;
+        text-align: center;
+        padding: 0 24px;
+        padding-top: 122px;
+
+        h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2E2E2E;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 40px;
+        }
+
+        .trophy-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confetti-wrapper {
+            position: relative;
+            width: 270px;
+            height: 270px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+
+            &.animate {
+                animation: pop-in 0.8s ease-out forwards;
+            }
+
+            .confetti {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                top: -88px;
+                left: -28px;
+
+
+                &.confetti-left {
+                    transform: translateX(-70px);
+                    top: -58px;
+                }
+
+                &.confetti-right {
+                    transform: translateX(70px);
+                    top: 10px;
+                }
+            }
+
+            .trophy-circle {
+                width: 120px;
+                height: 120px;
+                background-color: #CFEABC;
+                /* Light green background for trophy */
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2;
+
+                .trophy {
+                    width: 127px;
+                    height: 127px;
+                    z-index: 3;
+                }
+            }
+        }
+
+        .achievement-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-top: -48px;
+        }
+    }
+}
+
+@keyframes pop-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    70% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

@@ -1,0 +1,34 @@
+<!-- achievement-component/achievement.component.html -->
+<ion-content class="achievement-content">
+  <div class="close-button" (click)="dismiss()">
+    <ion-icon name="close-outline"></ion-icon>
+  </div>
+
+  <div class="achievement-container">
+    <h1>
+      New Achievement <br />
+      Unlocked
+    </h1>
+
+    <div class="trophy-container">
+      <!-- Trophy with confetti overlay -->
+      <div class="confetti-wrapper" [class.animate]="showAnimation">
+        <img
+          src="../../assets/icon/pngwing.com (14) 1.svg"
+          alt="confetti-left"
+          class="confetti confetti-left"
+        />
+        <img
+          src="../../assets/icon/pngwing.com (14) 2.svg"
+          alt="confetti-right"
+          class="confetti confetti-right"
+        />
+        <div class="trophy-circle">
+          <img [src]="badgeImage" alt="trophy" class="trophy" />
+        </div>
+      </div>
+    </div>
+
+    <p class="achievement-name">{{ badgeTitle }}</p>
+  </div>
+</ion-content>

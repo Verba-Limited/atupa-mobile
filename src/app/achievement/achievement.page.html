@@ -21,7 +21,11 @@
       </div>
 
       <div class="badges-container">
-        <div class="badge-card" *ngFor="let badge of badges">
+        <div
+          (click)="openBadgeDetails(badge)"
+          class="badge-card"
+          *ngFor="let badge of badges"
+        >
           <div
             class="badge-image-container"
             [ngClass]="{'gray': !badge.unlocked}"
