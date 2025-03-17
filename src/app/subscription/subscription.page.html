@@ -1,13 +1,93 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>subscription</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">subscription</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Subscription</h2>
+    </div>
+
+    <div class="content">
+      <!-- Subscription Plans -->
+      <div class="subscription-plans">
+        <!-- Annual Plan -->
+        <div class="plan-card active-plan">
+          <div class="plan-details">
+            <div class="plan-info">
+              <div class="plan-title">Annually</div>
+              <div class="plan-price">₦30,000/Year</div>
+            </div>
+            <div class="plan-badge">
+              <ion-icon
+                name="checkmark-circle"
+                class="checkmark-icon"
+              ></ion-icon>
+            </div>
+          </div>
+          <div class="plan-remaining">34 days remaining</div>
+          <button class="plan-button cancel-button">Cancel Subscription</button>
+        </div>
+
+        <!-- Monthly Plan -->
+        <div class="plan-card">
+          <div class="plan-details">
+            <div class="plan-info">
+              <div class="plan-title">Monthly</div>
+              <div class="plan-price">₦5,000/Month</div>
+            </div>
+          </div>
+          <div class="plan-remaining">30 days access to all lesson</div>
+          <button class="plan-button activate-button">Activate Plan</button>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="section-title">Payment Method</div>
+      <div class="payment-method">
+        <div class="card-info">
+          <img src="../../assets/icon/Visa.svg" alt="Visa" class="card-logo" />
+          <span class="card-text">Visa ending with 5678</span>
+        </div>
+        <div class="remove-button">
+          <ion-icon name="trash-outline" class="trash-icon"></ion-icon>
+          <span style="font-weight: 700; font-size: 14px">Remove</span>
+        </div>
+      </div>
+
+      <button class="add-card-button">
+        <ion-icon name="add-circle" class="add-icon"></ion-icon>
+        <span>Add new card</span>
+      </button>
+
+      <!-- History -->
+      <div class="section-title">History</div>
+      <div class="history-table">
+        <div class="table-header">
+          <div class="header-cell">Date</div>
+          <div class="header-cell">Plan type</div>
+          <div class="header-cell">Amount</div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell">3/14/2024</div>
+          <div class="table-cell">Monthly</div>
+          <div class="table-cell">₦5000</div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell">3/14/2024</div>
+          <div class="table-cell">Monthly</div>
+          <div class="table-cell">₦5000</div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell">3/14/2024</div>
+          <div class="table-cell">Yearly</div>
+          <div class="table-cell">₦30,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

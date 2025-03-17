@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-subscription',
@@ -9,8 +9,10 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./subscription.page.scss'],
   imports: [IonicModule, RouterModule, CommonModule],
 })
-export class SubscriptionPage implements OnInit {
-  constructor() {}
+export class SubscriptionPage {
+  constructor(private navCtrl: NavController) {}
 
-  ngOnInit() {}
+  navigateBack() {
+    this.navCtrl.back();
+  }
 }

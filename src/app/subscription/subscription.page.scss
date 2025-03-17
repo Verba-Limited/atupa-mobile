@@ -1,0 +1,226 @@
+.container {
+    padding: 16px;
+    background-color: #FFFFFF;
+    height: 100%;
+
+    .back-arrow {
+        position: absolute;
+        top: 35px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+
+    .framer {
+        color: #505050;
+        text-align: center;
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+
+    .content {
+        margin-top: 38px;
+    }
+
+
+    .subscription-plans {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .plan-card {
+        background-color: #F8F1E6;
+        border-radius: 12px;
+        padding: 21px;
+        height: 133px;
+        position: relative;
+
+        &.active-plan {
+            border: 2px solid #7B462F;
+        }
+    }
+
+    // .plan-details {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     align-items: center;
+    //     margin-bottom: 8px;
+    // }
+
+    .plan-info {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .plan-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #505050;
+        margin-bottom: 8px
+    }
+
+    .plan-price {
+        font-size: 16px;
+        font-weight: 600;
+        color: #505050;
+
+    }
+
+    .plan-badge {
+        position: absolute;
+        top: -14px;
+        right: -1px;
+
+
+        .checkmark-icon {
+            color: #7B462F;
+            font-size: 28px;
+        }
+    }
+
+    .plan-remaining {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 12px;
+    }
+
+    .plan-button {
+        width: 157px;
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 700;
+        border: 1px solid #7B462F;
+        background-color: transparent;
+        color: #7B462F;
+        cursor: pointer;
+
+        &.activate-button {
+            border: 1px solid #7B462F;
+            background-color: transparent;
+            color: #7B462F;
+            width: 116px;
+            height: 32px;
+        }
+    }
+
+
+    // Payment Method
+    .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 16px;
+        margin-top: 24px;
+    }
+
+    .payment-method {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .card-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .card-logo {
+            width: 39px;
+            height: 26px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #333;
+        }
+    }
+
+    .remove-button {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: #EB5757;
+        font-size: 14px;
+
+        .trash-icon {
+            font-size: 16px;
+            color: #C23327;
+        }
+    }
+
+    .add-card-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 142px;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #7B462F;
+        background-color: transparent;
+        color: #7B462F;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 24px;
+        margin-left: auto;
+        margin-right: auto;
+
+        .add-icon {
+            font-size: 20px;
+            color: #7B462F;
+        }
+    }
+
+
+    // History Table
+    .history-table {
+        border-radius: 8px;
+        overflow: hidden;
+        font-size: 14px;
+    }
+
+    .table-header {
+        display: flex;
+        background-color: #F8F1E6;
+        padding: 12px 16px;
+        font-weight: 600;
+    }
+
+    .table-row {
+        display: flex;
+        border-bottom: 1px solid #F0F0F0;
+        padding: 12px 16px;
+    }
+
+    .header-cell,
+    .table-cell {
+        flex: 1;
+        padding: 0 8px;
+
+        &:first-child {
+            flex: 0.8;
+            padding-left: 0;
+        }
+
+        &:nth-child(2) {
+            flex: 1.2;
+            padding-left: 60px;
+        }
+
+        &:last-child {
+            text-align: right;
+            padding-right: 0;
+            /* Remove right padding from last cell */
+        }
+    }
+}
