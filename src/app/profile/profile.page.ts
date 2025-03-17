@@ -36,6 +36,11 @@ export class ProfilePage {
       link: '/store',
     },
     {
+      icon: '../../assets/icon/subscribe.svg',
+      title: 'Subscription',
+      link: '/subscription',
+    },
+    {
       icon: '../../assets/icon/gear 1.svg',
       title: 'Settings',
       link: '/settings',
