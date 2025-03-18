@@ -1,0 +1,79 @@
+.container {
+    padding: 16px;
+    background-color: #FFFFFF;
+    height: 100%;
+
+    .back-arrow {
+        position: absolute;
+        top: 35px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+
+    .framer {
+        color: #505050;
+        text-align: center;
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+
+    .message {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 16px;
+
+        .invite-message {
+            font-weight: 700;
+            font-size: 16px;
+
+        }
+    }
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+
+        label {
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            background: #fff;
+            margin-top: 8px;
+
+            .email-text {
+                flex: 1;
+                color: #333;
+                font-size: 16px;
+            }
+
+            .invite-btn,
+            .copy-btn {
+                background: #7b462f;
+                color: white;
+                border: none;
+                padding: 11px 12px;
+                border-radius: 6px;
+                font-size: 14px;
+                cursor: pointer;
+            }
+        }
+    }
+
+}

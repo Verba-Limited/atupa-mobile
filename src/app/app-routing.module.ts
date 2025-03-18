@@ -158,6 +158,10 @@ const routes: Routes = [
     path: 'notification',
     loadChildren: () => import('./notification/notification.module').then( m => m.NotificationPageModule)
   },
+  {
+    path: 'invite',
+    loadChildren: () => import('./invite/invite.module').then( m => m.InvitePageModule)
+  },
 ];
 
 @NgModule({

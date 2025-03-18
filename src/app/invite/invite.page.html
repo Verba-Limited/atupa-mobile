@@ -1,0 +1,38 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Invite Friends</h2>
+    </div>
+
+    <div class="message">
+      <img src="../../assets/icon/invite.svg" alt="" />
+      <p class="invite-message">
+        Invite friends to this application with their email or share your invite
+        link
+      </p>
+    </div>
+
+    <div style="margin-top: 16px">
+      <div class="input-group">
+        <label>Email</label>
+        <div class="input-box">
+          <span class="email-text">Promiseqatar&#64;gmail.com</span>
+          <button class="invite-btn">Invite</button>
+        </div>
+      </div>
+      <br />
+      <div class="input-group">
+        <label>Share your invite link</label>
+        <div class="input-box">
+          <span class="email-text">Promiseqatar&#64;gmail.com</span>
+          <button class="copy-btn">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

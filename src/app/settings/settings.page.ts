@@ -45,25 +45,25 @@ export class SettingsPage {
       id: 4,
       name: 'Invite a friend',
       // arrow: 'assets/icon/Rectangle223.svg',
-      link: 'invite',
+      link: '/invite',
     },
     {
       id: 6,
       name: 'Help',
       // arrow: 'assets/icon/Rectangle223.svg',
-      link: 'help',
+      link: '/help',
     },
     {
       id: 7,
       name: 'Privacy Policy ',
       // arrow: 'assets/icon/Rectangle223.svg',
-      link: 'privacy',
+      link: '/privacy',
     },
     {
       id: 8,
       name: 'Terms and Condition',
       // arrow: 'assets/icon/Rectangle223.svg',
-      link: 'terms',
+      link: '/terms',
     },
   ];
 }
