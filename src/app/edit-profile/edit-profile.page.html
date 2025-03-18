@@ -1,13 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>edit-profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">edit-profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Edit Profile</h2>
+    </div>
+
+    <div class="profile-container">
+      <div class="profile-image">
+        <img
+          [src]="profileImage || '../../assets/icon/Group 597.svg'"
+          alt="Profile"
+        />
+        <input
+          type="file"
+          #fileInput
+          accept="image/*"
+          (change)="onFileSelected($event)"
+          hidden
+        />
+      </div>
+      <div class="camera-icon" (click)="fileInput.click()">
+        <ion-icon class="camera" name="camera"></ion-icon>
+      </div>
+    </div>
+
+    <br />
+    <div class="form-container">
+      <div>
+        <p>Full Name</p>
+        <ion-input class="input-field" placeholder="Promise Qatar"></ion-input>
+      </div>
+
+      <div>
+        <p>Email Address</p>
+        <ion-input
+          class="input-field"
+          placeholder="Promiseqatar@gmail.com"
+        ></ion-input>
+      </div>
+    </div>
+  </div>
 </ion-content>

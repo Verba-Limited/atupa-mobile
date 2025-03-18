@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-profile',
@@ -9,8 +9,22 @@ import { IonicModule } from '@ionic/angular';
   styleUrls: ['./edit-profile.page.scss'],
   imports: [IonicModule, RouterModule, CommonModule],
 })
-export class EditProfilePage implements OnInit {
-  constructor() {}
+export class EditProfilePage {
+  profileImage: string | ArrayBuffer | null = null;
+  constructor(private navCtrl: NavController) {}
 
-  ngOnInit() {}
+  navigateBack() {
+    this.navCtrl.back();
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profileImage = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 }

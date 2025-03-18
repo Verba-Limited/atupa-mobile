@@ -1,0 +1,118 @@
+.container {
+    padding: 16px;
+    background-color: #FFFFFF;
+    height: 100%;
+
+    .back-arrow {
+        position: absolute;
+        top: 35px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+
+    .framer {
+        color: #505050;
+        text-align: center;
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+
+
+
+    .profile-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .profile-image {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid #d4af37; // Golden border color
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+    }
+
+    .camera-icon {
+        position: absolute;
+        top: 24%;
+        left: 56%;
+        background: brown;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .camera {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .form-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        .input-field {
+            width: 100%;
+            height: 52px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            background: #fff;
+            --padding-start: 12px;
+            --padding-end: 12px;
+            // margin: 0;
+        }
+
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 5px;
+
+            .small-input {
+                width: 48%;
+                height: 45px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                padding: 0 10px;
+                background: #fff;
+                --padding-start: 12px;
+                --padding-end: 12px;
+            }
+
+            .cvv-input {
+                --padding-end: 30px;
+
+                .info-icon {
+                    color: #ccc;
+                    font-size: 20px;
+                    margin-right: 8px;
+                }
+            }
+        }
+    }
+}
