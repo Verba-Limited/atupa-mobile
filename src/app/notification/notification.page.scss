@@ -1,0 +1,55 @@
+.container {
+    padding: 10px;
+    background-color: #ffffff;
+    height: 100%;
+
+    .back-arrow {
+        position: absolute;
+        top: 35px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .framer {
+        color: #505050;
+        text-align: center;
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+
+
+    .notification-container {
+        margin-top: 40px;
+
+        ion-list {
+            background: transparent;
+        }
+
+
+        ion-item {
+            --background: #ffffff;
+            margin-bottom: 12px;
+
+
+            ion-label {
+                font-size: 16px;
+                color: #333;
+            }
+
+            /* Customize the toggle color */
+            ion-toggle {
+                --width: 37px;
+                --height: 21px;
+                --track-background: #ccc;
+                --track-background-checked: #7B462F;
+                --handle-background: #fff;
+                --handle-background-checked: #fff;
+            }
+        }
+    }
+}

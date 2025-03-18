@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Notification</h2>
+    </div>
+
+    <div class="notification-container">
+      <ion-list lines="none">
+        <!-- Show Notification Toggle -->
+        <ion-item>
+          <ion-label slot="start">Show notification</ion-label>
+          <ion-toggle
+            slot="end"
+            [(ngModel)]="showNotification"
+            (ionChange)="onShowNotificationChange($event)"
+          ></ion-toggle>
+        </ion-item>
+
+        <!-- Allow Sound Toggle -->
+        <ion-item>
+          <ion-label slot="start">Allow sound</ion-label>
+          <ion-toggle
+            slot="end"
+            [(ngModel)]="allowSound"
+            [disabled]="!showNotification"
+          ></ion-toggle>
+        </ion-item>
+
+        <!-- Allow Vibration Toggle -->
+        <ion-item>
+          <ion-label slot="start">Allow vibration</ion-label>
+          <ion-toggle
+            slot="end"
+            [(ngModel)]="allowVibration"
+            [disabled]="!showNotification"
+          ></ion-toggle>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
