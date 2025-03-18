@@ -1,6 +1,8 @@
 .container {
+    position: relative;
+    /* Important for absolute positioning of child elements */
     padding: 16px;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     height: 100%;
 
     .back-arrow {
@@ -12,7 +14,6 @@
         cursor: pointer;
     }
 
-
     .framer {
         color: #505050;
         text-align: center;
@@ -22,8 +23,6 @@
             font-weight: 700;
         }
     }
-
-
 
     .profile-container {
         display: flex;
@@ -45,8 +44,6 @@
             height: 100%;
             object-fit: cover;
         }
-
-
     }
 
     .camera-icon {
@@ -74,6 +71,8 @@
         display: flex;
         flex-direction: column;
         gap: 16px;
+        /* Add bottom margin to ensure content doesn't overlap with the button */
+        margin-bottom: 80px;
 
         .input-field {
             width: 100%;
@@ -84,35 +83,22 @@
             background: #fff;
             --padding-start: 12px;
             --padding-end: 12px;
-            // margin: 0;
         }
+    }
 
-        .input-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 5px;
+    .pay-button {
+        position: absolute;
+        bottom: 16px;
+        /* Distance from the bottom of the container */
+        left: 16px;
+        right: 16px;
+        height: 48px;
+        --background: #7B462F;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 800;
+        text-transform: none;
 
-            .small-input {
-                width: 48%;
-                height: 45px;
-                border-radius: 6px;
-                border: 1px solid #ccc;
-                padding: 0 10px;
-                background: #fff;
-                --padding-start: 12px;
-                --padding-end: 12px;
-            }
 
-            .cvv-input {
-                --padding-end: 30px;
-
-                .info-icon {
-                    color: #ccc;
-                    font-size: 20px;
-                    margin-right: 8px;
-                }
-            }
-        }
     }
 }
