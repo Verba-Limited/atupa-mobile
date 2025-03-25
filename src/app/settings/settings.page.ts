@@ -51,7 +51,7 @@ export class SettingsPage {
       id: 6,
       name: 'Help',
       // arrow: 'assets/icon/Rectangle223.svg',
-      link: '/help',
+      link: '/aid',
     },
     {
       id: 7,

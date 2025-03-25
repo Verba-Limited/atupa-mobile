@@ -161,7 +161,11 @@ const routes: Routes = [
   {
     path: 'invite',
     loadChildren: () => import('./invite/invite.module').then( m => m.InvitePageModule)
+  },  {
+    path: 'aid',
+    loadChildren: () => import('./aid/aid.module').then( m => m.AidPageModule)
   },
+
 ];
 
 @NgModule({
