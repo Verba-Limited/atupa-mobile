@@ -169,6 +169,10 @@ const routes: Routes = [
     path: 'policy',
     loadChildren: () => import('./policy/policy.module').then( m => m.PolicyPageModule)
   },
+  {
+    path: 'terms',
+    loadChildren: () => import('./terms/terms.module').then( m => m.TermsPageModule)
+  },
 
 ];
 
