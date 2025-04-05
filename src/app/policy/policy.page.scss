@@ -19,7 +19,23 @@
 
         h2 {
             font-size: 20px;
+            font-weight: 800;
+        }
+    }
+
+    .info-section {
+        margin-top: 40px;
+
+        .update {
+            color: #ACABAB;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .head {
+            font-size: 16px;
             font-weight: 700;
+            color: #2E2E2E;
         }
     }
 }
