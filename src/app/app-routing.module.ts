@@ -165,6 +165,10 @@ const routes: Routes = [
     path: 'aid',
     loadChildren: () => import('./aid/aid.module').then( m => m.AidPageModule)
   },
+  {
+    path: 'policy',
+    loadChildren: () => import('./policy/policy.module').then( m => m.PolicyPageModule)
+  },
 
 ];
 

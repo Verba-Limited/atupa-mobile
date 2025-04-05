@@ -1,0 +1,25 @@
+.container {
+    padding: 16px;
+    background-color: #FFFFFF;
+    height: 100%;
+
+    .back-arrow {
+        position: absolute;
+        top: 35px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+
+    .framer {
+        color: #505050;
+        text-align: center;
+
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+}
