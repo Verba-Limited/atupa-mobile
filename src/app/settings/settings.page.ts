@@ -51,13 +51,13 @@ export class SettingsPage {
       id: 6,
       name: 'Help',
       // arrow: 'assets/icon/Rectangle223.svg',
-      link: '/help',
+      link: '/aid',
     },
     {
       id: 7,
       name: 'Privacy Policy ',
       // arrow: 'assets/icon/Rectangle223.svg',
-      link: '/privacy',
+      link: '/policy',
     },
     {
       id: 8,

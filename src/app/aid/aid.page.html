@@ -1,0 +1,51 @@
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2>Help</h2>
+    </div>
+    <div class="subtitle">
+      <div class="text-section">
+        <h2>Tell us how our support team can help</h2>
+        <p>
+          Any request, inquiries or complaints? <br />
+          We will love to hear from you.
+        </p>
+      </div>
+      <div class="subtitle2">
+        <div class="email-contact">
+          <img src="../../assets/icon/email 1.svg" alt="email-icon" />
+          <div class="email-text">
+            <h3>Email</h3>
+            <p>Send us a mail and get feedback instant</p>
+          </div>
+          <img
+            src="../../assets/icon/Vector002.svg"
+            alt="email-icon"
+            class="arrow"
+          />
+        </div>
+        <div class="email-contact" (click)="openWhatsApp()">
+          <img
+            src="../../assets/icon/Vector(102).svg"
+            alt="email-icon"
+            class="icon"
+          />
+          <div class="email-text">
+            <h3>Chat us on Whatsapp</h3>
+            <p>Send us a message and we would reply</p>
+          </div>
+          <img
+            src="../../assets/icon/Vector002.svg"
+            alt="email-icon"
+            class="arrow"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
