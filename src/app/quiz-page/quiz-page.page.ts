@@ -27,178 +27,179 @@ interface QuizQuestion {
   standalone: true, // If using standalone components
 })
 export class QuizPagePage {
+  modalOpen = false;
 
   quizQuestions: QuizQuestion[] = [
     {
-      "id": "101",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 1,
-      "question": "Kini 1 ni Yoruba?",
-      "options": {
-        "option1": "Mefa",
-        "option2": "Okan",
-        "option3": "Marun",
-        "option4": "Meji"
+      id: '101',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 1,
+      question: 'Kini 1 ni Yoruba?',
+      options: {
+        option1: 'Mefa',
+        option2: 'Okan',
+        option3: 'Marun',
+        option4: 'Meji',
       },
-      "answer": "option2",
-      "explanation": "1 in Yoruba is 'Okan'.",
-      "picture": "https://example.com/images/question_101.png",
-      "points": 10
+      answer: 'option2',
+      explanation: "1 in Yoruba is 'Okan'.",
+      picture: 'https://example.com/images/question_101.png',
+      points: 10,
     },
     {
-      "id": "102",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 2,
-      "question": "Kini 5 ni Yoruba?",
-      "options": {
-        "option1": "Marun",
-        "option2": "Mefa",
-        "option3": "Meje",
-        "option4": "Merin"
+      id: '102',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 2,
+      question: 'Kini 5 ni Yoruba?',
+      options: {
+        option1: 'Marun',
+        option2: 'Mefa',
+        option3: 'Meje',
+        option4: 'Merin',
       },
-      "answer": "option1",
-      "explanation": "5 in Yoruba is 'Marun'.",
-      "picture": "https://example.com/images/question_102.png",
-      "points": 10
+      answer: 'option1',
+      explanation: "5 in Yoruba is 'Marun'.",
+      picture: 'https://example.com/images/question_102.png',
+      points: 10,
     },
     {
-      "id": "103",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 3,
-      "question": "Kini 10 ni Yoruba?",
-      "options": {
-        "option1": "Mewa",
-        "option2": "Mejo",
-        "option3": "Meje",
-        "option4": "Mefa"
+      id: '103',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 3,
+      question: 'Kini 10 ni Yoruba?',
+      options: {
+        option1: 'Mewa',
+        option2: 'Mejo',
+        option3: 'Meje',
+        option4: 'Mefa',
       },
-      "answer": "option1",
-      "explanation": "10 in Yoruba is 'Mewa'.",
-      "picture": "https://example.com/images/question_103.png",
-      "points": 10
+      answer: 'option1',
+      explanation: "10 in Yoruba is 'Mewa'.",
+      picture: 'https://example.com/images/question_103.png',
+      points: 10,
     },
     {
-      "id": "104",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 4,
-      "question": "Kini 20 ni Yoruba?",
-      "options": {
-        "option1": "Mewa",
-        "option2": "Ogun",
-        "option3": "Mokanla",
-        "option4": "Okan"
+      id: '104',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 4,
+      question: 'Kini 20 ni Yoruba?',
+      options: {
+        option1: 'Mewa',
+        option2: 'Ogun',
+        option3: 'Mokanla',
+        option4: 'Okan',
       },
-      "answer": "option2",
-      "explanation": "20 in Yoruba is 'Ogun'.",
-      "picture": "https://example.com/images/question_104.png",
-      "points": 10
+      answer: 'option2',
+      explanation: "20 in Yoruba is 'Ogun'.",
+      picture: 'https://example.com/images/question_104.png',
+      points: 10,
     },
     {
-      "id": "105",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 5,
-      "question": "Kini 50 ni Yoruba?",
-      "options": {
-        "option1": "Ogota",
-        "option2": "Ogbon",
-        "option3": "Aadota",
-        "option4": "Ogofa"
+      id: '105',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 5,
+      question: 'Kini 50 ni Yoruba?',
+      options: {
+        option1: 'Ogota',
+        option2: 'Ogbon',
+        option3: 'Aadota',
+        option4: 'Ogofa',
       },
-      "answer": "option3",
-      "explanation": "50 in Yoruba is 'Aadota'.",
-      "picture": "https://example.com/images/question_105.png",
-      "points": 10
+      answer: 'option3',
+      explanation: "50 in Yoruba is 'Aadota'.",
+      picture: 'https://example.com/images/question_105.png',
+      points: 10,
     },
     {
-      "id": "106",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 6,
-      "question": "Kini 100 ni Yoruba?",
-      "options": {
-        "option1": "Ogorun",
-        "option2": "Ogun",
-        "option3": "Ogota",
-        "option4": "Aadorun"
+      id: '106',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 6,
+      question: 'Kini 100 ni Yoruba?',
+      options: {
+        option1: 'Ogorun',
+        option2: 'Ogun',
+        option3: 'Ogota',
+        option4: 'Aadorun',
       },
-      "answer": "option1",
-      "explanation": "100 in Yoruba is 'Ogorun'.",
-      "picture": "https://example.com/images/question_106.png",
-      "points": 10
+      answer: 'option1',
+      explanation: "100 in Yoruba is 'Ogorun'.",
+      picture: 'https://example.com/images/question_106.png',
+      points: 10,
     },
     {
-      "id": "107",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 7,
-      "question": "Kini 200 ni Yoruba?",
-      "options": {
-        "option1": "Odogun",
-        "option2": "Igba",
-        "option3": "Eedegberun",
-        "option4": "Eedegbeta"
+      id: '107',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 7,
+      question: 'Kini 200 ni Yoruba?',
+      options: {
+        option1: 'Odogun',
+        option2: 'Igba',
+        option3: 'Eedegberun',
+        option4: 'Eedegbeta',
       },
-      "answer": "option2",
-      "explanation": "200 in Yoruba is 'Igba'.",
-      "picture": "https://example.com/images/question_107.png",
-      "points": 10
+      answer: 'option2',
+      explanation: "200 in Yoruba is 'Igba'.",
+      picture: 'https://example.com/images/question_107.png',
+      points: 10,
     },
     {
-      "id": "108",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 8,
-      "question": "Kini 500 ni Yoruba?",
-      "options": {
-        "option1": "Egberun",
-        "option2": "Eedegbeta",
-        "option3": "Eedegbon",
-        "option4": "Eedegbarun"
+      id: '108',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 8,
+      question: 'Kini 500 ni Yoruba?',
+      options: {
+        option1: 'Egberun',
+        option2: 'Eedegbeta',
+        option3: 'Eedegbon',
+        option4: 'Eedegbarun',
       },
-      "answer": "option2",
-      "explanation": "500 in Yoruba is 'Eedegbeta'.",
-      "picture": "https://example.com/images/question_108.png",
-      "points": 10
+      answer: 'option2',
+      explanation: "500 in Yoruba is 'Eedegbeta'.",
+      picture: 'https://example.com/images/question_108.png',
+      points: 10,
     },
     {
-      "id": "109",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 9,
-      "question": "Kini 1000 ni Yoruba?",
-      "options": {
-        "option1": "Egbewa",
-        "option2": "Egberun",
-        "option3": "Eedegbon",
-        "option4": "Eedegbawa"
+      id: '109',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 9,
+      question: 'Kini 1000 ni Yoruba?',
+      options: {
+        option1: 'Egbewa',
+        option2: 'Egberun',
+        option3: 'Eedegbon',
+        option4: 'Eedegbawa',
       },
-      "answer": "option2",
-      "explanation": "1000 in Yoruba is 'Egberun'.",
-      "picture": "https://example.com/images/question_109.png",
-      "points": 10
+      answer: 'option2',
+      explanation: "1000 in Yoruba is 'Egberun'.",
+      picture: 'https://example.com/images/question_109.png',
+      points: 10,
     },
     {
-      "id": "110",
-      "categoryId": "1",
-      "levelNumber": 1,
-      "questionNumber": 10,
-      "question": "Kini 10,000 ni Yoruba?",
-      "options": {
-        "option1": "Egbawa",
-        "option2": "Eedegberun",
-        "option3": "Egbeta",
-        "option4": "Egbarun"
+      id: '110',
+      categoryId: '1',
+      levelNumber: 1,
+      questionNumber: 10,
+      question: 'Kini 10,000 ni Yoruba?',
+      options: {
+        option1: 'Egbawa',
+        option2: 'Eedegberun',
+        option3: 'Egbeta',
+        option4: 'Egbarun',
       },
-      "answer": "option4",
-      "explanation": "10,000 in Yoruba is 'Egbarun'.",
-      "picture": "https://example.com/images/question_110.png",
-      "points": 10
-    }
+      answer: 'option4',
+      explanation: "10,000 in Yoruba is 'Egbarun'.",
+      picture: 'https://example.com/images/question_110.png',
+      points: 10,
+    },
   ];
 
   currentQuestion: any;
@@ -225,7 +226,7 @@ export class QuizPagePage {
     eyoOwo: 20,
     ami: 15,
   };
-  
+
   usedSuggestions: Record<'ileke' | 'obi' | 'eyoOwo' | 'ami', boolean> = {
     ileke: false,
     obi: false,
@@ -263,7 +264,7 @@ export class QuizPagePage {
       badge: '4',
     },
   ];
-  
+
   isBgSoundPlaying: boolean = true;
 
   levelOption = {
@@ -274,13 +275,14 @@ export class QuizPagePage {
     totalLevelPoints: 0,
     userCumulativePoint: 0,
     percentage: 0,
-  }
+  };
 
-  constructor(private navCtrl: NavController, 
-    private router: Router, 
-    private platform: Platform, 
-    private bgAudio: BackgroundAudioService) {
-  }
+  constructor(
+    private navCtrl: NavController,
+    private router: Router,
+    private platform: Platform,
+    private bgAudio: BackgroundAudioService
+  ) {}
 
   ngOnInit() {
     this.bgAudio.play();
@@ -305,7 +307,10 @@ export class QuizPagePage {
   }
 
   calculateTotalLevelPoints() {
-    this.totalLevelPoints = this.quizQuestions.reduce((sum, q) => sum + q.points, 0);
+    this.totalLevelPoints = this.quizQuestions.reduce(
+      (sum, q) => sum + q.points,
+      0
+    );
   }
 
   startTimer() {
@@ -328,7 +333,12 @@ export class QuizPagePage {
     this.stopTimer();
     this.selectedAnswer = null;
     this.isOptionSelected = false;
-    this.usedSuggestions = { ileke: false, obi: false, eyoOwo: false, ami: false };
+    this.usedSuggestions = {
+      ileke: false,
+      obi: false,
+      eyoOwo: false,
+      ami: false,
+    };
 
     // console.log(`answeredQuestions size: ${this.answeredQuestions.size}`);
     // console.log(`quizQuestions length: ${this.quizQuestions.length}`);
@@ -384,13 +394,15 @@ export class QuizPagePage {
 
   navigateBack() {
     this.navCtrl.back();
+    this.modalOpen = false;
   }
 
   selectOption(selectedOption: any, questionIndex: number) {
     // console.log(`questionIndex: ${questionIndex}`);
     this.isOptionSelected = true;
+    this.modalOpen = true;
     this.answerQuestion(selectedOption);
-    if(questionIndex == this.quizQuestions.length) {
+    if (questionIndex == this.quizQuestions.length) {
       console.log('End of quiz for the level');
       this.evaluateLevelProgress();
     }
@@ -402,7 +414,9 @@ export class QuizPagePage {
     const currentLevel = this.currentQuestion.levelNumber;
     const nextLevel = currentLevel + 1;
 
-    const nextLevelQuestions = this.quizQuestions.find(q => q.levelNumber === nextLevel);
+    const nextLevelQuestions = this.quizQuestions.find(
+      (q) => q.levelNumber === nextLevel
+    );
 
     console.log(`nextLevelQuestions: ${nextLevelQuestions}`);
 
@@ -412,24 +426,28 @@ export class QuizPagePage {
     this.levelOption.totalAnswered = this.answeredQuestions.size;
     this.levelOption.userCumulativePoint = this.userCumulativePoint;
     this.levelOption.totalLevelPoints = this.totalLevelPoints;
-    this.levelOption.percentage = (this.levelOption.totalAnswered / this.levelOption.totalQuestions) * 100;
+    this.levelOption.percentage =
+      (this.levelOption.totalAnswered / this.levelOption.totalQuestions) * 100;
 
     console.log(`Level Option Object: ${JSON.stringify(this.levelOption)}`);
 
     if (nextLevelQuestions) {
       this.navCtrl.navigateForward(`/completed-level/${nextLevel}`);
     } else {
-      this.router.navigate(['completed-level', {levelObject: JSON.stringify(this.levelOption)}]);
+      this.router.navigate([
+        'completed-level',
+        { levelObject: JSON.stringify(this.levelOption) },
+      ]);
       // this.navCtrl.navigateForward('/completed-level');
     }
   }
-  
+
   useSuggestion(type: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
     if (this.userCumulativePoint < this.suggestionCosts[type]) return;
-  
+
     this.userCumulativePoint -= this.suggestionCosts[type];
     this.usedSuggestions[type] = true;
-  
+
     switch (type) {
       case 'ileke':
         this.removeIncorrectOptions(2);
@@ -448,14 +466,29 @@ export class QuizPagePage {
   }
 
   disableSuggestion(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
-    return this.usedSuggestions[slug] || this.userCumulativePoint < this.suggestionCosts[slug]
+    return (
+      this.usedSuggestions[slug] ||
+      this.userCumulativePoint < this.suggestionCosts[slug]
+    );
   }
-  
+
   removeIncorrectOptions(count: number) {
-    let incorrectOptions = Object.keys(this.currentQuestion.options).filter(opt => opt !== this.currentQuestion.answer);
-    incorrectOptions = incorrectOptions.sort(() => Math.random() - 0.5).slice(0, count);
-  
-    incorrectOptions.forEach(opt => delete this.currentQuestion.options[opt]);
+    let incorrectOptions = Object.keys(this.currentQuestion.options).filter(
+      (opt) => opt !== this.currentQuestion.answer
+    );
+    incorrectOptions = incorrectOptions
+      .sort(() => Math.random() - 0.5)
+      .slice(0, count);
+
+    incorrectOptions.forEach((opt) => delete this.currentQuestion.options[opt]);
+  }
+
+  openModal() {
+    this.modalOpen = true;
+  }
+
+  handleModalDismiss() {
+    this.modalOpen = false;
   }
 
   // Text to Speech Section
@@ -485,5 +518,4 @@ export class QuizPagePage {
     window.speechSynthesis.speak(utterance);
   }
   // End Text to Speech Section
-
 }

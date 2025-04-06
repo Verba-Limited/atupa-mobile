@@ -373,7 +373,7 @@ ion-content {
         @include items-center;
         justify-content: center;
         flex-direction: column;
-        padding-top: 20px;
+        padding-top: 10px;
 
         .content-new {
             @include items-center;
@@ -417,13 +417,15 @@ ion-content {
         }
     }
 
-    ion-content.correct-answer {
-        --background: #d4edda; // Light green for a correct answer
-    }
-
-    ion-content.wrong-answer {
-        --background: #f8d7da; // Light red for a wrong answer
-    }
 
 
+
+}
+
+ion-content.correct-answer {
+    --background: #F4F8EE !important;
+}
+
+ion-content.wrong-answer {
+    --background: #FFF0EE;
 }
