@@ -1,3 +1,4 @@
+<!-- category.page.html -->
 <ion-content>
   <div class="container">
     <ion-icon
@@ -29,9 +30,7 @@
           lines="full"
         >
           <!-- Image on the left -->
-          <ion-thumbnail slot="start">
-            <img [src]="cat.image" alt="category icon" />
-          </ion-thumbnail>
+          <img [src]="cat.image" alt="category icon" class="category-icon" />
 
           <!-- Category name -->
           <ion-label>{{ cat.name }}</ion-label>

@@ -1,3 +1,21 @@
+@mixin items-center {
+    display: flex;
+    align-items: center;
+}
+
+@mixin sizes ($font: 16px) {
+    font-size: $font;
+}
+
+@mixin width-sizes ($width: 16px, $height: 16px) {
+    width: $width;
+    height: $height;
+}
+
+ion-app {
+    --background: #f5f5f5;
+}
+
 ion-content {
     --background: #fff;
 
@@ -15,8 +33,7 @@ ion-content {
         }
 
         .framer {
-            display: flex;
-            align-items: center;
+            @include items-center;
             justify-content: space-between;
             text-align: center;
             color: #505050;
@@ -34,8 +51,7 @@ ion-content {
 
 
             .star {
-                display: flex;
-                align-items: center;
+                @include items-center;
                 justify-content: center;
                 gap: 7px;
                 background-image: url('../../assets/icon/Rectangle\ 14.svg');
@@ -52,8 +68,7 @@ ion-content {
                     border-radius: 100%;
                     width: 17px;
                     height: 17px;
-                    display: flex;
-                    align-items: center;
+                    @include items-center;
                     justify-content: center;
                 }
 
@@ -76,8 +91,7 @@ ion-content {
 
             .timer {
                 width: 40px;
-                display: flex;
-                align-items: center;
+                @include items-center;
                 gap: 5px;
                 margin-top: 7px;
 
@@ -100,9 +114,9 @@ ion-content {
 
         // Centering Quiz Card
         .quiz-container {
-            display: flex;
+            @include items-center;
             justify-content: center;
-            align-items: center;
+
             flex-direction: column;
             // height: calc(100vh - 100px); // Adjust based on header size
             margin-top: 15px;
@@ -129,7 +143,7 @@ ion-content {
 
         .text-content h1 {
             font-weight: 400;
-            font-size: 16px;
+            @include sizes(24px);
             line-height: 32.74px;
             color: #505050;
         }
@@ -151,26 +165,24 @@ ion-content {
         }
 
         .quiz-button {
-            position:fixed;
+            position: fixed;
             bottom: 5px;
-            width:100%;
+            width: 100%;
             margin-left: -15px;
-            
+            @include items-center;
             display: flex;
             justify-content: center;
-            align-items: center;
+
             // padding-top: 45%;
 
             .button {
-                display: flex;
-                align-items: center;
+                @include items-center;
                 justify-content: center;
                 gap: 15px;
             }
 
             .overlay-container {
-                display: flex;
-                align-items: center;
+                @include items-center;
                 gap: 20px;
 
             }
@@ -179,9 +191,9 @@ ion-content {
                 position: relative;
                 width: 67.25px;
                 height: 63.87px;
-                display: flex;
+                @include items-center;
                 justify-content: center;
-                align-items: center;
+
             }
 
             .background-image {
@@ -236,9 +248,8 @@ ion-content {
                 font-weight: bold;
                 width: 17px;
                 height: 17px;
-                display: flex;
+                @include items-center;
                 justify-content: center;
-                align-items: center;
                 border-radius: 50%;
             }
         }
@@ -265,10 +276,12 @@ ion-content {
         bottom: -5px;
         left: 20px;
         z-index: 10;
+
         img {
             width: 18px;
             margin-right: 5px;
         }
+
         p {
             color: #C23327;
             font-size: 18px;
@@ -284,15 +297,14 @@ ion-content {
     }
 
     .option {
-        display: flex;
-        align-items: center;
+        @include items-center;
         justify-content: center;
         gap: 8px;
         background: #f5f5f5;
         border-radius: 12px;
         width: 160px;
         height: 60px;
-        font-size: 16px;
+        @include sizes();
         font-weight: 600;
         color: #505050;
         cursor: pointer;
@@ -301,8 +313,7 @@ ion-content {
 
     .option input {
         appearance: none;
-        width: 16px;
-        height: 16px;
+        @include width-sizes();
         border: 2px solid #bbb;
         border-radius: 50%;
         outline: none;
@@ -313,8 +324,7 @@ ion-content {
         position: absolute;
         top: 0;
         left: 0;
-        width: 16px;
-        height: 16px;
+        @include width-sizes();
         z-index: 2;
     }
 
@@ -328,8 +338,7 @@ ion-content {
     }
 
     .option.correct label {
-        display: flex;
-        align-items: center;
+        @include items-center;
         gap: 5px;
         color: #6b8e23;
         font-weight: 700;
@@ -348,16 +357,11 @@ ion-content {
     }
 
     .option.incorrect label {
-        display: flex;
-        align-items: center;
+        @include items-center;
         gap: 5px;
         color: #C23327;
         font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        color: #e74c3c;
-        font-weight: 700;
+
 
     }
 
@@ -365,35 +369,25 @@ ion-content {
         width: 20px;
     }
 
-
-    // .quiz-button {
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     .button {
-    //         display: flex;
-    //         align-items: center;
-    //         gap: 15px;
-    //         padding-top: 35%;
-    //     }
-    // }
-
     .new-content {
-        display: flex;
+        @include items-center;
         justify-content: center;
-        align-items: center;
         flex-direction: column;
+        padding-top: 20px;
+
+        .content-new {
+            @include items-center;
+            flex-direction: column;
+        }
 
         .sub-content {
-            display: flex;
-            align-items: center;
+            @include items-center;
             margin-top: 20px;
             color: #2E2E2E;
         }
 
         .sub-content2 {
-            display: flex;
-            align-items: center;
+            @include items-center;
             margin-top: 20px;
         }
 
@@ -411,16 +405,25 @@ ion-content {
 
         .explain {
             color: #2E2E2E;
-            font-size: 16px;
+            @include sizes();
             font-weight: 700;
         }
 
         .paragram {
             color: #505050;
-            font-size: 16px;
+            @include sizes();
             font-weight: 400;
             line-height: 5px;
         }
     }
+
+    ion-content.correct-answer {
+        --background: #d4edda; // Light green for a correct answer
+    }
+
+    ion-content.wrong-answer {
+        --background: #f8d7da; // Light red for a wrong answer
+    }
+
 
 }

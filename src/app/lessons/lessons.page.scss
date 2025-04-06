@@ -1,3 +1,9 @@
+@mixin item-center {
+    display: flex;
+    align-items: center;
+}
+
+
 .header-background {
     background-image: url('../../assets/icon/Rectanglelesson.svg');
     background-position: center;
@@ -37,7 +43,9 @@
 
 
 .White-container {
-    padding: 16px;
+    padding: 10px;
+    margin-top: -12px;
+
 
     .owe {
         font-size: 20px;
@@ -47,8 +55,7 @@
 }
 
 .image-section {
-    display: flex;
-    align-items: center;
+    @include item-center;
     gap: 9px;
 
     .title {
@@ -67,8 +74,7 @@
 }
 
 .image-section1 {
-    display: flex;
-    align-items: center;
+    @include item-center;
     gap: 9px;
     margin-left: 80px;
 
@@ -102,9 +108,9 @@
 }
 
 .setion {
-    display: flex;
+    @include item-center;
     justify-content: space-between;
-    align-items: center;
+
 }
 
 .inti {
