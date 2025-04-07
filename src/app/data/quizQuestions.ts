@@ -2,6 +2,7 @@ export const quizQuestions = [
     {
       id: '101',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 1,
       question: 'Kini 1 ni Yoruba?',
@@ -19,6 +20,7 @@ export const quizQuestions = [
     {
       id: '102',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 2,
       question: 'Kini 5 ni Yoruba?',
@@ -36,6 +38,7 @@ export const quizQuestions = [
     {
       id: '103',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 3,
       question: 'Kini 10 ni Yoruba?',
@@ -53,6 +56,7 @@ export const quizQuestions = [
     {
       id: '104',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 4,
       question: 'Kini 20 ni Yoruba?',
@@ -70,6 +74,7 @@ export const quizQuestions = [
     {
       id: '105',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 5,
       question: 'Kini 50 ni Yoruba?',
@@ -87,6 +92,7 @@ export const quizQuestions = [
     {
       id: '106',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 6,
       question: 'Kini 100 ni Yoruba?',
@@ -104,6 +110,7 @@ export const quizQuestions = [
     {
       id: '107',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 7,
       question: 'Kini 200 ni Yoruba?',
@@ -121,6 +128,7 @@ export const quizQuestions = [
     {
       id: '108',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 8,
       question: 'Kini 500 ni Yoruba?',
@@ -138,6 +146,7 @@ export const quizQuestions = [
     {
       id: '109',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 9,
       question: 'Kini 1000 ni Yoruba?',
@@ -155,6 +164,7 @@ export const quizQuestions = [
     {
       id: '110',
       categoryId: '1',
+      categoryName: 'onka',
       levelNumber: 1,
       questionNumber: 10,
       question: 'Kini 10,000 ni Yoruba?',
@@ -175,6 +185,7 @@ export const animalQuestions = [
   {
     id: '201',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 1,
     question: 'Kini Tiger ni Yoruba?',
@@ -192,6 +203,7 @@ export const animalQuestions = [
   {
     id: '202',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 2,
     question: 'Kini Lion ni Yoruba?',
@@ -209,6 +221,7 @@ export const animalQuestions = [
   {
     id: '203',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 3,
     question: 'Kini Elephant ni Yoruba?',
@@ -226,6 +239,7 @@ export const animalQuestions = [
   {
     id: '204',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 4,
     question: 'Kini Dog ni Yoruba?',
@@ -243,6 +257,7 @@ export const animalQuestions = [
   {
     id: '205',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 5,
     question: 'Kini Cat ni Yoruba?',
@@ -260,6 +275,7 @@ export const animalQuestions = [
   {
     id: '206',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 6,
     question: 'Kini Fish ni Yoruba?',
@@ -277,6 +293,7 @@ export const animalQuestions = [
   {
     id: '207',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 7,
     question: 'Kini Goat ni Yoruba?',
@@ -294,6 +311,7 @@ export const animalQuestions = [
   {
     id: '208',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 8,
     question: 'Kini Cow ni Yoruba?',
@@ -311,6 +329,7 @@ export const animalQuestions = [
   {
     id: '209',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 9,
     question: 'Kini Horse ni Yoruba?',
@@ -328,6 +347,7 @@ export const animalQuestions = [
   {
     id: '210',
     categoryId: '2',
+    categoryName: 'eranko',
     levelNumber: 1,
     questionNumber: 10,
     question: 'Kini Chicken ni Yoruba?',
