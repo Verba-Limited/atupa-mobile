@@ -128,13 +128,13 @@ ion-content {
             background-repeat: no-repeat;
             background-size: cover;
             width: 349px;
-            height: 251px;
+            // height: 251px;
             position: relative;
-            /* Allows absolute positioning inside */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             padding: 20px;
+            border-radius: 30px;;
         }
 
         .text-content {
@@ -144,7 +144,7 @@ ion-content {
         .text-content h1 {
             font-weight: 400;
             @include sizes(24px);
-            line-height: 32.74px;
+            line-height: 15.74px;
             color: #505050;
         }
 
@@ -253,6 +253,15 @@ ion-content {
                 border-radius: 50%;
             }
         }
+
+        .question-picture {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 30px;
+            margin-top: 20px;
+            box-shadow: 0 0 8px 8px white inset;
+        }
     }
 
     .text-content p {
@@ -293,7 +302,7 @@ ion-content {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 15px;
-        margin-top: 40px;
+        margin-top: 25px;
     }
 
     .option {

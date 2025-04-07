@@ -37,4 +37,8 @@ export class CompletedLevelPage {
   alllevelPage() {
     this.router.navigate(['/all-level']);
   }
+
+  goToHome() {
+    this.router.navigate(['/tabs/home-tab']);
+  }
 }
