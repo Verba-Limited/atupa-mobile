@@ -134,7 +134,8 @@ ion-content {
             flex-direction: column;
             justify-content: space-between;
             padding: 20px;
-            border-radius: 30px;;
+            border-radius: 30px;
+            ;
         }
 
         .text-content {
@@ -172,8 +173,6 @@ ion-content {
             @include items-center;
             display: flex;
             justify-content: center;
-
-            // padding-top: 45%;
 
             .button {
                 @include items-center;
@@ -298,138 +297,160 @@ ion-content {
         }
     }
 
-    .options-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin-top: 25px;
-    }
+    .options-content {
+        position: relative;
 
-    .option {
-        @include items-center;
-        justify-content: center;
-        gap: 8px;
-        background: #f5f5f5;
-        border-radius: 12px;
-        width: 160px;
-        height: 60px;
-        @include sizes();
-        font-weight: 600;
-        color: #505050;
-        cursor: pointer;
-        border: 2px solid transparent;
-    }
-
-    .option input {
-        appearance: none;
-        @include width-sizes();
-        border: 2px solid #bbb;
-        border-radius: 50%;
-        outline: none;
-
-    }
-
-    .check-icon {
-        position: absolute;
-        top: 0;
-        left: 0;
-        @include width-sizes();
-        z-index: 2;
-    }
-
-    // .option input:checked {
-    //     border-color: #6b8e23;
-    // }
-
-    .option.correct {
-        border: 2px solid #6b8e23;
-        background: white;
-    }
-
-    .option.correct label {
-        @include items-center;
-        gap: 5px;
-        color: #6b8e23;
-        font-weight: 700;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .option.correct img {
-        width: 20px;
-    }
-
-    .option.incorrect {
-        border: 2px solid #C23327;
-        background: white;
-    }
-
-    .option.incorrect label {
-        @include items-center;
-        gap: 5px;
-        color: #C23327;
-        font-weight: 700;
-
-
-    }
-
-    .option.incorrect img {
-        width: 20px;
-    }
-
-    .new-content {
-        @include items-center;
-        justify-content: center;
-        flex-direction: column;
-        padding-top: 10px;
-
-        .content-new {
-            @include items-center;
-            flex-direction: column;
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
         }
 
-        .sub-content {
-            @include items-center;
-            margin-top: 20px;
-            color: #2E2E2E;
+        .correct-answerImg {
+            position: absolute;
+            top: 83%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            // z-index: 10;
+            z-index: 999;
+            opacity: 1;
+            transition: opacity 2s ease;
         }
 
-        .sub-content2 {
-            @include items-center;
-            margin-top: 20px;
-        }
-
-        .create-account {
-            --background: #7B462F;
-            --color: white;
-            height: 52px;
-            text-transform: none;
-            --border-radius: 10px;
-            font-weight: 700;
-            margin-top: 10px;
-            width: 343px;
-            --box-shadow: none;
-        }
-
-        .explain {
-            color: #2E2E2E;
-            @include sizes();
-            font-weight: 700;
-        }
-
-        .paragram {
-            color: #505050;
-            @include sizes();
-            font-weight: 400;
-            line-height: 5px;
+        .correct-answerImg.fade-out {
+            opacity: 0;
         }
     }
+}
 
 
+
+.option {
+    @include items-center;
+    justify-content: center;
+    gap: 8px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    width: 160px;
+    height: 60px;
+    @include sizes();
+    font-weight: 600;
+    color: #505050;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.option input {
+    appearance: none;
+    @include width-sizes();
+    border: 2px solid #bbb;
+    border-radius: 50%;
+    outline: none;
+
+}
+
+.check-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include width-sizes();
+    z-index: 2;
+}
+
+// .option input:checked {
+//     border-color: #6b8e23;
+// }
+
+.option.correct {
+    border: 2px solid #6b8e23;
+    background: white;
+}
+
+.option.correct label {
+    @include items-center;
+    gap: 5px;
+    color: #6b8e23;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option.correct img {
+    width: 20px;
+}
+
+.option.incorrect {
+    border: 2px solid #C23327;
+    background: white;
+}
+
+.option.incorrect label {
+    @include items-center;
+    gap: 5px;
+    color: #C23327;
+    font-weight: 700;
 
 
 }
+
+.option.incorrect img {
+    width: 20px;
+}
+
+.new-content {
+    @include items-center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 10px;
+
+    .content-new {
+        @include items-center;
+        flex-direction: column;
+    }
+
+    .sub-content {
+        @include items-center;
+        margin-top: 20px;
+        color: #2E2E2E;
+    }
+
+    .sub-content2 {
+        @include items-center;
+        margin-top: 20px;
+    }
+
+    .create-account {
+        --background: #7B462F;
+        --color: white;
+        height: 52px;
+        text-transform: none;
+        --border-radius: 10px;
+        font-weight: 700;
+        margin-top: 10px;
+        width: 343px;
+        --box-shadow: none;
+    }
+
+    .explain {
+        color: #2E2E2E;
+        @include sizes();
+        font-weight: 700;
+    }
+
+    .paragram {
+        color: #505050;
+        @include sizes();
+        font-weight: 400;
+        line-height: 5px;
+    }
+}
+
+
+
+
+
 
 ion-content.correct-answer {
     --background: #F4F8EE !important;

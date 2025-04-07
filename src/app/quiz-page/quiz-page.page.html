@@ -50,8 +50,13 @@
             </h1>
 
             <!-- <img src="../../assets/icon/Rectangle 67.svg" alt="" /> -->
-             <div class="question-picture" *ngIf="currentQuestion.picture">
-              <img src="{{currentQuestion.picture}}" alt="" width="100%" height="100%" />
+            <div class="question-picture" *ngIf="currentQuestion.picture">
+              <img
+                src="{{currentQuestion.picture}}"
+                alt=""
+                width="100%"
+                height="100%"
+              />
             </div>
 
             <p>{{ currentQuestion.question }}</p>
@@ -73,22 +78,32 @@
           </div>
         </div>
 
-        <div class="options-container">
+        <div class="options-content">
+          <div class="options-container">
+            <div
+              class="option"
+              *ngFor="let key of getOptionKeys();"
+              (click)="selectOption(key, questionIndex)"
+              [class.correct]="isOptionSelected && correctOption && (key === currentQuestion.answer)"
+              [class.incorrect]="isOptionSelected && !correctOption && (key === wrongAnswer)"
+            >
+              <input
+                type="radio"
+                [id]="key"
+                name="quiz"
+                [checked]="isOptionSelected"
+                [disabled]="isOptionSelected"
+              />
+              <label [for]="key">{{ currentQuestion.options[key] }}</label>
+            </div>
+          </div>
+
           <div
-            class="option"
-            *ngFor="let key of getOptionKeys();"
-            (click)="selectOption(key, questionIndex)"
-            [class.correct]="isOptionSelected && correctOption && (key === currentQuestion.answer)"
-            [class.incorrect]="isOptionSelected && !correctOption && (key === wrongAnswer)"
+            class="correct-answerImg"
+            *ngIf="showFeedback"
+            [ngClass]="{'fade-out': feedbackFadeOut}"
           >
-            <input
-              type="radio"
-              [id]="key"
-              name="quiz"
-              [checked]="isOptionSelected"
-              [disabled]="isOptionSelected"
-            />
-            <label [for]="key">{{ currentQuestion.options[key] }}</label>
+            <img [src]="selectedFeedbackImage" alt="" />
           </div>
         </div>
       </div>
@@ -123,22 +138,23 @@
         </div>
       </div>
 
-
       <ion-modal
         #modal
         trigger="open-modal"
-        [isOpen]="true"
+        [isOpen]="modalOpen"
         [initialBreakpoint]="0.33"
         [breakpoints]="[0.33]"
         [backdropDismiss]="true"
         [backdropBreakpoint]="0.5"
         (ionModalDidDismiss)="handleModalDismiss()"
-        *ngIf="isOptionSelected">
+        *ngIf="isOptionSelected"
+      >
         <ng-template>
           <ion-content
             [ngClass]="{
         'correct-answer': selectedAnswer === currentQuestion.answer,
-        'wrong-answer': selectedAnswer && selectedAnswer !== currentQuestion.answer}">
+        'wrong-answer': selectedAnswer && selectedAnswer !== currentQuestion.answer}"
+          >
             <div class="new-content" *ngIf="isOptionSelected">
               <div class="new-content">
                 <h3 class="explain">Explanation</h3>
@@ -175,7 +191,8 @@
                 <div class="new-content">
                   <h3>Level Completed!</h3>
                   <p>
-                    Your Score: {{ userCumulativePoint }} / {{ totalLevelPoints }}
+                    Your Score: {{ userCumulativePoint }} / {{ totalLevelPoints
+                    }}
                   </p>
                 </div>
                 <ion-button

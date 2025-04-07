@@ -30,5 +30,8 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "files": [
+    "src/app/data/quizQuestions.ts"
+  ]
 }
