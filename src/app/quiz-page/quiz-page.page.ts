@@ -29,7 +29,7 @@ interface QuizQuestion {
   standalone: true, // If using standalone components
 })
 export class QuizPagePage {
-  modalOpen = false;
+  // modalOpen = false;
 
   // quizQuestions: QuizQuestion[] = quizQuestions;
   quizQuestions: QuizQuestion[] = animalQuestions;
@@ -215,11 +215,13 @@ export class QuizPagePage {
   selectedAnswer: any;
   levelCompleted = false;
   timerInterval: any;
-
+  modalOpen: boolean = false;
   isOptionSelected: boolean = false;
-
+  selectedFeedbackImage: string = '';
+  feedbackFadeOut: boolean = false;
   correctOption: boolean = false;
   wrongAnswer: any;
+  showFeedback: boolean = false;
 
   questionIndex: number = 0;
 
@@ -362,6 +364,15 @@ export class QuizPagePage {
     }
   }
 
+  correctImages: string[] = [
+    '../../assets/icon/rightone.svg',
+    '../../assets/icon/righttwo.svg',
+  ];
+  wrongImages: string[] = [
+    '../../assets/icon/wrongone.svg',
+    '../../assets/icon/wrongtwo.svg',
+  ];
+
   answerQuestion(option: string) {
     if (!this.selectedAnswer) {
       this.selectedAnswer = option;
@@ -405,17 +416,55 @@ export class QuizPagePage {
   selectOption(selectedOption: any, questionIndex: number) {
     // console.log(`questionIndex: ${questionIndex}`);
     this.isOptionSelected = true;
-    this.modalOpen = true;
+    this.feedbackFadeOut = false;
+    this.showFeedback = true;
     this.answerQuestion(selectedOption);
+
+    const correctAnswer = this.currentQuestion.answer;
+    let newImage: string;
+
+    if (selectedOption === correctAnswer) {
+      do {
+        newImage =
+          this.correctImages[
+            Math.floor(Math.random() * this.correctImages.length)
+          ];
+      } while (
+        newImage === this.selectedFeedbackImage &&
+        this.selectedFeedbackImage.length > 1
+      );
+    } else {
+      do {
+        newImage =
+          this.wrongImages[Math.floor(Math.random() * this.wrongImages.length)];
+      } while (
+        newImage === this.selectedFeedbackImage &&
+        this.wrongImages.length > 1
+      );
+    }
+
+    this.selectedFeedbackImage = newImage;
+
     if (questionIndex == this.quizQuestions.length) {
       console.log('End of quiz for the level');
       this.evaluateLevelProgress();
     }
+
+    this.modalOpen = false;
+
+    setTimeout(() => {
+      this.feedbackFadeOut = true;
+    }, 3000);
+
+    setTimeout(() => {
+      this.modalOpen = true;
+      this.showFeedback = false;
+    }, 3000);
   }
 
   goToNextLevel() {
     this.stopBackgroundAudio();
-    
+
     if (!this.currentQuestion) return;
 
     const currentLevel = this.currentQuestion.levelNumber;
