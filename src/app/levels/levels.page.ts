@@ -30,19 +30,24 @@ export class LevelsPage {
     this.router.navigate(['/quiz-page']);
   }
 
+  // goToPage (page: string) {
+  //   this.router.navigate(['/quiz-page', { page: page }]);
+  // }
+
   goToPage (page: string) {
     switch (page) {
       case 'onka':
-        this.router.navigate(['/quiz-page']);
+        this.router.navigate(['/quiz-page', { page: page }]);
         break;
       case 'eranko':
-        this.router.navigate(['/eranko-quiz']);
+        this.router.navigate(['/quiz-page', { page: page }]);
+        // this.router.navigate(['/eranko-quiz']);
         break;
       case 'owe':
-        this.router.navigate(['/owe-page']);
+        this.router.navigate(['/quiz-page', { page: page }]);
         break;
       case 'oba-ilu':
-        this.router.navigate(['/oba-ilu']);
+        this.router.navigate(['/quiz-page', { page: page }]);
         break;
       case 'ilu':
         this.router.navigate(['/ilu']);

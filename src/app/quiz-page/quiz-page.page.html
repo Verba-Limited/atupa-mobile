@@ -1,10 +1,11 @@
 <ion-content>
   <div class="container">
-    <ion-icon
-      (click)="navigateBack()"
-      name="arrow-back-outline"
-      class="back-arrow"
-    ></ion-icon>
+    <div>
+      <ion-icon (click)="navigateBack()"
+        name="arrow-back-outline"
+        class="back-arrow"></ion-icon>
+    </div>
+
     <div class="framer">
       <h2 class="onka">Onka</h2>
       <!-- <h3 class="cumuscore">{{ userCumulativePoint }}</h3> -->
@@ -19,9 +20,8 @@
       <div
         class="audio-size"
         (click)="stopBackgroundAudio()"
-        *ngIf="isBgSoundPlaying"
-      >
-        <ion-icon name="mic-off-circle-outline"></ion-icon>
+        *ngIf="isBgSoundPlaying">
+        <ion-icon name="mic-circle-outline"></ion-icon>
       </div>
 
       <div
@@ -29,7 +29,7 @@
         (click)="playBackgroundAudio()"
         *ngIf="!isBgSoundPlaying"
       >
-        <ion-icon name="mic-circle-outline"></ion-icon>
+        <ion-icon name="mic-off-circle-outline"></ion-icon>
       </div>
 
       <!-- <div class="timer">
@@ -40,12 +40,12 @@
     </div>
     <div *ngIf="currentQuestion">
       <div class="quiz-container">
-        <div class="quiz-card">
+        <div class="quiz-card" [style]="currentQuestion.picture == null ? 'height: 250px' : ''">
           <div class="text-content">
             <div>
               <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
             </div>
-            <h1 *ngIf="questionIndex <= quizQuestions.length">
+            <h1 *ngIf="questionIndex <= quizQuestions.length" [style]="currentQuestion.picture == null ? 'padding-bottom: 35px' : ''">
               Question {{ questionIndex }}/{{quizQuestions.length}}
             </h1>
 
@@ -142,23 +142,33 @@
         #modal
         trigger="open-modal"
         [isOpen]="modalOpen"
-        [initialBreakpoint]="0.33"
-        [breakpoints]="[0.33]"
+        [initialBreakpoint]="answeredQuestions.size === quizQuestions.length ? 0.5 : 0.33"
+        [breakpoints]="answeredQuestions.size === quizQuestions.length ? [0.5] : [0.33]"
         [backdropDismiss]="true"
         [backdropBreakpoint]="0.5"
         (ionModalDidDismiss)="handleModalDismiss()"
-        *ngIf="isOptionSelected"
-      >
+        *ngIf="isOptionSelected">
         <ng-template>
           <ion-content
-            [ngClass]="{
-        'correct-answer': selectedAnswer === currentQuestion.answer,
-        'wrong-answer': selectedAnswer && selectedAnswer !== currentQuestion.answer}"
-          >
+            [ngClass]="{'correct-answer': selectedAnswer === currentQuestion.answer,
+        'wrong-answer': selectedAnswer && selectedAnswer !== currentQuestion.answer}">
             <div class="new-content" *ngIf="isOptionSelected">
               <div class="new-content">
                 <h3 class="explain">Explanation</h3>
+                <p class="paragram" *ngIf="currentQuestion.fullMeaning">{{ currentQuestion.fullMeaning }}</p>
+                
                 <p class="paragram">{{ currentQuestion.explanation }}</p>
+              </div>
+
+              <div class="sub-content"
+                *ngIf="(selectedAnswer && selectedAnswer === currentQuestion.answer) && !currentQuestion.fullMeaning">
+                <img src="../../assets/icon/ekuise.svg" alt="" />
+                <p>Ku ise!</p>
+              </div>
+              <div class="sub-content"
+                *ngIf="(selectedAnswer && selectedAnswer !== currentQuestion.answer) && !currentQuestion.fullMeaning">
+                <img src="../../assets/icon/kodara.svg" alt="" />
+                <p>Ko dara!</p>
               </div>
 
               <div>
@@ -166,26 +176,11 @@
                   expand="block"
                   class="create-account"
                   (click)="loadNextQuestion()"
-                  *ngIf="isOptionSelected && (questionIndex !== quizQuestions.length)"
-                >
+                  *ngIf="isOptionSelected && (questionIndex !== quizQuestions.length)">
                   Next
                 </ion-button>
               </div>
 
-              <div
-                class="sub-content"
-                *ngIf="selectedAnswer && selectedAnswer === currentQuestion.answer"
-              >
-                <img src="../../assets/icon/ekuise.svg" alt="" />
-                <p>Ku ise!</p>
-              </div>
-              <div
-                class="sub-content"
-                *ngIf="selectedAnswer && selectedAnswer !== currentQuestion.answer"
-              >
-                <img src="../../assets/icon/kodara.svg" alt="" />
-                <p>Ko dara!</p>
-              </div>
 
               <div *ngIf="answeredQuestions.size === quizQuestions.length">
                 <div class="new-content">
@@ -218,4 +213,11 @@
       </ion-modal>
     </div>
   </div>
+
+      <!-- <ion-alert
+    trigger="present-alert"
+    header="Are you sure you want to quiz game?"
+    [buttons]="alertButtons"
+    (didDismiss)="setResult($event)"></ion-alert> -->
+
 </ion-content>

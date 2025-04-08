@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Platform, IonicModule, NavController } from '@ionic/angular';
+import { Platform, IonicModule, NavController, AlertController } from '@ionic/angular';
+import type { OverlayEventDetail } from '@ionic/core';
+
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { BackgroundAudioService } from '../services/background-audio.service';
 
-import { quizQuestions, animalQuestions } from '../data/quizQuestions'; // Import the quiz questions from the data file
+import { numberQuestions, animalQuestions, kingsQuestions, proverbsQuestions } from '../data/quizQuestions'; // Import the quiz questions from the data file
 
 interface QuizQuestion {
   id: string;
@@ -17,7 +19,7 @@ interface QuizQuestion {
   options: { [key: string]: string };
   answer: string;
   explanation: string;
-  picture: string;
+  picture: any;
   points: number;
 }
 
@@ -31,8 +33,8 @@ interface QuizQuestion {
 export class QuizPagePage {
   // modalOpen = false;
 
-  // quizQuestions: QuizQuestion[] = quizQuestions;
-  quizQuestions: QuizQuestion[] = animalQuestions;
+  quizQuestions: QuizQuestion[] = [];
+  // quizQuestions: QuizQuestion[] = animalQuestions;
 
   // quizQuestions: QuizQuestion[] = [
   //   {
@@ -284,12 +286,24 @@ export class QuizPagePage {
     percentage: 0,
   };
 
+  pageFrom: any;
+
   constructor(
     private navCtrl: NavController,
+    private alertController: AlertController,
     private router: Router,
     private platform: Platform,
-    private bgAudio: BackgroundAudioService
-  ) {}
+    private bgAudio: BackgroundAudioService,
+    private activatedRouter: ActivatedRoute
+  ) {
+    const page = this.activatedRouter.snapshot.paramMap.get('page');
+    console.log(`pageFrom: ${page}`);
+    if (page != null) {
+      this.pageFrom = page;
+      this.loadQuizQuestion(page);
+      // this.goToPage(page);
+    } 
+  }
 
   ngOnInit() {
     this.bgAudio.play();
@@ -297,6 +311,27 @@ export class QuizPagePage {
     this.shuffleQuestions();
     this.loadNextQuestion();
     this.calculateTotalLevelPoints();
+  }
+
+  // get pageFrom and load quiz questions based on the page
+  loadQuizQuestion(pageFrom: string) {
+    switch (pageFrom) {
+      case 'onka':
+        this.quizQuestions = numberQuestions;
+        break;
+      case 'eranko':
+        this.quizQuestions = animalQuestions;
+        break;
+      case 'oba-ilu':
+        this.quizQuestions = kingsQuestions;
+        break;
+      case 'owe':
+        this.quizQuestions = proverbsQuestions;
+        break;
+      default:
+        this.quizQuestions = numberQuestions;
+        break;
+    }
   }
 
   stopBackgroundAudio() {
@@ -409,8 +444,10 @@ export class QuizPagePage {
   }
 
   navigateBack() {
-    this.navCtrl.back();
-    this.modalOpen = false;
+    console.log('Navigating back');
+    // this.navCtrl.back();
+    // this.modalOpen = false;
+    this.showOptions();
   }
 
   selectOption(selectedOption: any, questionIndex: number) {
@@ -574,4 +611,58 @@ export class QuizPagePage {
     window.speechSynthesis.speak(utterance);
   }
   // End Text to Speech Section
+
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        console.log('Alert confirmed');
+      },
+    },
+  ];
+
+  setResult(event: CustomEvent<OverlayEventDetail>) {
+    console.log(`Dismissed with role: ${event.detail.role}`);
+  }
+
+  async showOptions() {
+    this.stopTimer();
+    const alert = await this.alertController.create({
+      header: "Quiz Game?",
+      message: "Are you sure you want to leave the quiz?",
+      buttons: [
+        {
+          text: "Yes",
+          role: "cancel",
+          handler: () => {
+            console.log("Declined the offer");
+            this.isOptionSelected = false;
+            this.handleModalDismiss();
+            this.stopBackgroundAudio();
+            this.bgAudio.stop();
+            this.router.navigate(['/tabs/home-tab']);
+          },
+        },
+        {
+          text: "No",
+          handler: () => {
+            this.startTimer();
+            console.log("Accepted the offer");
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
 }
