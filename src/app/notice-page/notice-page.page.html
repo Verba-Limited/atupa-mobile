@@ -1,0 +1,38 @@
+<ion-content>
+  <div class="container">
+    <ion-icon
+      (click)="navigateBack()"
+      name="arrow-back-outline"
+      class="back-arrow"
+    ></ion-icon>
+    <div class="framer">
+      <h2 class="onka">Notification</h2>
+      <img src="../../assets/icon/seticon.svg" alt="" class="image" />
+    </div>
+
+    <!-- <div class="notification-card">
+      <div class="notification-icon">
+        <img src="../../assets/icon/receipt 1.svg" alt="" />
+      </div>
+      <div>
+        <p>
+          <span>Subscription:</span> Get a monthly plan for <br />
+          20% discount rate.
+        </p>
+        <p>20 mins ago</p>
+      </div>
+    </div> -->
+    <div class="subscription" *ngFor="let item of badges">
+      <!-- Icon Section -->
+      <div class="subscription__icon">
+        <img [src]="item.imageSrc" alt="" />
+      </div>
+
+      <!-- Content Section -->
+      <div class="subscription__content">
+        <p class="subscription__content__title">{{item.title}}</p>
+        <p class="subscription__content__timestamp">20 mins ago</p>
+      </div>
+    </div>
+  </div>
+</ion-content>
