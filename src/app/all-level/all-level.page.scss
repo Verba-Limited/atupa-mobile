@@ -1,5 +1,6 @@
 ion-content {
     --background: #fff;
+
     .framer {
         color: #505050;
         text-align: center;
@@ -60,13 +61,19 @@ ion-content {
         display: flex;
         justify-content: center;
         z-index: 1;
+
+        img {
+            width: 80px;
+            height: auto;
+        }
+
+        img:nth-child(1),
+        img:nth-child(3) {
+            transform: translateY(20px);
+        }
     }
 
 
-    .stars img {
-        width: 177.01px;
-        height: 78px;
-    }
 
     .rank {
         font-weight: 700;

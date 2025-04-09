@@ -11,16 +11,21 @@
 
   <div class="quiz-wrapper">
     <div class="stars">
-      <img src="../../assets/icon/Group 43.svg" alt="Star" />
+      <img src="../../assets/icon/Rectangle 91.svg" alt="Star" />
+      <img src="../../assets/icon/Rectangle 91.svg" alt="Star2" />
+      <img src="../../assets/icon/Rectangle 93.svg" alt="Star3" />
     </div>
 
     <div class="quiz-result">
       <div class="score-container">
         <div class="progress-circle">
-          <span class="progress-text">{{ levelObject.userCumulativePoint }}%</span>
+          <span class="progress-text"
+            >{{ levelObject.userCumulativePoint }}%</span
+          >
         </div>
         <p class="score-text">
-          You answered {{ levelObject.totalAnswered }} <br /> out of {{ levelObject.totalQuestions }} questions
+          You answered {{ levelObject.totalAnswered }} <br />
+          out of {{ levelObject.totalQuestions }} questions
         </p>
       </div>
 
@@ -44,10 +49,13 @@
       <ion-button
         (click)="alllevelPage()"
         expand="block"
-        class="create-account">
+        class="create-account"
+      >
         Next Level
       </ion-button>
-      <ion-button expand="block" class="login" (click)="goToHome()"> Back to Homepage </ion-button>
+      <ion-button expand="block" class="login" (click)="goToHome()">
+        Back to Homepage
+      </ion-button>
     </div>
   </div>
 </ion-content>
