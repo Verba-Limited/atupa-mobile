@@ -347,7 +347,6 @@ ion-content {
     border: 2px solid #bbb;
     border-radius: 50%;
     outline: none;
-
 }
 
 .check-icon {
@@ -365,6 +364,9 @@ ion-content {
 .option.correct {
     border: 2px solid #6b8e23;
     background: white;
+    input {
+        background: #6b8e23;
+    }
 }
 
 .option.correct label {

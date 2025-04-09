@@ -8,7 +8,13 @@ import type { OverlayEventDetail } from '@ionic/core';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { BackgroundAudioService } from '../services/background-audio.service';
 
-import { numberQuestions, animalQuestions, kingsQuestions, proverbsQuestions } from '../data/quizQuestions'; // Import the quiz questions from the data file
+import { 
+  numberQuestions, 
+  animalQuestions, 
+  kingsQuestions, 
+  proverbsQuestions, 
+  townsQuestions 
+} from '../data/quizQuestions'; // Import the quiz questions from the data file
 
 interface QuizQuestion {
   id: string;
@@ -328,6 +334,9 @@ export class QuizPagePage {
       case 'owe':
         this.quizQuestions = proverbsQuestions;
         break;
+      case 'ilu':
+        this.quizQuestions = townsQuestions;
+        break;
       default:
         this.quizQuestions = numberQuestions;
         break;
@@ -525,8 +534,10 @@ export class QuizPagePage {
     console.log(`Level Option Object: ${JSON.stringify(this.levelOption)}`);
 
     if (nextLevelQuestions) {
+      this.isOptionSelected = false;
       this.navCtrl.navigateForward(`/completed-level/${nextLevel}`);
     } else {
+      this.isOptionSelected = false;
       this.router.navigate([
         'completed-level',
         { levelObject: JSON.stringify(this.levelOption) },

@@ -19,4 +19,9 @@ export class HomeTabPage {
   openNoticePage() {
     this.router.navigate(['/notice-page']);
   }
+
+  goToLesson() {
+    this.router.navigate(['/tabs/lesson']);
+  }
+
 }

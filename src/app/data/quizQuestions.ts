@@ -749,3 +749,185 @@ export const proverbsQuestions = [
     points: 10,
   },
 ];
+
+export const townsQuestions = [{
+  id: '501',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 1,
+  question: 'Ìlú wo ni a ti máa ń pè ní "Ìlú Òrànmíyàn"?',
+  options: {
+    option1: 'Ọ̀yọ́',
+    option2: 'Ifẹ̀',
+    option3: 'Ìjẹ̀bú',
+    option4: 'Ìlórin'
+  },
+  answer: 'option2',
+  explanation: 'Òrànmíyàn jẹ́ ọba pàtàkì nínú ìtàn Yorùbá.',
+  picture: null,
+  points: 10
+},
+{
+  id: '502',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 2,
+  question: 'Ìlú wo ni a ti máa ń pè ní "Ìlú Alágbàrà Méjì"?',
+  options: {
+    option1: 'Ìbàdàn',
+    option2: 'Ògbómọ̀ṣọ́',
+    option3: 'Òwò',
+    option4: 'Ìjẹ̀bú Òde'
+  },
+  answer: 'option2',
+  explanation: "Ògbómọ̀ṣọ́ ni a mọ̀ sí 'Ìlú Alágbàrà Méjì'.",
+  picture: null,
+  points: 10
+},
+{
+  id: '503',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 3,
+  question: 'Ìlú wo ni a mọ̀ sí ibi tí Lísábì ti wá?',
+  options: {
+    option1: 'Ègbá',
+    option2: 'Ọ̀ǹdó',
+    option3: 'Ìjẹ̀bú',
+    option4: 'Ọ̀yọ́'
+  },
+  answer: 'option1',
+  explanation: 'Lísábì ni jagunjagun olókìkí tí ìlú Ègbá.',
+  picture: null,
+  points: 10
+},
+{
+  id: '504',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 4,
+  question: 'Ìlú wo ni a ti máa ń pè ní "Ìlú Ajé"?',
+  options: {
+    option1: 'Ìjẹ̀bú Òde',
+    option2: 'Ògbómọ̀ṣọ́',
+    option3: 'Èkìtì',
+    option4: 'Èdè'
+  },
+  answer: 'option1',
+  explanation: "Ìjẹ̀bú Òde ni a mọ̀ sí 'Ìlú Ajé'.",
+  picture: null,
+  points: 10
+},
+{
+  id: '505',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 5,
+  question: 'Ìlú wo ni a mọ̀ sí "Ìlú Ọba Méjì"?',
+  options: {
+    option1: 'Ìbàdàn',
+    option2: 'Ọ̀yọ́',
+    option3: 'Ìwọ',
+    option4: 'Ògbómọ̀ṣọ́'
+  },
+  answer: 'option3',
+  explanation: 'Ìwọ ní ọba méjì lówà nígbà kan.',
+  picture: null,
+  points: 10
+},
+{
+  id: '506',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 6,
+  question: 'Ìlú wo ni ilé Ìyá Ọ̀ṣun wà?',
+  options: {
+    option1: 'Ọ̀ṣogbo',
+    option2: 'Ọ̀ṣọ̀gbo',
+    option3: 'Ifẹ̀',
+    option4: 'Ìbàdàn'
+  },
+  answer: 'option1',
+  explanation: 'Ọ̀ṣun Ọ̀ṣogbo ni a ṣe ní Ọ̀ṣogbo.',
+  picture: null,
+  points: 10
+},
+{
+  id: '507',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 7,
+  question: 'Ìlú wo ni a ti máa ń pè ní "Ìlú Ọlógbo"?',
+  options: {
+    option1: 'Ọ̀ǹdó',
+    option2: 'Ìkìrùn',
+    option3: 'Òwò',
+    option4: 'Èdè'
+  },
+  answer: 'option1',
+  explanation: "Oríkì ìlú Ọ̀ǹdó ni 'Ìlú Ọlógbo'.",
+  picture: null,
+  points: 10
+},
+{
+  id: '508',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 8,
+  question: 'Ìlú wo ni a mọ̀ sí ibi tí ajọdún Ṣàngó ti máa ń wáyé?',
+  options: {
+    option1: 'Ọ̀yọ́',
+    option2: 'Ìbàdàn',
+    option3: 'Ọ̀ǹdó',
+    option4: 'Ifẹ̀'
+  },
+  answer: 'option1',
+  explanation: 'Ajọdún Ṣàngó máa ń wáyé ní Ọ̀yọ́.',
+  picture: null,
+  points: 10
+},
+{
+  id: '509',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 9,
+  question: 'Ìlú wo ló jẹ́ olú ìlú ìjọba Yorùbá ní ìgbà àtijọ́?',
+  options: {
+    option1: 'Ọ̀yọ́',
+    option2: 'Ifẹ̀',
+    option3: 'Ìbàdàn',
+    option4: 'Ègbá'
+  },
+  answer: 'option1',
+  explanation: 'Ọ̀yọ́ ni olú ìlú ìjọba Ọ̀yọ́ Empire.',
+  picture: null,
+  points: 10
+},
+{
+  id: '510',
+  categoryId: '5',
+  categoryName: 'ilu',
+  levelNumber: 1,
+  questionNumber: 10,
+  question: 'Ìlú wo ló jẹ́ ìpìlẹ̀ Yorùbá láti ìbẹ̀rẹ̀?',
+  options: {
+    option1: 'Ifẹ̀',
+    option2: 'Ọ̀yọ́',
+    option3: 'Ìjẹ̀bú',
+    option4: 'Ìlórin'
+  },
+  answer: 'option1',
+  explanation: 'A gbàgbọ́ pé gbogbo Yorùbá ti wá láti Ifẹ̀.',
+  picture: null,
+  points: 10
+}]
+

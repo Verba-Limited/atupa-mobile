@@ -93,6 +93,7 @@
                 name="quiz"
                 [checked]="isOptionSelected"
                 [disabled]="isOptionSelected"
+                [class.correct]="isOptionSelected && correctOption && (key === currentQuestion.answer)"
               />
               <label [for]="key">{{ currentQuestion.options[key] }}</label>
             </div>
@@ -194,9 +195,9 @@
                   expand="block"
                   class="create-account"
                   *ngIf="levelCompleted"
-                  (click)="goToNextLevel()"
-                >
-                  Proceed to Level {{ currentQuestion.levelNumber + 1 }}
+                  (click)="goToNextLevel()">
+                  <!-- Proceed to Level {{ currentQuestion.levelNumber + 1 }} -->
+                  Proceed
                 </ion-button>
                 <ion-button
                   expand="block"

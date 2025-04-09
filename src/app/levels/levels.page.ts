@@ -30,37 +30,38 @@ export class LevelsPage {
     this.router.navigate(['/quiz-page']);
   }
 
+  goToPage (page: string) {
+    this.router.navigate(['/quiz-page', { page: page }]);
+  }
+
   // goToPage (page: string) {
-  //   this.router.navigate(['/quiz-page', { page: page }]);
+  //   switch (page) {
+  //     case 'onka':
+  //       this.router.navigate(['/quiz-page', { page: page }]);
+  //       break;
+  //     case 'eranko':
+  //       this.router.navigate(['/quiz-page', { page: page }]);
+  //       // this.router.navigate(['/eranko-quiz']);
+  //       break;
+  //     case 'owe':
+  //       this.router.navigate(['/quiz-page', { page: page }]);
+  //       break;
+  //     case 'oba-ilu':
+  //       this.router.navigate(['/quiz-page', { page: page }]);
+  //       break;
+  //     case 'ilu':
+  //       this.router.navigate(['/quiz-page', { page: page }]);
+  //       break;
+  //     case 'akanlo-ede':
+  //       this.router.navigate(['/akanlo-ede']);
+  //       break;
+  //     case 'apejuwe':
+  //       this.router.navigate(['/apejuwe']);
+  //       break;
+  //     default:
+  //       this.router.navigate(['/home']);
+  //       break;
+  //   }
   // }
 
-  goToPage (page: string) {
-    switch (page) {
-      case 'onka':
-        this.router.navigate(['/quiz-page', { page: page }]);
-        break;
-      case 'eranko':
-        this.router.navigate(['/quiz-page', { page: page }]);
-        // this.router.navigate(['/eranko-quiz']);
-        break;
-      case 'owe':
-        this.router.navigate(['/quiz-page', { page: page }]);
-        break;
-      case 'oba-ilu':
-        this.router.navigate(['/quiz-page', { page: page }]);
-        break;
-      case 'ilu':
-        this.router.navigate(['/ilu']);
-        break;
-      case 'akanlo-ede':
-        this.router.navigate(['/akanlo-ede']);
-        break;
-      case 'apejuwe':
-        this.router.navigate(['/apejuwe']);
-        break;
-      default:
-        this.router.navigate(['/home']);
-        break;
-    }
-  }
 }
