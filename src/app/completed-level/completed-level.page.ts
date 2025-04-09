@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,8 +22,9 @@ export class CompletedLevelPage {
   };
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.levelObject = {};
-    let retrievedLevelObject = this.activatedRoute.snapshot.paramMap.get('levelObject');
-    if(retrievedLevelObject != null) {
+    let retrievedLevelObject =
+      this.activatedRoute.snapshot.paramMap.get('levelObject');
+    if (retrievedLevelObject != null) {
       this.levelObject = JSON.parse(retrievedLevelObject);
     }
     console.log(`Level Object: ${JSON.stringify(this.levelObject)}`);

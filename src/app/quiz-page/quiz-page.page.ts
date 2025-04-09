@@ -1,17 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Platform, IonicModule, NavController, AlertController } from '@ionic/angular';
+import {
+  Platform,
+  IonicModule,
+  NavController,
+  AlertController,
+  ModalController,
+} from '@ionic/angular';
+import type { OverlayEventDetail } from '@ionic/core';
+
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { filter } from 'rxjs/operators';
 import { BackgroundAudioService } from '../services/background-audio.service';
 
-import { 
-  numberQuestions, 
-  animalQuestions, 
-  kingsQuestions, 
-  proverbsQuestions, 
-  townsQuestions 
+import {
+  numberQuestions,
+  animalQuestions,
+  kingsQuestions,
+  proverbsQuestions,
+  townsQuestions,
 } from '../data/quizQuestions'; // Import the quiz questions from the data file
 
 interface QuizQuestion {
@@ -122,7 +131,8 @@ export class QuizPagePage {
     private router: Router,
     private platform: Platform,
     private bgAudio: BackgroundAudioService,
-    private activatedRouter: ActivatedRoute
+    private activatedRouter: ActivatedRoute,
+    private modalController: ModalController
   ) {
     const page = this.activatedRouter.snapshot.paramMap.get('page');
     const levelNo = this.activatedRouter.snapshot.paramMap.get('level');
@@ -132,7 +142,7 @@ export class QuizPagePage {
       this.pageFrom = page;
       this.loadQuizQuestion(page, levelNo);
       // this.goToPage(page);
-    } 
+    }
   }
 
   ngOnInit() {
@@ -363,8 +373,10 @@ export class QuizPagePage {
 
     if (nextLevelQuestions) {
       this.isOptionSelected = false;
+      this.modalOpen = false;
       this.navCtrl.navigateForward(`/completed-level/${nextLevel}`);
     } else {
+      this.modalOpen = false;
       this.isOptionSelected = false;
       this.router.navigate([
         'completed-level',
@@ -423,6 +435,14 @@ export class QuizPagePage {
     this.modalOpen = false;
   }
 
+  async ionViewWillLeave() {
+    const modal = await this.modalController.getTop();
+    if (modal) {
+      await modal.dismiss();
+    }
+    this.modalOpen = false;
+  }
+
   // Text to Speech Section
   async speakText(text: string) {
     try {
@@ -451,18 +471,38 @@ export class QuizPagePage {
   }
   // End Text to Speech Section
 
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+        console.log('Alert confirmed');
+      },
+    },
+  ];
+
+  setResult(event: CustomEvent<OverlayEventDetail>) {
+    console.log(`Dismissed with role: ${event.detail.role}`);
+  }
 
   async showOptions() {
     this.stopTimer();
     const alert = await this.alertController.create({
-      header: "Quiz Game?",
-      message: "Are you sure you want to leave the quiz?",
+      header: 'Quiz Game?',
+      message: 'Are you sure you want to leave the quiz?',
       buttons: [
         {
-          text: "Yes",
-          role: "cancel",
+          text: 'Yes',
+          role: 'cancel',
           handler: () => {
-            console.log("Declined the offer");
+            console.log('Declined the offer');
             this.isOptionSelected = false;
             this.handleModalDismiss();
             this.stopBackgroundAudio();
@@ -471,10 +511,10 @@ export class QuizPagePage {
           },
         },
         {
-          text: "No",
+          text: 'No',
           handler: () => {
             this.startTimer();
-            console.log("Accepted the offer");
+            console.log('Accepted the offer');
           },
         },
       ],
@@ -482,5 +522,4 @@ export class QuizPagePage {
 
     await alert.present();
   }
-
 }
