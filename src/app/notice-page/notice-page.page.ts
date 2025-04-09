@@ -37,7 +37,7 @@ export class NoticePagePage implements OnInit {
     },
     {
       id: 3,
-      imageSrc: '../../assets/icon/book-open 1.svg',
+      imageSrc: '../../assets/icon/book-open 2.svg',
       title: 'Lesson : Another lesson has been added, name is apejuwe ',
     },
     {
