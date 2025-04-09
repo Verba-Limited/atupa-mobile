@@ -15,4 +15,8 @@ export class HomeTabPage {
   levelsPage(pageName: string) {
     this.router.navigate(['/levels', { page: pageName }]);
   }
+
+  openNoticePage() {
+    this.router.navigate(['/notice-page']);
+  }
 }

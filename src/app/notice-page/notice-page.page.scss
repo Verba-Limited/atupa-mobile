@@ -1,0 +1,91 @@
+@mixin text-center {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    padding: 10px;
+    height: 100%;
+
+    .back-arrow {
+        position: absolute;
+        top: 35px;
+        left: 30px;
+        font-size: 22px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .framer {
+        @include text-center;
+        justify-content: space-between;
+        text-align: center;
+        color: #505050;
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        margin-top: 6px;
+        margin-left: -2px;
+
+        .onka {
+            font-size: 20px;
+            font-weight: 700;
+            flex-grow: 1;
+            margin-left: 25px;
+            text-align: center;
+        }
+
+        .image {
+            position: absolute;
+            top: 21px;
+            right: 23px;
+        }
+    }
+
+    .subscription {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background-color: #fafafa;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+    .subscription__icon {
+        width: 38px;
+        height: 38px;
+        padding: 10px;
+        background-color: #FDF1E6;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .subscription__icon img {
+        width: 38px;
+        height: 38px;
+        fill: #B17A50;
+    }
+
+    .subscription__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .subscription__content__title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+    }
+
+    .subscription__content__timestamp {
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: #777;
+        margin: 0;
+    }
+}
