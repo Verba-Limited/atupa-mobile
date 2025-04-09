@@ -125,10 +125,12 @@ export class QuizPagePage {
     private activatedRouter: ActivatedRoute
   ) {
     const page = this.activatedRouter.snapshot.paramMap.get('page');
+    const levelNo = this.activatedRouter.snapshot.paramMap.get('level');
     console.log(`pageFrom: ${page}`);
-    if (page != null) {
+    console.log(`levelNo: ${levelNo}`);
+    if (page != null && levelNo != null) {
       this.pageFrom = page;
-      this.loadQuizQuestion(page);
+      this.loadQuizQuestion(page, levelNo);
       // this.goToPage(page);
     } 
   }
@@ -141,11 +143,15 @@ export class QuizPagePage {
     this.calculateTotalLevelPoints();
   }
 
+  getQuestionLevel(questions: any, levelNumber: number) {
+    return questions.filter((q: any) => q.levelNumber == levelNumber);
+  }
+
   // get pageFrom and load quiz questions based on the page
-  loadQuizQuestion(pageFrom: string) {
+  loadQuizQuestion(pageFrom: string, levelNumber: any=1) {
     switch (pageFrom) {
       case 'onka':
-        this.quizQuestions = numberQuestions;
+        this.quizQuestions = this.getQuestionLevel(numberQuestions, levelNumber);
         break;
       case 'eranko':
         this.quizQuestions = animalQuestions;

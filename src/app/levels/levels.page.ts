@@ -30,8 +30,9 @@ export class LevelsPage {
     this.router.navigate(['/quiz-page']);
   }
 
-  goToPage (page: string) {
-    this.router.navigate(['/quiz-page', { page: page }]);
+  goToPage (page: string, level: any) {
+    this.router.navigate(['/quiz-page', { page: page, level: level }]);
+    // this.router.navigate(['/quiz-page', { page: page }]);
   }
 
   // goToPage (page: string) {

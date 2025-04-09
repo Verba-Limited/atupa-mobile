@@ -16,13 +16,14 @@
     <!-- Levels List -->
     <div class="levels-list">
       <!-- Unlocked Levels -->
-      <button (click)="goToPage(pageFrom)" class="level-btn unlocked">
-        <ion-icon name="checkmark-circle"></ion-icon>
+      <button (click)="goToPage(pageFrom, 1)" class="level-btn unlocked">
+        <!-- <ion-icon name="checkmark-circle"></ion-icon> -->
+        <ion-icon name="play-circle"></ion-icon>
         <span>Level 1</span>
       </button>
 
-      <button class="level-btn unlocked">
-        <ion-icon name="play-circle"></ion-icon>
+      <button (click)="goToPage(pageFrom, 2)" class="level-btn unlocked" disabled>
+        <ion-icon name="lock-closed"></ion-icon>
         <span>Level 2</span>
       </button>
 
