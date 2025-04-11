@@ -45,7 +45,7 @@ interface QuizQuestion {
 })
 export class QuizPagePage {
   quizQuestions: QuizQuestion[] = [];
-
+  currentLevel: any;
   currentQuestion: any;
   answeredQuestions = new Set();
   userCumulativePoint = 0;
@@ -61,9 +61,7 @@ export class QuizPagePage {
   correctOption: boolean = false;
   wrongAnswer: any;
   showFeedback: boolean = false;
-
   questionIndex: number = 0;
-
   questionCompleted: boolean = false;
 
   suggestionCosts: Record<'ileke' | 'obi' | 'eyoOwo' | 'ami', number> = {
@@ -114,6 +112,7 @@ export class QuizPagePage {
   isBgSoundPlaying: boolean = true;
 
   levelOption = {
+    quizPage: '',
     title: '',
     levelCompleted: 0,
     totalQuestions: 0,
@@ -121,6 +120,7 @@ export class QuizPagePage {
     totalLevelPoints: 0,
     userCumulativePoint: 0,
     percentage: 0,
+    nextLevel: 0,
   };
 
   pageFrom: any;
@@ -139,6 +139,7 @@ export class QuizPagePage {
     console.log(`pageFrom: ${page}`);
     console.log(`levelNo: ${levelNo}`);
     if (page != null && levelNo != null) {
+      this.currentLevel = levelNo;
       this.pageFrom = page;
       this.loadQuizQuestion(page, levelNo);
       // this.goToPage(page);
@@ -360,8 +361,10 @@ export class QuizPagePage {
 
     console.log(`nextLevelQuestions: ${nextLevelQuestions}`);
 
+    this.levelOption.quizPage = this.pageFrom;
     this.levelOption.title = `Level ${currentLevel}`;
     this.levelOption.levelCompleted = currentLevel;
+    this.levelOption.nextLevel = nextLevel;
     this.levelOption.totalQuestions = this.quizQuestions.length;
     this.levelOption.totalAnswered = this.answeredQuestions.size;
     this.levelOption.userCumulativePoint = this.userCumulativePoint;
@@ -502,7 +505,7 @@ export class QuizPagePage {
           text: 'Yes',
           role: 'cancel',
           handler: () => {
-            console.log('Declined the offer');
+            console.log('You picked yes');
             this.isOptionSelected = false;
             this.handleModalDismiss();
             this.stopBackgroundAudio();
@@ -514,7 +517,7 @@ export class QuizPagePage {
           text: 'No',
           handler: () => {
             this.startTimer();
-            console.log('Accepted the offer');
+            console.log('You picked no');
           },
         },
       ],

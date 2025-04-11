@@ -386,6 +386,9 @@ ion-content {
 .option.incorrect {
     border: 2px solid #C23327;
     background: white;
+    input {
+        background: #C23327;
+    }
 }
 
 .option.incorrect label {

@@ -46,11 +46,8 @@
     </div>
 
     <div class="button-container">
-      <ion-button
-        (click)="alllevelPage()"
-        expand="block"
-        class="create-account"
-      >
+      <ion-button (click)="goToNextLevel(levelObject.quizPage, levelObject.nextLevel)"
+        expand="block" class="create-account">
         Next Level
       </ion-button>
       <ion-button expand="block" class="login" (click)="goToHome()">

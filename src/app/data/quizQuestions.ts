@@ -242,8 +242,8 @@ export const numberQuestions = [
       question: 'Kí ni a ń pè 19 ní Yorùbá?',
       options: {
         option1: 'Mọ́kànlá',
-        option2: 'Ọ̀kan',
-        option3: 'Ọ̀kànlélógún',
+        option2: 'Ọ̀kànlélógún',
+        option3: 'Ọ̀kàndínlógún',
         option4: 'Ọ̀kànlá',
       },
       answer: 'option3',

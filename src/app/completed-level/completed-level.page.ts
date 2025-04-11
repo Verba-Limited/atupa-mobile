@@ -38,6 +38,10 @@ export class CompletedLevelPage {
     this.router.navigate(['/all-level']);
   }
 
+  goToNextLevel(page: any, nextLevel: any) {
+    this.router.navigate(['/quiz-page', { page: page, level: nextLevel }]);
+  }
+
   goToHome() {
     this.router.navigate(['/tabs/home-tab']);
   }
