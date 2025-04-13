@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Run unit testing
           command: |
-            export CHROME_BIN=$(which google-chrome-stable) && npm run test
+            export CHROME_BIN=$(which google-chrome-stable) && npm run test -- --browsers=ChromeHeadless
       - store_test_results:
           path: ~/project/junit
 workflows:
