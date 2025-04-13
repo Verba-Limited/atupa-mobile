@@ -25,7 +25,7 @@ jobs:
           command: npm install -g @ionic/cli
       - run:
           name: Run unit testing
-          command: npm run test:ci -- --karmaConfig=karma.conf.js
+          command: npm run test:ci
       - store_test_results:
           path: ~/project/junit
 workflows:
