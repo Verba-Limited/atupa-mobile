@@ -21,6 +21,9 @@ jobs:
             - ~/.npm
           key: npm-cache-{{ checksum "package-lock.json" }}
       - run:
+          name: Install Ionic CLI
+          command: npm install -g @ionic/cli
+      - run:
           name: Build Project
           command: ionic serve
 workflows:
