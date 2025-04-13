@@ -31,6 +31,17 @@ jobs:
           command: npm install -g @ionic/cli
 
       - run:
+          name: Install Chromium (if Chrome binary not found)
+          command: |
+            echo "Checking for Chrome binary..."
+            if ! [ -x "$(command -v google-chrome)" ] && ! [ -x "$(command -v chromium)" ] && ! [ -x "$(command -v chromium-browser)" ]; then
+              echo "No Chrome binary found, installing Chromium..."
+              sudo apt-get update
+              sudo apt-get install -y chromium-browser
+            fi
+            echo "Chrome binary found or installed."
+
+      - run:
           name: Detect Chrome binary and set CHROME_BIN
           command: |
             echo "Detecting available Chrome binary..."
