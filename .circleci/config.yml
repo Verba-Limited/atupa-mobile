@@ -9,8 +9,6 @@ executors:
 jobs:
   build:
     executor: node-executor
-    environment:
-      CHROME_BIN: /usr/bin/chromium-browser
     steps:
       - checkout
 
@@ -33,10 +31,21 @@ jobs:
           command: npm install -g @ionic/cli
 
       - run:
-          name: Verify Chrome binary path
+          name: Detect Chrome binary and set CHROME_BIN
           command: |
-            echo "Chrome binary path:" $CHROME_BIN
-            ls -la $CHROME_BIN
+            echo "Detecting available Chrome binary..."
+            if [ -x "$(command -v google-chrome)" ]; then
+              export CHROME_BIN=$(command -v google-chrome)
+            elif [ -x "$(command -v chromium-browser)" ]; then
+              export CHROME_BIN=$(command -v chromium-browser)
+            elif [ -x "$(command -v chromium)" ]; then
+              export CHROME_BIN=$(command -v chromium)
+            else
+              echo "No Chrome binary found." && exit 1
+            fi
+            echo "Found Chrome binary at: $CHROME_BIN"
+            echo "export CHROME_BIN=$CHROME_BIN" >> $BASH_ENV
+            source $BASH_ENV
 
       - run:
           name: Run unit tests
