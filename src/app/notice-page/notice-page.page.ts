@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 
 interface Badge {
   id: number;
@@ -18,12 +17,10 @@ interface Badge {
   standalone: true,
 })
 export class NoticePagePage implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private navCtrl: NavController) {}
 
   navigateBack() {
-    // this.navCtrl.back();
-    console.log('Navigating back');
-    this.router.navigate(['tabs/home-tab']);
+    this.navCtrl.back();
   }
 
   ngOnInit() {}
