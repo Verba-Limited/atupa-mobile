@@ -8,6 +8,8 @@ executors:
 jobs:
   build:
     executor: node-executor
+    environment:
+      CHROME_BIN: /usr/bin/google-chrome
     steps:
       - checkout
       - restore_cache:
