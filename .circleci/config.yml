@@ -2,7 +2,7 @@ version: 2.1
 executors:
   node-executor:
     docker:
-      - image: cimg/node:18.20.5
+      - image: cimg/node:18.20.5-browsers
     working_directory: ~/project
 jobs:
   build:
@@ -24,8 +24,10 @@ jobs:
           name: Install Ionic CLI
           command: npm install -g @ionic/cli
       - run:
-          name: Build Project
-          command: ionic serve
+          name: Run unit testing
+          command: npm run test:ci -- --karmaConfig=karma.conf.js
+      - store_test_results:
+          path: ~/project/junit
 workflows:
   version: 2
   build_and_serve:
