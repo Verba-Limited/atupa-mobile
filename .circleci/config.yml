@@ -4,6 +4,7 @@ executors:
     docker:
       - image: cimg/node:18.20.5-browsers
     working_directory: ~/project
+
 jobs:
   build:
     executor: node-executor
@@ -24,11 +25,17 @@ jobs:
           name: Install Ionic CLI
           command: npm install -g @ionic/cli
       - run:
+          name: Verify Chrome Binary
+          command: |
+            echo "Checking for Chrome binary..."
+            which google-chrome || echo "Chrome binary not found"
+      - run:
           name: Run unit testing
           command: |
             export CHROME_BIN=$(which google-chrome) && npm run test
       - store_test_results:
           path: ~/project/junit
+
 workflows:
   version: 2
   build_and_serve:
