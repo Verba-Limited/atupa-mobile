@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { ModalController, AngularDelegate } from '@ionic/angular';
+import { MockProvider } from 'ng-mocks';
+import { ActivatedRoute } from '@angular/router';
 
 import { QuizRewardComponent } from './quiz-reward.component';
 
@@ -9,8 +12,15 @@ describe('QuizRewardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ QuizRewardComponent ],
-      imports: [IonicModule.forRoot()]
+      providers: [
+        MockProvider(ModalController),
+        MockProvider(ActivatedRoute),
+        MockProvider(AngularDelegate)
+      ],
+      imports: [
+        IonicModule.forRoot(),
+        QuizRewardComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(QuizRewardComponent);

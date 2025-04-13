@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { ModalController, AngularDelegate } from '@ionic/angular';
+import { MockProvider } from 'ng-mocks';
+import { ActivatedRoute } from '@angular/router';
 
 import { TrailComponent } from './trail.component';
 
@@ -9,8 +12,15 @@ describe('TrailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrailComponent ],
-      imports: [IonicModule.forRoot()]
+      providers: [
+        MockProvider(ModalController),
+        MockProvider(ActivatedRoute),
+        MockProvider(AngularDelegate)
+      ],
+      imports: [
+        IonicModule.forRoot(),
+        TrailComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TrailComponent);

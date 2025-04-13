@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-
 import { BackgroundAudioService } from './background-audio.service';
 
 describe('BackgroundAudioService', () => {
   let service: BackgroundAudioService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [BackgroundAudioService]
+    });
     service = TestBed.inject(BackgroundAudioService);
   });
 

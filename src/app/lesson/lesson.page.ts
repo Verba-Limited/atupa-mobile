@@ -1,7 +1,6 @@
-import { LessonsPage } from './../lessons/lessons.page';
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 interface lessonTypes {
@@ -23,7 +22,6 @@ interface categoryTypes {
   selector: 'app-lesson',
   templateUrl: './lesson.page.html',
   styleUrls: ['./lesson.page.scss'],
-  standalone: true,
   imports: [IonicModule, CommonModule, RouterModule],
 })
 export class LessonPage {
@@ -32,7 +30,7 @@ export class LessonPage {
   subscriptionType = 'Monthly subscription';
   daysLeft = 20;
   progress = 60;
-  constructor(private router: Router) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   toggleMenu() {
     this.isMenuVisible = !this.isMenuVisible;

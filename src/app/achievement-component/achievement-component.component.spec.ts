@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { ModalController, AngularDelegate } from '@ionic/angular';
+import { MockProvider } from 'ng-mocks';
+import { ActivatedRoute } from '@angular/router';
 
 import { AchievementComponentComponent } from './achievement-component.component';
 
@@ -9,8 +12,15 @@ describe('AchievementComponentComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AchievementComponentComponent ],
-      imports: [IonicModule.forRoot()]
+      providers: [
+        MockProvider(ModalController),
+        MockProvider(ActivatedRoute),
+        MockProvider(AngularDelegate)
+      ],
+      imports: [
+        IonicModule.forRoot(),
+        AchievementComponentComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AchievementComponentComponent);
