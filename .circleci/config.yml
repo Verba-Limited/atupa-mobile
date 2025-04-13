@@ -4,9 +4,12 @@ executors:
     docker:
       - image: cimg/node:18.20.5-browsers
     working_directory: ~/project
+
 jobs:
   build:
     executor: node-executor
+    environment:
+      CHROME_BIN: /usr/bin/google-chrome
     steps:
       - checkout
       - restore_cache:
@@ -27,13 +30,16 @@ jobs:
           name: Verify Chrome Binary
           command: |
             echo "Checking for Chrome binary..."
-            which google-chrome-stable || echo "Chrome binary not found"
+            which google-chrome || echo "Chrome binary not found"
       - run:
           name: Run unit testing
+          environment:
+            CHROME_BIN: /usr/bin/google-chrome-stable
           command: |
-            export CHROME_BIN=$(which google-chrome-stable) && npm run test -- --browsers=ChromeHeadless
+            export CHROME_BIN=$(which google-chrome-stable) && npm run test
       - store_test_results:
           path: ~/project/junit
+
 workflows:
   version: 2
   build_and_serve:
