@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Run unit testing
           command: |
-            export CHROME_BIN=$(which google-chrome) && npm run test:ci
+            export CHROME_BIN=$(which google-chrome-stable) && npm run test
       - store_test_results:
           path: ~/project/junit
 workflows:
