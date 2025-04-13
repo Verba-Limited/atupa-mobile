@@ -1,71 +1,63 @@
 <?xml version="1.0"?>
-<testsuite name="Chrome Headless 135.0.0.0 (Mac OS 10.15.7)" package="" timestamp="2025-04-13T12:47:41" id="0" hostname="etranzacts-MacBook-Pro.local" tests="50" errors="0" failures="0" time="5.269">
+<testsuite name="Chrome Headless 135.0.0.0 (Mac OS 10.15.7)" package="" timestamp="2025-04-13T12:58:58" id="0" hostname="etranzacts-MacBook-Pro.local" tests="50" errors="0" failures="0" time="4.63">
   <properties>
     <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/135.0.0.0 Safari/537.36"/>
   </properties>
-  <testcase name="CompletedLevelPage should create" time="0.065" classname="CompletedLevelPage"/>
-  <testcase name="SettingsPage should create" time="0.068" classname="SettingsPage"/>
-  <testcase name="SubscriptionPage should create" time="0.044" classname="SubscriptionPage"/>
-  <testcase name="VerificationPage should create" time="0.044" classname="VerificationPage"/>
-  <testcase name="TabsPage should create" time="0.079" classname="TabsPage"/>
+  <testcase name="PaymentSuccessfulPage should create" time="0.049" classname="PaymentSuccessfulPage"/>
+  <testcase name="AppComponent should create the app" time="0.043" classname="AppComponent"/>
+  <testcase name="SettingsPage should create" time="0.046" classname="SettingsPage"/>
+  <testcase name="PayMethodPage should create" time="0.04" classname="PayMethodPage"/>
+  <testcase name="AchievementComponentComponent should create" time="0.309" classname="AchievementComponentComponent"/>
+  <testcase name="ForgotPasswordPage should create" time="0.046" classname="ForgotPasswordPage"/>
+  <testcase name="PaymentFailedPage should create" time="0.042" classname="PaymentFailedPage"/>
+  <testcase name="BackgroundAudioService should be created" time="1.491" classname="BackgroundAudioService"/>
+  <testcase name="LessonsPage should create" time="0.045" classname="LessonsPage"/>
+  <testcase name="EditProfilePage should create" time="0.04" classname="EditProfilePage"/>
+  <testcase name="QuizRewardComponent should create" time="0.036" classname="QuizRewardComponent"/>
+  <testcase name="ProfilePage should create" time="0.048" classname="ProfilePage"/>
   <testcase name="AidPage should create" time="0.038" classname="AidPage"/>
-  <testcase name="BackgroundAudioService should be created" time="2.107" classname="BackgroundAudioService"/>
-  <testcase name="PopularLessonPage should create" time="0.071" classname="PopularLessonPage"/>
-  <testcase name="EditProfilePage should create" time="0.049" classname="EditProfilePage"/>
-  <testcase name="TestQuestionPage should create" time="0.048" classname="TestQuestionPage"/>
-  <testcase name="AllLessonsPage should create" time="0.04" classname="AllLessonsPage"/>
-  <testcase name="StorePage should create" time="0.043" classname="StorePage"/>
-  <testcase name="PayMethodPage should create" time="0.085" classname="PayMethodPage"/>
-  <testcase name="AchievementComponentComponent should create" time="0.31" classname="AchievementComponentComponent"/>
-  <testcase name="PaymentModalComponent should create" time="0.037" classname="PaymentModalComponent"/>
-  <testcase name="AchievementPage should create" time="0.042" classname="AchievementPage"/>
-  <testcase name="NoticePagePage should create" time="0.038" classname="NoticePagePage"/>
-  <testcase name="PolicyPage should create" time="0.037" classname="PolicyPage"/>
-  <testcase name="TrailComponent should create" time="0.043" classname="TrailComponent"/>
-  <testcase name="PaymentFailedPage should create" time="0.037" classname="PaymentFailedPage"/>
-  <testcase name="SignUpPage should create" time="0.043" classname="SignUpPage"/>
+  <testcase name="ErankoQuizPage should create" time="0.041" classname="ErankoQuizPage"/>
+  <testcase name="LessonPage should create" time="0.127" classname="LessonPage"/>
+  <testcase name="ChangePasswordPage should create" time="0.038" classname="ChangePasswordPage"/>
+  <testcase name="PaymentModalComponent should create" time="0.038" classname="PaymentModalComponent"/>
+  <testcase name="NotificationPage should create" time="0.042" classname="NotificationPage"/>
+  <testcase name="VerificationPage should create" time="0.038" classname="VerificationPage"/>
   <testcase name="OwePagePage should create" time="0.044" classname="OwePagePage"/>
-  <testcase name="QuizRewardComponent should create" time="0.037" classname="QuizRewardComponent"/>
-  <testcase name="ForgotPasswordPage should create" time="0.036" classname="ForgotPasswordPage"/>
-  <testcase name="LoginPage should create" time="0.038" classname="LoginPage"/>
-  <testcase name="ErankoQuizPage should create" time="0.043" classname="ErankoQuizPage"/>
-  <testcase name="ProfilePage should create" time="0.04" classname="ProfilePage"/>
-  <testcase name="LessonPage should create" time="0.109" classname="LessonPage"/>
-  <testcase name="PaymentSuccessfulPage should create" time="0.036" classname="PaymentSuccessfulPage"/>
-  <testcase name="LessonListPage should create" time="0.037" classname="LessonListPage"/>
-  <testcase name="LeaderboardPage should create" time="0.072" classname="LeaderboardPage"/>
-  <testcase name="CategoryPage should create" time="0.055" classname="CategoryPage"/>
-  <testcase name="InvitePage should create" time="0.042" classname="InvitePage"/>
-  <testcase name="NotificationPage should create" time="0.078" classname="NotificationPage"/>
-  <testcase name="QuizPagePage should create" time="0.051" classname="QuizPagePage"/>
-  <testcase name="HomePage should create" time="0.064" classname="HomePage"/>
-  <testcase name="AppComponent should create the app" time="0.202" classname="AppComponent"/>
-  <testcase name="ChangePasswordPage should create" time="0.037" classname="ChangePasswordPage"/>
-  <testcase name="ShopModalComponent should create" time="0.105" classname="ShopModalComponent"/>
-  <testcase name="AllLevelPage should create" time="0.038" classname="AllLevelPage"/>
-  <testcase name="SuggestionComponent should create" time="0.088" classname="SuggestionComponent"/>
-  <testcase name="QuizPage should create" time="0.211" classname="QuizPage"/>
-  <testcase name="TotalLessonScoreComponent should create" time="0.041" classname="TotalLessonScoreComponent"/>
-  <testcase name="LessonsPage should create" time="0.041" classname="LessonsPage"/>
-  <testcase name="HomeTabPage should create" time="0.152" classname="HomeTabPage"/>
-  <testcase name="BookmarkPage should create" time="0.052" classname="BookmarkPage"/>
-  <testcase name="TermsPage should create" time="0.037" classname="TermsPage"/>
-  <testcase name="LevelsPage should create" time="0.039" classname="LevelsPage"/>
+  <testcase name="TrailComponent should create" time="0.037" classname="TrailComponent"/>
+  <testcase name="TabsPage should create" time="0.057" classname="TabsPage"/>
+  <testcase name="TestQuestionPage should create" time="0.042" classname="TestQuestionPage"/>
+  <testcase name="BookmarkPage should create" time="0.044" classname="BookmarkPage"/>
+  <testcase name="ShopModalComponent should create" time="0.111" classname="ShopModalComponent"/>
+  <testcase name="StorePage should create" time="0.041" classname="StorePage"/>
+  <testcase name="TotalLessonScoreComponent should create" time="0.037" classname="TotalLessonScoreComponent"/>
+  <testcase name="CategoryPage should create" time="0.04" classname="CategoryPage"/>
+  <testcase name="HomePage should create" time="0.063" classname="HomePage"/>
+  <testcase name="SubscriptionPage should create" time="0.066" classname="SubscriptionPage"/>
+  <testcase name="TermsPage should create" time="0.038" classname="TermsPage"/>
+  <testcase name="HomeTabPage should create" time="0.175" classname="HomeTabPage"/>
+  <testcase name="LessonListPage should create" time="0.07" classname="LessonListPage"/>
+  <testcase name="TestPage should create" time="0.038" classname="TestPage"/>
+  <testcase name="LevelsPage should create" time="0.038" classname="LevelsPage"/>
+  <testcase name="QuizPagePage should create" time="0.053" classname="QuizPagePage"/>
+  <testcase name="SignUpPage should create" time="0.04" classname="SignUpPage"/>
+  <testcase name="QuizPage should create" time="0.187" classname="QuizPage"/>
+  <testcase name="AllLessonsPage should create" time="0.037" classname="AllLessonsPage"/>
+  <testcase name="AllLevelPage should create" time="0.119" classname="AllLevelPage"/>
+  <testcase name="LoginPage should create" time="0.086" classname="LoginPage"/>
+  <testcase name="PolicyPage should create" time="0.036" classname="PolicyPage"/>
+  <testcase name="CompletedLevelPage should create" time="0.116" classname="CompletedLevelPage"/>
+  <testcase name="AchievementPage should create" time="0.038" classname="AchievementPage"/>
+  <testcase name="NoticePagePage should create" time="0.111" classname="NoticePagePage"/>
+  <testcase name="PopularLessonPage should create" time="0.048" classname="PopularLessonPage"/>
   <testcase name="BasicsPage should create" time="0.037" classname="BasicsPage"/>
-  <testcase name="TestPage should create" time="0.039" classname="TestPage"/>
+  <testcase name="SuggestionComponent should create" time="0.036" classname="SuggestionComponent"/>
+  <testcase name="InvitePage should create" time="0.037" classname="InvitePage"/>
+  <testcase name="LeaderboardPage should create" time="0.111" classname="LeaderboardPage"/>
   <system-out>
-    <![CDATA[Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'Level Object: {"title":"Test Level","levelCompleted":1,"totalQuestions":10,"totalAnswered":10,"totalLevelPoints":100,"userCumulativePoint":80,"percentage":80}'
-,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'level title: Test Level'
+    <![CDATA[Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'pageFrom: onka'
+,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'levelNo: 1'
 ,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'Level Object: {"title":"Test Level","levelCompleted":1,"totalQuestions":10,"totalAnswered":10,"totalLevelPoints":100,"userCumulativePoint":80,"percentage":80}'
 ,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'level title: Test Level'
-,Chrome 135.0.0.0 (Mac OS 10.15.7) LOG: 'Level Object: {"title":"Test Level","levelCompleted":1,"totalQuestions":10,"totalAnswered":10,"totalLevelPoints":100,"userCumulativePoint":80,"percentage":80}'
-,Chrome 135.0.0.0 (Mac OS 10.15.7) LOG: 'level title: Test Level'
-,Chrome 135.0.0.0 (Mac OS 10.15.7) LOG: 'pageFrom: onka'
-,Chrome 135.0.0.0 (Mac OS 10.15.7) LOG: 'levelNo: 1'
-,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'pageFrom: onka'
-,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'levelNo: 1'
-,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'pageFrom: onka'
-,Chrome Headless 135.0.0.0 (Mac OS 10.15.7) LOG: 'levelNo: 1'
 
 ]]>
   </system-out>
