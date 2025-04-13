@@ -1,4 +1,5 @@
 version: 2.1
+
 executors:
   node-executor:
     docker:
@@ -9,32 +10,38 @@ jobs:
   build:
     executor: node-executor
     environment:
-      CHROME_BIN: /usr/bin/google-chrome
+      CHROME_BIN: /usr/bin/chromium-browser
     steps:
       - checkout
+
       - restore_cache:
           keys:
             - npm-cache-{{ checksum "package-lock.json" }}
             - npm-cache-
+
       - run:
           name: Install dependencies
           command: npm install
+
       - save_cache:
           paths:
             - ~/.npm
           key: npm-cache-{{ checksum "package-lock.json" }}
+
       - run:
           name: Install Ionic CLI
           command: npm install -g @ionic/cli
+
       - run:
-          name: Verify Chrome Binary
+          name: Verify Chrome binary path
           command: |
-            echo "Checking for Chrome binary..."
-            which google-chrome || echo "Chrome binary not found"
+            echo "Chrome binary path:" $CHROME_BIN
+            ls -la $CHROME_BIN
+
       - run:
-          name: Run unit testing
-          command: |
-            npm run test
+          name: Run unit tests
+          command: npm run test
+
       - store_test_results:
           path: ~/project/junit
 
