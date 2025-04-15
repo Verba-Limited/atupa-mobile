@@ -60,7 +60,7 @@
               class="proverb-wrapper"
               *ngFor="let item of lessonItem"
               [style.background-color]="item.bgColor"
-              [routerLink]="item.link"
+              (click)="popularPage(item.name)"
             >
               <div class="proverb-image">
                 <img [src]="item.image" alt="" />
@@ -94,7 +94,7 @@
                 class="proverb-wrapper"
                 *ngFor="let item of catgoryItem"
                 [style.background-color]="item.bgColor"
-                [routerLink]="item.link"
+                (click)="categoryPage(item.name)"
               >
                 <div class="proverb-image">
                   <img [src]="item.image" alt="" />
@@ -154,7 +154,9 @@
             <!-- Middle: Title and Button -->
             <div class="quiz-info">
               <h3 class="title">Alufabeti - Session 7</h3>
-              <button (click)="LessonsPage()" class="continue-btn">Continue</button>
+              <button (click)="LessonsPage()" class="continue-btn">
+                Continue
+              </button>
             </div>
 
             <!-- Right: Progress Circle -->

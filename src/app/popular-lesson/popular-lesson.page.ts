@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
@@ -10,7 +10,13 @@ import { IonicModule, NavController } from '@ionic/angular';
   imports: [IonicModule, CommonModule, RouterModule],
 })
 export class PopularLessonPage {
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private activateRouter: ActivatedRoute
+  ) {
+    const page = this.activateRouter.snapshot.paramMap.get('page');
+  }
+
   navigateBack() {
     this.navCtrl.back();
   }

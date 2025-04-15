@@ -1,3 +1,4 @@
+import { CategoryPage } from './../category/category.page';
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -42,7 +43,6 @@ export class LessonPage {
       name: 'Owe',
       hour: 6,
       bgColor: '#E19F65',
-      link: '/popular-lesson',
     },
     {
       image: '../../assets/icon/ilu-image.svg',
@@ -64,7 +64,6 @@ export class LessonPage {
       name: 'Alufabeti',
       hour: 6,
       bgColor: '#F2E1CB',
-      link: '/category',
     },
     {
       image: '../../assets/icon/ilu-image.svg',
@@ -79,6 +78,13 @@ export class LessonPage {
       bgColor: '#FBF4E4',
     },
   ];
+
+  categoryPage(pageName: string) {
+    this.router.navigate(['/category', { page: pageName }]);
+  }
+  popularPage(pageName: string) {
+    this.router.navigate(['/popular-lesson', { page: pageName }]);
+  }
 
   navigateToBookmarks() {
     // Navigate to bookmarks page

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,14 @@ import { IonicModule, NavController } from '@ionic/angular';
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
 export class CategoryPage {
-  constructor(private navCtrl: NavController) {}
+  pageFrom: any;
+
+  constructor(
+    private navCtrl: NavController,
+    private activateRouter: ActivatedRoute
+  ) {
+    const page = this.activateRouter.snapshot.paramMap.get('page');
+  }
   navigateBack() {
     this.navCtrl.back();
   }
