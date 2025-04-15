@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IonicModule, NavController, ModalController } from '@ionic/angular';
 import { TrailComponent } from '../trail/trail.component';
 interface sectionType {
@@ -21,11 +21,22 @@ interface sectionType {
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
 export class LessonsPage {
+  currentLesson: any;
+  pageFrom: any;
   constructor(
     private navCtrl: NavController,
     private router: Router,
-    private modalController: ModalController
-  ) {}
+    private modalController: ModalController,
+    private activatedRouter: ActivatedRoute
+  ) {
+    const lesson = this.activatedRouter.snapshot.paramMap.get('lesson');
+    console.log(`pageFrom: ${lesson}`);
+    if (lesson != null) {
+      this.currentLesson = lesson;
+      this.pageFrom = lesson;
+    }
+  }
+
 
   navigateBack() {
     this.navCtrl.back();
@@ -35,7 +46,7 @@ export class LessonsPage {
       id: 1,
       icon: 1,
       durations: 1,
-      title: 'Basic of owe',
+      title: 'Topic overview',
       view: 'view',
       locked: false,
       link: '/basics',
@@ -44,7 +55,7 @@ export class LessonsPage {
       id: 2,
       icon: 2,
       durations: 2,
-      title: 'Foundational of owe',
+      title: 'Fundamentals of the Topic',
       view: 'view',
       locked: true, // <-- Locked
     },
@@ -52,10 +63,58 @@ export class LessonsPage {
       id: 3,
       icon: 3,
       durations: 3,
-      title: 'Basic of owe',
+      title: 'Lesson 1',
       view: 'view',
       locked: true, // <-- Locked
     },
+    {
+      id: 4,
+      icon: 4,
+      durations: 4,
+      title: 'Lesson 2',
+      view: 'view',
+      locked: true, // <-- Locked
+    },
+    {
+      id: 5,
+      icon: 5,
+      durations: 5,
+      title: 'Lesson 3',
+      view: 'view',
+      locked: true, // <-- Locked
+    },
+    {
+      id: 6,
+      icon: 6,
+      durations: 6,
+      title: 'Lesson 4',
+      view: 'view',
+      locked: true, // <-- Locked
+    },
+    {
+      id: 7,
+      icon: 7,
+      durations: 7,
+      title: 'Summary',
+      view: 'view',
+      locked: true, // <-- Locked
+    },
+    {
+      id: 8,
+      icon: 8,
+      durations: 8,
+      title: 'Quiz',
+      view: 'view',
+      locked: true, // <-- Locked
+    },
+    {
+      id: 9,
+      icon: 9,
+      durations: 9,
+      title: 'Topic Certificate',
+      view: 'view',
+      locked: true, // <-- Locked
+    }
   ];
 
   openSection(item: sectionType) {

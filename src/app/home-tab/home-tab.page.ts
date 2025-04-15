@@ -24,4 +24,8 @@ export class HomeTabPage {
     this.router.navigate(['/tabs/lesson']);
   }
 
+  goToMainLesson(lessonName: string) {
+    this.router.navigate(['/lessons', { lesson: lessonName }]);
+  }
+
 }
