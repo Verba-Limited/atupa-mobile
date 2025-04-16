@@ -81,7 +81,7 @@ export class LessonsPage {
       durations: 5,
       title: 'Lesson 3',
       view: 'view',
-      locked: true, // <-- Locked
+      locked: true,
     },
     {
       id: 6,
