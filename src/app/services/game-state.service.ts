@@ -32,4 +32,10 @@ export class GameStateService {
       this.gameStateSubject.next(null);
     }
   }
+
+  // Add this method to retrieve the saved states
+  getGameStates(): any[] {
+    const savedStates = localStorage.getItem('latestQuizStates');
+    return savedStates ? JSON.parse(savedStates) : [];
+  }
 }

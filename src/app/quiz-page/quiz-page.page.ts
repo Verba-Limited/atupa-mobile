@@ -150,6 +150,14 @@ export class QuizPagePage {
       this.pageFrom = page;
       this.loadQuizQuestion(page, levelNo);
     }
+  }
+
+  ngOnInit() {
+    this.bgAudio.play();
+    this.isBgSoundPlaying = true;
+    this.shuffleQuestions();
+    this.loadNextQuestion();
+    this.calculateTotalLevelPoints();
 
     this.activatedRouter.queryParams.subscribe((params) => {
       const page = params['page'];
@@ -157,10 +165,10 @@ export class QuizPagePage {
       const questionIndex = params['index'];
       const score = params['score'];
 
-      console.log(`pageFrom: ${page}`);
-      console.log(`levelNo: ${levelNo}`);
-      console.log(`questionIndex: ${questionIndex}`);
-      console.log(`score: ${score}`);
+      // console.log(`pageFrom: ${page}`);
+      // console.log(`levelNo: ${levelNo}`);
+      // console.log(`questionIndex: ${questionIndex}`);
+      // console.log(`score: ${score}`);
 
       if (page && levelNo) {
         this.pageFrom = page;
@@ -181,14 +189,6 @@ export class QuizPagePage {
         console.warn('Invalid questionIndex or no questions available.');
       }
     });
-  }
-
-  ngOnInit() {
-    this.bgAudio.play();
-    this.isBgSoundPlaying = true;
-    this.shuffleQuestions();
-    this.loadNextQuestion();
-    this.calculateTotalLevelPoints();
   }
 
   getQuestionLevel(questions: any, levelNumber: number) {
