@@ -142,8 +142,24 @@ export class QuizPagePage {
       this.currentLevel = levelNo;
       this.pageFrom = page;
       this.loadQuizQuestion(page, levelNo);
-      // this.goToPage(page);
     }
+
+    this.activatedRouter.queryParams.subscribe((params) => {
+      const page = params['page'];
+      const levelNo = params['level'];
+      const questionIndex = params['index'];
+
+      console.log(`pageFrom: ${page}`);
+      console.log(`levelNo: ${levelNo}`);
+      console.log(`questionIndex: ${questionIndex}`);
+
+      if (page && levelNo) {
+        this.pageFrom = page;
+        this.currentLevel = +levelNo;
+        this.questionIndex = +questionIndex || 0;
+        this.loadQuizQuestion(page, levelNo);
+      }
+    });
   }
 
   ngOnInit() {
@@ -159,10 +175,13 @@ export class QuizPagePage {
   }
 
   // get pageFrom and load quiz questions based on the page
-  loadQuizQuestion(pageFrom: string, levelNumber: any=1) {
+  loadQuizQuestion(pageFrom: string, levelNumber: any = 1) {
     switch (pageFrom) {
       case 'onka':
-        this.quizQuestions = this.getQuestionLevel(numberQuestions, levelNumber);
+        this.quizQuestions = this.getQuestionLevel(
+          numberQuestions,
+          levelNumber
+        );
         break;
       case 'eranko':
         this.quizQuestions = animalQuestions;
@@ -506,6 +525,7 @@ export class QuizPagePage {
           role: 'cancel',
           handler: () => {
             console.log('You picked yes');
+            this.saveGameState(); // Save the game state locally
             this.isOptionSelected = false;
             this.handleModalDismiss();
             this.stopBackgroundAudio();
@@ -524,5 +544,21 @@ export class QuizPagePage {
     });
 
     await alert.present();
+  }
+
+  saveGameState() {
+    const gameState = {
+      quizQuestions: this.quizQuestions,
+      currentQuestion: this.currentQuestion,
+      currentLevel: this.currentLevel,
+      answeredQuestions: Array.from(this.answeredQuestions),
+      userCumulativePoint: this.userCumulativePoint,
+      totalLevelPoints: this.totalLevelPoints,
+      questionIndex: this.questionIndex,
+      pageFrom: this.pageFrom,
+    };
+
+    localStorage.setItem('latestQuizState', JSON.stringify(gameState));
+    console.log('Game state saved:', gameState);
   }
 }

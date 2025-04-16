@@ -21,5 +21,4 @@ export class QuizPage {
   // owePage() {
   //   this.router.navigate(['/owe-page']);
   // }
-
 }

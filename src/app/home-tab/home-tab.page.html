@@ -149,45 +149,46 @@
 
       <div class="quiz">
         <p class="heading">Latest Quiz</p>
-        <div class="latest">
-          <div class="quiz-container">
-            <!-- Left: Image -->
-            <div class="icon">
-              <img src="../../assets/icon/flat.svg" alt="Eranko icon" />
-            </div>
+        <!-- If a saved quiz state is found, show the resumed quiz card -->
+        <div *ngIf="latestQuizState; else noSavedQuiz">
+          <div class="latest" (click)="continueQuiz(latestQuizState.pageFrom)">
+            <div class="quiz-container">
+              <!-- Left: Display an icon based on the quiz type or pageFrom -->
+              <div class="icon">
+                <!-- You can choose the image source conditionally if needed -->
+                <img src="../../assets/icon/flat.svg" alt="Quiz icon" />
+              </div>
 
-            <!-- Middle: Title and Button -->
-            <div class="quiz-info">
-              <h3 class="title">Eranko - Level 2</h3>
-              <button class="continue-btn">Continue</button>
-            </div>
+              <!-- Middle: Title and Continue Button -->
+              <div class="quiz-info">
+                <!-- Bind title dynamically based on saved state -->
+                <h3 class="title">
+                  {{ latestQuizState.pageFrom }} - Level {{
+                  latestQuizState.currentLevel }}
+                </h3>
+                <button
+                  class="continue-btn"
+                  (click)="continueQuiz(latestQuizState.pageFrom)"
+                >
+                  Continue
+                </button>
+              </div>
 
-            <!-- Right: Progress Circle -->
-            <div class="progress-circle">
-              <span class="progress-text">5/10</span>
+              <!-- Right: Display the progress dynamically -->
+              <div class="progress-circle">
+                <!-- Assuming quizQuestions was stored, use its length -->
+                <span class="progress-text">
+                  {{ latestQuizState.questionIndex }}/{{
+                  latestQuizState.quizQuestions?.length || 10 }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <br />
-        <div class="latest">
-          <div class="quiz-container">
-            <!-- Left: Image -->
-            <div class="icon2">
-              <img src="../../assets/icon/Rectangle 22.svg" alt="Eranko icon" />
-            </div>
-
-            <!-- Middle: Title and Button -->
-            <div class="quiz-info">
-              <h3 class="title">Onka - Level 1</h3>
-              <button class="continue-btn">Continue</button>
-            </div>
-
-            <!-- Right: Progress Circle -->
-            <div class="progress-circle2">
-              <span class="progress-text">6/10</span>
-            </div>
-          </div>
-        </div>
+        <!-- Template to show if no saved quiz exists -->
+        <ng-template #noSavedQuiz>
+          <p>No saved quiz available. Start a new quiz to see progress here!</p>
+        </ng-template>
       </div>
     </div>
   </div>
