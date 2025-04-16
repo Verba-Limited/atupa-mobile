@@ -12,9 +12,11 @@
         to exclusive learning and quiz
       </p>
     </div>
-    <form action="">
+    <form (ngSubmit)="register()">
       <div style="margin-top: 50px">
         <ion-input
+          [(ngModel)]="firstName"
+          name="firstName"
           label="First Name"
           label-placement="floating"
           fill="outline"
@@ -22,6 +24,8 @@
           style="color: #505050"></ion-input>
         <br />
         <ion-input
+          [(ngModel)]="lastName"
+          name="lastName"
           label="Last Name"
           label-placement="floating"
           fill="outline"
@@ -29,31 +33,51 @@
           style="color: #505050"></ion-input>
         <br />
         <ion-input
+          [(ngModel)]="email"
+          name="email"
           label="Email Address"
           label-placement="floating"
           fill="outline"
           placeholder="Email Address"
           style="color: #505050"></ion-input>
         <br />
-        <ion-input placeholder="Password" fill="outline" type="password">
+        <ion-input 
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Password" 
+          fill="outline" 
+          [type]="showPassword ? 'text' : 'password'"
+          (ionInput)="checkPasswordRequirements()">
           <ion-input-password-toggle
+            (click)="togglePasswordVisibility()"
             slot="end"
             color="dark"></ion-input-password-toggle>
         </ion-input>
+        
         <!-- Password requirements -->
         <div class="password-requirements">
-          <div class="requirement">
+          <div class="requirement" [ngClass]="{'completed': passwordRequirements.length}">
             <span class="radio-circle"></span>
             <label>must contain at least six characters</label>
           </div>
-          <div class="requirement completed">
+          <div class="requirement" [ngClass]="{'completed': passwordRequirements.special}">
             <span class="radio-circle"></span>
             <label>must have a special character</label>
           </div>
         </div>
+
+        <p *ngIf="error" class="error-message" style="color: red; font-size: 12px;">
+          {{ error }}
+        </p>
+        
         <br />
-        <ion-button expand="block" class="create-account">
-          Register
+        <ion-button 
+          type="submit"
+          expand="block" 
+          class="create-account"
+          [disabled]="loading">
+          <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+          <span *ngIf="!loading">Register</span>
         </ion-button>
 
         <p class="question">

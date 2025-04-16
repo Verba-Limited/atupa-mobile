@@ -1,16 +1,35 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule, FormsModule, CommonModule],
 })
 export class SignUpPage {
-  constructor(private navCtrl: NavController, private router: Router) {}
+  firstName = '';
+  lastName = '';
+  email = '';
+  password = '';
+  showPassword = false;
+  loading = false;
+  error = '';
+  passwordRequirements = {
+    length: false,
+    special: false
+  };
+
+  constructor(
+    private navCtrl: NavController, 
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   navigateBack() {
     this.navCtrl.back(); // Navigate to the previous page
@@ -18,5 +37,59 @@ export class SignUpPage {
 
   loginPage() {
     this.router.navigate(['/login']);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  checkPasswordRequirements() {
+    // Check password length
+    this.passwordRequirements.length = this.password.length >= 6;
+    
+    // Check for special character
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    this.passwordRequirements.special = specialChars.test(this.password);
+  }
+
+  async register() {
+    this.loading = true;
+    this.error = '';
+
+    // Validate form inputs
+    if (!this.firstName || !this.lastName || !this.email || !this.password) {
+      this.error = 'All fields are required';
+      this.loading = false;
+      return;
+    }
+
+    // Validate password requirements
+    if (!this.passwordRequirements.length || !this.passwordRequirements.special) {
+      this.error = 'Password does not meet the requirements';
+      this.loading = false;
+      return;
+    }
+
+    try {
+      const userData = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+        passwordConfirm: this.password
+      };
+
+      await this.authService.register(userData);
+      
+      // Optionally auto-login the user after registration
+      await this.authService.login(this.email, this.password);
+      
+      this.router.navigateByUrl('/tabs');
+    } catch (error) {
+      console.error('Registration error:', error);
+      this.error = 'Registration failed. Please try again.';
+    } finally {
+      this.loading = false;
+    }
   }
 }

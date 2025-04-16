@@ -2,24 +2,39 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
 
 interface settingTypes {
   id: number;
   name: string;
   arrow?: string;
   link?: string;
+  action?: () => void;
 }
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
+  standalone: true,
   imports: [IonicModule, RouterModule, CommonModule],
 })
 export class SettingsPage {
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private authService: AuthService
+  ) {}
 
   navigateBack() {
     this.navCtrl.back();
+  }
+
+  async logout() {
+    try {
+      await this.authService.logout();
+      // Navigation will be handled by the AuthService
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   }
 
   subPages: settingTypes[] = [
@@ -64,6 +79,12 @@ export class SettingsPage {
       name: 'Terms and Condition',
       // arrow: 'assets/icon/Rectangle223.svg',
       link: '/terms',
+    },
+    {
+      id: 9,
+      name: 'Logout',
+      // arrow: 'assets/icon/Rectangle223.svg',
+      action: () => this.logout(),
     },
   ];
 }

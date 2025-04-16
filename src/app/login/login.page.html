@@ -12,9 +12,11 @@
         your adventure
       </p>
     </div>
-    <form action="">
+    <form (ngSubmit)="openDashboad()">
       <div style="margin-top: 50px">
         <ion-input
+          [(ngModel)]="email"
+          name="email"
           label="Email Address"
           label-placement="floating"
           fill="outline"
@@ -22,23 +24,36 @@
           style="color: #505050"
         ></ion-input>
         <br />
-        <ion-input placeholder="Password" fill="outline" type="password">
+        <ion-input 
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Password" 
+          fill="outline" 
+          [type]="showPassword ? 'text' : 'password'"
+        >
           <ion-input-password-toggle
+            (click)="togglePasswordVisibility()"
             slot="end"
             color="dark"
           ></ion-input-password-toggle>
         </ion-input>
+
+        <p *ngIf="error" class="error-message" style="color: red; font-size: 12px;">
+          {{ error }}
+        </p>
 
         <p class="forgot-password" style="font-size: 14px; font-weight: 400">
           <span (click)="navigateToForget()">Forgot Password?</span>
         </p>
         <br />
         <ion-button
-          (click)="openDashboad()"
+          type="submit"
           expand="block"
           class="create-account"
+          [disabled]="loading"
         >
-          Sign in
+          <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+          <span *ngIf="!loading">Sign in</span>
         </ion-button>
       </div>
     </form>

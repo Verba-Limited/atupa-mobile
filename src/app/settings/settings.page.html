@@ -12,11 +12,12 @@
     <div>
       <ion-list>
         <ion-item
-          [routerLink]="cat.link"
           *ngFor="let cat of subPages"
           button
           detail
           lines="full"
+          [routerLink]="cat.link ? cat.link : null"
+          (click)="cat.action && cat.action()"
         >
           <!-- <img [src]="cat.arrow" alt="category icon" /> -->
 
