@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { ChangeDetectorRef } from '@angular/core';
+import { GameStateService } from '../services/game-state.service';
 
 @Component({
   selector: 'app-home-tab',
@@ -12,27 +14,23 @@ import { IonicModule } from '@ionic/angular';
 })
 export class HomeTabPage implements OnInit {
   latestQuizState: any = null;
+  constructor(
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private gameStateService: GameStateService
+  ) {}
 
   ngOnInit() {
-    this.loadLatestQuizState();
+    // Subscribe to game state updates
+    this.gameStateService.gameState$.subscribe((state) => {
+      this.latestQuizState = state;
+      this.cdr.detectChanges();
+    });
+
+    // Load the initial state
+    this.gameStateService.loadGameState();
   }
 
-  ionViewWillEnter() {
-    this.loadLatestQuizState();
-  }
-
-  constructor(private router: Router) {}
-  loadLatestQuizState() {
-    const savedState = localStorage.getItem('latestQuizState');
-    if (savedState) {
-      try {
-        this.latestQuizState = JSON.parse(savedState);
-      } catch (error) {
-        console.error('Error parsing saved quiz state:', error);
-        this.latestQuizState = null;
-      }
-    }
-  }
   continueQuiz(page: string) {
     // Checking if a saved state exists and matches the current page
     if (this.latestQuizState && this.latestQuizState.pageFrom === page) {
@@ -41,6 +39,7 @@ export class HomeTabPage implements OnInit {
           page: this.latestQuizState.pageFrom,
           level: this.latestQuizState.currentLevel,
           index: this.latestQuizState.questionIndex,
+          score: this.latestQuizState.userCumulativePoint,
         },
       });
     } else {
@@ -48,6 +47,7 @@ export class HomeTabPage implements OnInit {
         queryParams: {
           page: page,
           level: 1,
+          score: 0,
         },
       });
     }

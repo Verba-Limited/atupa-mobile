@@ -22,6 +22,7 @@ import {
   proverbsQuestions,
   townsQuestions,
 } from '../data/quizQuestions'; // Import the quiz questions from the data file
+import { GameStateService } from '../services/game-state.service';
 
 interface QuizQuestion {
   id: string;
@@ -132,12 +133,18 @@ export class QuizPagePage {
     private platform: Platform,
     private bgAudio: BackgroundAudioService,
     private activatedRouter: ActivatedRoute,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private gameStateService: GameStateService
   ) {
     const page = this.activatedRouter.snapshot.paramMap.get('page');
     const levelNo = this.activatedRouter.snapshot.paramMap.get('level');
+    const questionIndex =
+      this.activatedRouter.snapshot.queryParamMap.get('index');
+    const score = this.activatedRouter.snapshot.queryParamMap.get('score');
     console.log(`pageFrom: ${page}`);
     console.log(`levelNo: ${levelNo}`);
+    console.log(`questionIndex: ${questionIndex}`);
+    console.log(`score: ${score}`);
     if (page != null && levelNo != null) {
       this.currentLevel = levelNo;
       this.pageFrom = page;
@@ -148,16 +155,30 @@ export class QuizPagePage {
       const page = params['page'];
       const levelNo = params['level'];
       const questionIndex = params['index'];
+      const score = params['score'];
 
       console.log(`pageFrom: ${page}`);
       console.log(`levelNo: ${levelNo}`);
       console.log(`questionIndex: ${questionIndex}`);
+      console.log(`score: ${score}`);
 
       if (page && levelNo) {
         this.pageFrom = page;
         this.currentLevel = +levelNo;
         this.questionIndex = +questionIndex || 0;
         this.loadQuizQuestion(page, levelNo);
+      }
+
+      this.questionIndex = questionIndex ? +questionIndex : 0;
+      this.userCumulativePoint = score ? +score : 0;
+
+      if (
+        this.quizQuestions.length > 0 &&
+        this.questionIndex < this.quizQuestions.length
+      ) {
+        this.currentQuestion = this.quizQuestions[this.questionIndex];
+      } else {
+        console.warn('Invalid questionIndex or no questions available.');
       }
     });
   }
@@ -558,7 +579,7 @@ export class QuizPagePage {
       pageFrom: this.pageFrom,
     };
 
-    localStorage.setItem('latestQuizState', JSON.stringify(gameState));
+    this.gameStateService.updateGameState(gameState);
     console.log('Game state saved:', gameState);
   }
 }
