@@ -31,19 +31,43 @@
     <br />
     <div class="form-container">
       <div>
-        <p>Full Name</p>
-        <ion-input class="input-field" placeholder="Promise Qatar"></ion-input>
+        <p>First Name</p>
+        <input 
+          class="regular-input" 
+          type="text"
+          [value]="firstName" 
+          (input)="onFirstNameChange($event)"
+          placeholder="Enter first name"
+        />
+      </div>
+
+      <div>
+        <p>Last Name</p>
+        <input 
+          class="regular-input" 
+          type="text"
+          [value]="lastName" 
+          (input)="onLastNameChange($event)"
+          placeholder="Enter last name"
+        />
       </div>
 
       <div>
         <p>Email Address</p>
-        <ion-input
-          class="input-field"
-          placeholder="Promiseqatar@gmail.com"
-        ></ion-input>
+        <input 
+          class="regular-input" 
+          type="email"
+          [value]="email" 
+          readonly
+          disabled
+          placeholder="Email"
+        />
+        <!-- <p class="note">Email address cannot be changed</p> -->
       </div>
 
-      <ion-button expand="block" class="pay-button"> Save Changes </ion-button>
+      <ion-button expand="block" class="pay-button" (click)="saveChanges()"> 
+        Save Changes 
+      </ion-button>
     </div>
   </div>
 </ion-content>

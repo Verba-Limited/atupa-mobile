@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 interface Badge {
   id: number;
@@ -17,10 +19,39 @@ interface Badge {
   standalone: true,
 })
 export class NoticePagePage implements OnInit {
-  constructor(private navCtrl: NavController) {}
+  returnTo: string = '/tabs/home-tab'; // Default return path
+  navigating: boolean = false; // To prevent multiple clicks
+  
+  constructor(
+    private navCtrl: NavController,
+    private router: Router,
+    private location: Location
+  ) {
+    // Get return route from router state if available
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras.state) {
+      const state = navigation.extras.state as { returnTo: string };
+      if (state.returnTo) {
+        this.returnTo = state.returnTo;
+      }
+    }
+  }
 
-  navigateBack() {
-    this.navCtrl.back();
+  navigateBack(event?: Event) {
+    // Prevent event propagation to avoid multiple clicks
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    
+    // Prevent multiple navigation attempts
+    if (this.navigating) return;
+    this.navigating = true;
+    
+    console.log('Navigating back to:', this.returnTo);
+    
+    // Use a simple approach - direct navigation
+    this.router.navigateByUrl(this.returnTo, { replaceUrl: true });
   }
 
   ngOnInit() {}

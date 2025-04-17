@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ChangeDetectorRef } from '@angular/core';
 import { GameStateService } from '../services/game-state.service';
+import { AuthService } from '../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-tab',
@@ -12,12 +14,16 @@ import { GameStateService } from '../services/game-state.service';
   standalone: true,
   imports: [IonicModule, CommonModule],
 })
-export class HomeTabPage implements OnInit {
+export class HomeTabPage implements OnInit, OnDestroy {
   latestQuizState: any = null;
+  userFirstName: string = '';
+  private userSubscription: Subscription = new Subscription();
+  
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private gameStateService: GameStateService
+    private gameStateService: GameStateService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -29,6 +35,58 @@ export class HomeTabPage implements OnInit {
 
     // Load the initial state
     this.gameStateService.loadGameState();
+    
+    // Get user info from auth service
+    this.getUserInfo();
+  }
+
+  ngOnDestroy() {
+    // Clean up subscriptions to prevent memory leaks
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
+  getUserInfo() {
+    // Try to load from localStorage directly first for immediate display
+    const userData = localStorage.getItem('user_data');
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        this.updateUserName(user);
+      } catch (e) {
+        console.error('Error parsing user data from localStorage', e);
+      }
+    }
+    
+    // Always subscribe to user changes to keep the UI updated
+    this.userSubscription = this.authService.user$.subscribe(userData => {
+      if (userData) {
+        this.updateUserName(userData);
+      } else {
+        // If user data is null but we have something in localStorage, try to load from there
+        const localData = localStorage.getItem('user_data');
+        if (localData) {
+          try {
+            const user = JSON.parse(localData);
+            this.updateUserName(user);
+          } catch (e) {
+            console.error('Error parsing user data in subscription', e);
+            this.userFirstName = 'Guest';
+          }
+        } else {
+          this.userFirstName = 'Guest';
+        }
+      }
+    });
+  }
+
+  updateUserName(user: any) {
+    this.userFirstName = user.firstName || 
+                         (user.name ? user.name.split(' ')[0] : null) || 
+                         'Guest';
+    this.cdr.detectChanges();
+    console.log('User name updated to:', this.userFirstName);
   }
 
   continueQuiz(page: string) {
@@ -62,7 +120,7 @@ export class HomeTabPage implements OnInit {
   }
 
   openNoticePage() {
-    this.router.navigate(['/notice-page']);
+    this.router.navigate(['/notice-page'], { state: { returnTo: '/tabs/home-tab' } });
   }
 
   goToLesson() {

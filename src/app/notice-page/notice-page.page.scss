@@ -8,11 +8,22 @@
     height: 100%;
 
     .back-arrow {
-        position: absolute;
-        top: 35px;
-        left: 30px;
-        font-size: 22px;
+        font-size: 24px;
         color: black;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .back-button-wrapper {
+        position: absolute;
+        top: 25px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
         cursor: pointer;
     }
 

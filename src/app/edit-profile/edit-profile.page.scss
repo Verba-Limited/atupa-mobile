@@ -1,9 +1,10 @@
 .container {
     position: relative;
     /* Important for absolute positioning of child elements */
-    padding: 16px;
+    padding: 20px;
     background-color: #ffffff;
     height: 100%;
+    margin-top: 30px;
 
     .back-arrow {
         position: absolute;
@@ -15,8 +16,11 @@
     }
 
     .framer {
-        color: #505050;
         text-align: center;
+        color: #505050;
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 10px;
 
         h2 {
             font-size: 20px;
@@ -25,19 +29,20 @@
     }
 
     .profile-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 50px;
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin: 30px auto;
     }
 
     .profile-image {
-        position: relative;
-        width: 120px;
-        height: 120px;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         overflow: hidden;
-        border: 3px solid #d4af37; // Golden border color
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         img {
             width: 100%;
@@ -48,57 +53,84 @@
 
     .camera-icon {
         position: absolute;
-        top: 24%;
-        left: 56%;
-        background: brown;
-        color: white;
-        width: 30px;
-        height: 30px;
+        bottom: 0;
+        right: 0;
+        background-color: #7B462F;
         border-radius: 50%;
+        padding: 8px;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
+    }
 
-        .camera {
-            width: 20px;
-            height: 20px;
-        }
+    .camera {
+        color: white;
+        font-size: 16px;
     }
 
     .form-container {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        /* Add bottom margin to ensure content doesn't overlap with the button */
-        margin-bottom: 80px;
+        div {
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #505050;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+            font-style: italic;
+        }
 
         .input-field {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            --padding-start: 10px;
+        }
+        
+        .regular-input {
             width: 100%;
-            height: 52px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            padding: 0 10px;
-            background: #fff;
-            --padding-start: 12px;
-            --padding-end: 12px;
+            padding: 12px 10px;
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #505050;
+            background: white;
+            outline: none;
+            
+            &:focus {
+                border-color: #e28d40;
+                box-shadow: 0 0 0 1px rgba(226, 141, 64, 0.2);
+            }
+            
+            &:disabled {
+                background-color: #f5f5f5;
+                opacity: 0.8;
+                cursor: not-allowed;
+            }
+        }
+        
+        ion-input.disabled, ion-input[disabled] {
+            background-color: #f5f5f5;
+            opacity: 0.8;
         }
     }
 
     .pay-button {
-        position: absolute;
-        bottom: 16px;
-        /* Distance from the bottom of the container */
-        left: 16px;
-        right: 16px;
-        height: 48px;
+        margin-top: 50px;
         --background: #7B462F;
-        border-radius: 4px;
-        font-size: 16px;
-        font-weight: 800;
+        --border-radius: 10px;
+        --padding-top: 16px;
+        --padding-bottom: 16px;
+        font-weight: 600;
         text-transform: none;
-
-
+        font-size: 16px;
+        --box-shadow: none;
     }
 }
