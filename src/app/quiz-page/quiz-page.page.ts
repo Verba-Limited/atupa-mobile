@@ -162,7 +162,6 @@ export class QuizPagePage {
     if (!this.activatedRouter.snapshot.queryParamMap.has('index')) {
       this.loadNextQuestion();
     }
-    this.calculateTotalLevelPoints();
 
     this.activatedRouter.queryParams.subscribe((params) => {
       const page = params['page'];
@@ -253,6 +252,10 @@ export class QuizPagePage {
         this.quizQuestions = numberQuestions;
         break;
     }
+    
+    // Calculate total level points after questions are loaded
+    this.calculateTotalLevelPoints();
+    console.log("Total level points calculated:", this.totalLevelPoints);
   }
 
   stopBackgroundAudio() {
@@ -447,8 +450,13 @@ export class QuizPagePage {
 
     this.selectedFeedbackImage = newImage;
 
-    if (questionIndex == this.quizQuestions.length) {
+    // Check if this is the last question
+    if (questionIndex === this.quizQuestions.length) {
       console.log('End of quiz for the level');
+      // Add this question to answered questions to ensure completion state is detected
+      if (!this.answeredQuestions.has(this.currentQuestion.id)) {
+        this.answeredQuestions.add(this.currentQuestion.id);
+      }
       this.evaluateLevelProgress();
     }
 
@@ -645,6 +653,9 @@ export class QuizPagePage {
   }
 
   saveGameState() {
+    // Calculate total points before saving to ensure it's current
+    this.calculateTotalLevelPoints();
+    
     const gameState = {
       quizQuestions: this.quizQuestions,
       currentQuestion: this.currentQuestion,

@@ -269,8 +269,26 @@ ion-content {
             object-fit: cover;
             border-radius: 30px;
             margin-top: 20px;
-            box-shadow: 0 0 8px 8px white inset;
+            position: relative;
             transition: opacity 0.3s ease;
+            mask-image: radial-gradient(ellipse 90% 88% at 50% 50%, black 75%, transparent 95%);
+            -webkit-mask-image: radial-gradient(ellipse 90% 88% at 50% 50%, black 75%, transparent 95%);
+            border: none;
+            z-index: 1;
+        }
+        
+        .question-container::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 30px;
+            pointer-events: none;
+            z-index: 2;
+            background: radial-gradient(ellipse 80% 75% at 50% 50%, transparent 60%, rgba(255,255,255,0.9) 100%);
+            box-shadow: 0 0 20px 10px white inset;
         }
     }
 
