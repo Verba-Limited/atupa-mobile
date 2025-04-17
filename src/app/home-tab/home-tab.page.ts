@@ -16,8 +16,10 @@ import { Subscription } from 'rxjs';
 })
 export class HomeTabPage implements OnInit, OnDestroy {
   latestQuizState: any = null;
+  savedQuizStates: any[] = [];
   userFirstName: string = '';
   private userSubscription: Subscription = new Subscription();
+  private quizStatesSubscription: Subscription = new Subscription();
   
   constructor(
     private router: Router,
@@ -33,6 +35,12 @@ export class HomeTabPage implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     });
 
+    // Subscribe to quiz states array updates
+    this.quizStatesSubscription = this.gameStateService.quizStates$.subscribe((states) => {
+      this.savedQuizStates = states;
+      this.cdr.detectChanges();
+    });
+
     // Load the initial state
     this.gameStateService.loadGameState();
     
@@ -44,6 +52,9 @@ export class HomeTabPage implements OnInit, OnDestroy {
     // Clean up subscriptions to prevent memory leaks
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
+    }
+    if (this.quizStatesSubscription) {
+      this.quizStatesSubscription.unsubscribe();
     }
   }
 
@@ -89,32 +100,44 @@ export class HomeTabPage implements OnInit, OnDestroy {
     console.log('User name updated to:', this.userFirstName);
   }
 
-  continueQuiz(page: string) {
-    // Checking if a saved state exists and matches the current page
-    if (this.latestQuizState && this.latestQuizState.pageFrom === page) {
-      this.router.navigate(['/quiz-page'], {
-        queryParams: {
-          page: this.latestQuizState.pageFrom,
-          level: this.latestQuizState.currentLevel,
-          index: this.latestQuizState.questionIndex,
-          score: this.latestQuizState.userCumulativePoint,
-        },
-      });
-    } else {
-      this.router.navigate(['/quiz-page'], {
-        queryParams: {
-          page: page,
-          level: 1,
-          score: 0,
-        },
-      });
-    }
+  continueQuiz(page: string, level?: number, index?: number, score?: number) {
+    this.router.navigate(['/quiz-page'], {
+      queryParams: {
+        page: page,
+        level: level || 1,
+        index: index || 0,
+        score: score || 0,
+      },
+    });
   }
-  // Optional: a method to clear the saved state if the quiz is completed or the user cancels resuming.
-  clearQuizState() {
+
+  // Get an appropriate icon for the quiz category
+  getQuizIcon(category: string): string {
+    const icons: {[key: string]: string} = {
+      'onka': '../../assets/icon/Rectangle 22.svg',
+      'eranko': '../../assets/icon/flat.svg',
+      'oba-ilu': '../../assets/icon/obailu.svg',
+      'ilu': '../../assets/icon/Rectangle 22.svg'
+    };
+    
+    return icons[category] || '../../assets/icon/flat.svg';
+  }
+
+  // Remove a quiz from saved states
+  removeQuiz(event: Event, pageFrom: string) {
+    event.stopPropagation(); // Prevent the click from propagating to the parent
+    this.gameStateService.removeQuizState(pageFrom);
+  }
+  
+  // Optional: a method to clear all saved quiz states
+  clearAllQuizStates() {
     localStorage.removeItem('latestQuizState');
+    localStorage.removeItem('quizStates');
     this.latestQuizState = null;
+    this.savedQuizStates = [];
+    this.cdr.detectChanges();
   }
+
   levelsPage(pageName: string) {
     this.router.navigate(['/levels', { page: pageName }]);
   }

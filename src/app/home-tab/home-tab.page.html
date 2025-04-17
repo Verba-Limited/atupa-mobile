@@ -92,9 +92,8 @@
               style="margin-top: 15px"
             />
             <img
-              src="../../assets/icon/Rectangle 22.svg"
+              src="../../assets/icon/ilu.svg"
               alt=""
-              style="margin-top: 15px"
             />
           </div>
         </div>
@@ -149,43 +148,41 @@
 
       <div class="quiz">
         <p class="heading">Latest Quiz</p>
-        <!-- If a saved quiz state is found, show the resumed quiz card -->
-        <div *ngIf="latestQuizState; else noSavedQuiz">
-          <div class="latest" (click)="continueQuiz(latestQuizState.pageFrom)">
-            <div class="quiz-container">
-              <!-- Left: Display an icon based on the quiz type or pageFrom -->
-              <div class="icon">
-                <!-- You can choose the image source conditionally if needed -->
-                <img src="../../assets/icon/flat.svg" alt="Quiz icon" />
+        <!-- If saved quiz states exist, show them as a list -->
+        <div *ngIf="savedQuizStates && savedQuizStates.length > 0; else noSavedQuiz">
+          <div class="latest" *ngFor="let quizState of savedQuizStates; let i = index">
+            <div class="quiz-container" (click)="continueQuiz(quizState.pageFrom, quizState.currentLevel, quizState.questionIndex, quizState.userCumulativePoint)">
+              <!-- Left: Display an icon based on the quiz category -->
+              <div [ngClass]="{'icon': quizState.pageFrom === 'eranko' || quizState.pageFrom === 'oba-ilu', 'icon2': quizState.pageFrom === 'onka' || quizState.pageFrom === 'ilu'}">
+                <img [src]="getQuizIcon(quizState.pageFrom)" alt="Quiz icon" />
               </div>
 
               <!-- Middle: Title and Continue Button -->
               <div class="quiz-info">
                 <!-- Bind title dynamically based on saved state -->
                 <h3 class="title">
-                  {{ latestQuizState.pageFrom }} - Level {{
-                  latestQuizState.currentLevel }}
+                  {{ quizState.pageFrom }} - Level {{ quizState.currentLevel }}
                 </h3>
                 <button
                   class="continue-btn"
-                  (click)="continueQuiz(latestQuizState.pageFrom)"
-                >
+                  (click)="continueQuiz(quizState.pageFrom, quizState.currentLevel, quizState.questionIndex, quizState.userCumulativePoint)">
                   Continue
                 </button>
-
-                <!-- <button class="continue-btn" (click)=" clearQuizState()">
-                  restart
-                </button> -->
               </div>
 
               <!-- Right: Display the progress dynamically -->
-              <div class="progress-circle">
-                <!-- Assuming quizQuestions was stored, use its length -->
+              <div [ngClass]="{'progress-circle': quizState.pageFrom === 'eranko' || quizState.pageFrom === 'oba-ilu', 'progress-circle2': quizState.pageFrom === 'onka' || quizState.pageFrom === 'ilu'}">
                 <span class="progress-text">
-                  {{ latestQuizState.questionIndex }}/{{
-                  latestQuizState.quizQuestions?.length || 10 }}
+                  {{ quizState.questionIndex }}/{{ quizState.quizQuestions?.length || 10 }}
                 </span>
               </div>
+              
+              <!-- Add a remove button that doesn't disrupt original styling -->
+              <!-- <ion-icon 
+                name="close-circle" 
+                style="position: relative; top: 0px; right: 10px; color: #7B462F; font-size: 20px;"
+                (click)="removeQuiz($event, quizState.pageFrom)">
+              </ion-icon> -->
             </div>
           </div>
         </div>

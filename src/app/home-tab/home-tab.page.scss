@@ -237,8 +237,16 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 85px;
+    height: auto;
+    min-height: 85px;
     border-radius: 20px;
+    margin-bottom: 16px;
+}
+
+// Add a separator between quiz items
+.latest:not(:last-child) {
+    margin-bottom: 16px;
+    padding-bottom: 8px;
 }
 
 .quiz {

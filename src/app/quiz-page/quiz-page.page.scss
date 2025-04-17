@@ -46,7 +46,8 @@ ion-content {
                 font-weight: bold;
                 flex-grow: 1;
                 margin-left: 25px;
-                text-align: center; // Ensure centering
+                text-align: center;
+                text-transform: capitalize;
             }
 
 
@@ -120,6 +121,7 @@ ion-content {
             flex-direction: column;
             // height: calc(100vh - 100px); // Adjust based on header size
             margin-top: 15px;
+            transition: opacity 0.3s ease;
         }
 
         .quiz-card {
@@ -253,6 +255,14 @@ ion-content {
             }
         }
 
+        .question-container {
+            position: relative;
+            // min-height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .question-picture {
             width: 100%;
             height: 200px;
@@ -260,6 +270,7 @@ ion-content {
             border-radius: 30px;
             margin-top: 20px;
             box-shadow: 0 0 8px 8px white inset;
+            transition: opacity 0.3s ease;
         }
     }
 
@@ -324,7 +335,18 @@ ion-content {
     }
 }
 
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
 
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
 
 .option {
     @include items-center;

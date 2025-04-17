@@ -47,7 +47,7 @@ interface QuizQuestion {
 export class QuizPagePage {
   quizQuestions: QuizQuestion[] = [];
   currentLevel: any;
-  currentQuestion: any;
+  currentQuestion: any = { categoryName: '' };
   answeredQuestions = new Set();
   userCumulativePoint = 0;
   totalLevelPoints = 0;
@@ -62,8 +62,10 @@ export class QuizPagePage {
   correctOption: boolean = false;
   wrongAnswer: any;
   showFeedback: boolean = false;
-  questionIndex: number = 0;
+  questionIndex: number = 1;
   questionCompleted: boolean = false;
+  isImageLoading: boolean = false;
+  questionVisible: boolean = true;
 
   suggestionCosts: Record<'ileke' | 'obi' | 'eyoOwo' | 'ami', number> = {
     ileke: 10,
@@ -156,7 +158,10 @@ export class QuizPagePage {
     this.bgAudio.play();
     this.isBgSoundPlaying = true;
     this.shuffleQuestions();
-    this.loadNextQuestion();
+    // Only call loadNextQuestion if not resuming from saved state
+    if (!this.activatedRouter.snapshot.queryParamMap.has('index')) {
+      this.loadNextQuestion();
+    }
     this.calculateTotalLevelPoints();
 
     this.activatedRouter.queryParams.subscribe((params) => {
@@ -173,18 +178,46 @@ export class QuizPagePage {
       if (page && levelNo) {
         this.pageFrom = page;
         this.currentLevel = +levelNo;
-        this.questionIndex = +questionIndex || 0;
+        this.questionIndex = +questionIndex || 1;
         this.loadQuizQuestion(page, levelNo);
       }
 
-      this.questionIndex = questionIndex ? +questionIndex : 0;
+      this.questionIndex = questionIndex ? +questionIndex : 1;
       this.userCumulativePoint = score ? +score : 0;
 
       if (
         this.quizQuestions.length > 0 &&
         this.questionIndex < this.quizQuestions.length
       ) {
-        this.currentQuestion = this.quizQuestions[this.questionIndex];
+        const nextQuestion = this.quizQuestions[this.questionIndex - 1];
+        
+        // Handle image preloading for saved quiz state
+        if (nextQuestion.picture) {
+          this.isImageLoading = true;
+          this.questionVisible = false;
+          
+          // Preload the image
+          const img = new Image();
+          img.onload = () => {
+            this.currentQuestion = nextQuestion;
+            this.isImageLoading = false;
+            this.questionVisible = true;
+            this.startTimer();
+          };
+          img.onerror = () => {
+            console.error('Failed to load image:', nextQuestion.picture);
+            this.currentQuestion = nextQuestion;
+            this.isImageLoading = false;
+            this.questionVisible = true;
+            this.startTimer();
+          };
+          img.src = nextQuestion.picture;
+        } else {
+          // No image, proceed immediately
+          this.currentQuestion = nextQuestion;
+          this.questionVisible = true;
+          this.startTimer();
+        }
       } else {
         console.warn('Invalid questionIndex or no questions available.');
       }
@@ -244,6 +277,9 @@ export class QuizPagePage {
   }
 
   startTimer() {
+    // Clear any existing timer first to prevent multiple intervals
+    this.stopTimer();
+    
     this.timer = 10;
     this.timerInterval = setInterval(() => {
       if (this.timer > 0) {
@@ -270,19 +306,57 @@ export class QuizPagePage {
       ami: false,
     };
 
+    // Hide current question while preparing the next one
+    this.questionVisible = false;
+
     // console.log(`answeredQuestions size: ${this.answeredQuestions.size}`);
     // console.log(`quizQuestions length: ${this.quizQuestions.length}`);
     // console.log(`answeredQuestions < quizQuestions : ${this.answeredQuestions.size < this.quizQuestions.length}`);
 
     if (this.answeredQuestions.size < this.quizQuestions.length) {
-      this.currentQuestion = this.quizQuestions[this.answeredQuestions.size];
-      this.answeredQuestions.add(this.currentQuestion.id);
-      this.startTimer();
-      this.questionIndex++;
-      this.questionCompleted = false;
+      const nextQuestion = this.quizQuestions[this.answeredQuestions.size];
+      
+      // Pre-load image if there is one
+      if (nextQuestion.picture) {
+        this.isImageLoading = true;
+        
+        // Preload the image
+        const img = new Image();
+        img.onload = () => {
+          // Image is loaded, now set the current question and show it
+          this.currentQuestion = nextQuestion;
+          this.answeredQuestions.add(this.currentQuestion.id);
+          this.questionIndex++;
+          this.questionCompleted = false;
+          this.isImageLoading = false;
+          this.questionVisible = true;
+          this.startTimer();
+        };
+        img.onerror = () => {
+          // Handle image loading error
+          console.error('Failed to load image:', nextQuestion.picture);
+          this.currentQuestion = nextQuestion;
+          this.answeredQuestions.add(this.currentQuestion.id);
+          this.questionIndex++;
+          this.questionCompleted = false;
+          this.isImageLoading = false;
+          this.questionVisible = true;
+          this.startTimer();
+        };
+        img.src = nextQuestion.picture;
+      } else {
+        // No image, proceed immediately
+        this.currentQuestion = nextQuestion;
+        this.answeredQuestions.add(this.currentQuestion.id);
+        this.questionIndex++;
+        this.questionCompleted = false;
+        this.questionVisible = true;
+        this.startTimer();
+      }
     } else {
-      this.questionIndex = 0;
+      this.questionIndex = 1;
       this.questionCompleted = true;
+      this.questionVisible = true;
       this.evaluateLevelProgress();
     }
   }
@@ -320,7 +394,7 @@ export class QuizPagePage {
   }
 
   resetLevel() {
-    this.questionIndex = 0;
+    this.questionIndex = 1;
     this.answeredQuestions.clear();
     this.userCumulativePoint = 0;
     this.shuffleQuestions();
@@ -328,6 +402,9 @@ export class QuizPagePage {
   }
 
   getOptionKeys() {
+    if (!this.currentQuestion || !this.currentQuestion.options) {
+      return [];
+    }
     return Object.keys(this.currentQuestion.options);
   }
 

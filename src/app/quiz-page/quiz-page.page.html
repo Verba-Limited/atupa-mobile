@@ -7,7 +7,7 @@
     </div>
 
     <div class="framer">
-      <h2 class="onka">Onka</h2>
+      <h2 class="onka">{{ currentQuestion?.categoryName || '' }}</h2>
       <h3 class="cumuscore">{{ currentLevel }}</h3>
       <div class="star">
         <div class="star-color">
@@ -38,24 +38,32 @@
       </div> -->
     </div>
     <div *ngIf="currentQuestion">
-      <div class="quiz-container">
+      <div class="quiz-container" [class.hidden]="!questionVisible">
         <div class="quiz-card" [style]="currentQuestion.picture == null ? 'height: 250px' : ''">
           <div class="text-content">
             <div>
               <img class="first" src="../../assets/icon/Group 31.svg" alt="" />
             </div>
             <h1 *ngIf="questionIndex <= quizQuestions.length" [style]="currentQuestion.picture == null ? 'padding-bottom: 35px' : ''">
-              Question {{ questionIndex }}/{{quizQuestions.length}}
+              Question {{ questionIndex || 1 }}/{{quizQuestions.length}}
             </h1>
 
             <!-- <img src="../../assets/icon/Rectangle 67.svg" alt="" /> -->
-            <div class="question-picture" *ngIf="currentQuestion.picture">
-              <img
-                src="{{currentQuestion.picture}}"
-                alt=""
-                width="100%"
-                height="100%"
-              />
+            <div class="question-container">
+              <!-- Show loading spinner while image is loading -->
+              <div class="loading-spinner" *ngIf="isImageLoading">
+                <ion-spinner name="crescent"></ion-spinner>
+              </div>
+              
+              <!-- Question picture when not loading -->
+              <div class="question-picture" *ngIf="currentQuestion.picture && !isImageLoading">
+                <img
+                  [src]="currentQuestion.picture"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+              </div>
             </div>
 
             <p>{{ currentQuestion.question }}</p>
