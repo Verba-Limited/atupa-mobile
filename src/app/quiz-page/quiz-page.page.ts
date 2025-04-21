@@ -21,6 +21,7 @@ import {
   kingsQuestions,
   proverbsQuestions,
   townsQuestions,
+  fruitQuestions,
 } from '../data/quizQuestions'; // Import the quiz questions from the data file
 import { GameStateService } from '../services/game-state.service';
 
@@ -51,6 +52,7 @@ export class QuizPagePage {
   answeredQuestions = new Set();
   userCumulativePoint = 0;
   totalLevelPoints = 0;
+  overallTotalPoints = 0; // Track overall points from all categories
   timer = 10;
   selectedAnswer: any;
   levelCompleted = false;
@@ -152,14 +154,25 @@ export class QuizPagePage {
       this.pageFrom = page;
       this.loadQuizQuestion(page, levelNo);
     }
+
+    // Initialize the overall total points from the game state service
+    this.overallTotalPoints = this.gameStateService.getTotalPoints();
+    console.log(`Initial overall total points: ${this.overallTotalPoints}`);
   }
 
   ngOnInit() {
     this.bgAudio.play();
     this.isBgSoundPlaying = true;
-    this.shuffleQuestions();
+    
     // Only call loadNextQuestion if not resuming from saved state
     if (!this.activatedRouter.snapshot.queryParamMap.has('index')) {
+      // Reset these values for a fresh quiz
+      this.answeredQuestions = new Set();
+      this.questionIndex = 1;
+      this.userCumulativePoint = 0;
+      this.levelOption.userCumulativePoint = 0;
+      
+      this.shuffleQuestions();
       this.loadNextQuestion();
     }
 
@@ -168,27 +181,76 @@ export class QuizPagePage {
       const levelNo = params['level'];
       const questionIndex = params['index'];
       const score = params['score'];
+      const previousScore = params['previousScore'];
 
-      // console.log(`pageFrom: ${page}`);
-      // console.log(`levelNo: ${levelNo}`);
-      // console.log(`questionIndex: ${questionIndex}`);
-      // console.log(`score: ${score}`);
+      console.log(`pageFrom: ${page}`);
+      console.log(`levelNo: ${levelNo}`);
+      console.log(`questionIndex: ${questionIndex}`);
+      console.log(`score: ${score}`);
+      console.log(`previousScore: ${previousScore}`);
 
       if (page && levelNo) {
         this.pageFrom = page;
         this.currentLevel = +levelNo;
         this.questionIndex = +questionIndex || 1;
         this.loadQuizQuestion(page, levelNo);
+        
+        // Check if this is a continuation
+        if (questionIndex) {
+          // Try to load the saved game state to restore answered questions
+          const savedState = this.gameStateService.getQuizState(page);
+          if (savedState && savedState.answeredQuestions) {
+            // Convert the array back to a Set
+            this.answeredQuestions = new Set(savedState.answeredQuestions);
+            console.log(`Restored ${this.answeredQuestions.size} answered questions from saved state`);
+            
+            // If there are no answered questions but we have a question index > 1,
+            // we need to populate the answered questions based on the index
+            if (this.answeredQuestions.size === 0 && +questionIndex > 1) {
+              console.log(`No answered questions found but questionIndex is ${questionIndex}. Populating answered questions...`);
+              // Mark questions as answered up to the current index
+              for (let i = 0; i < +questionIndex - 1; i++) {
+                if (i < this.quizQuestions.length) {
+                  this.answeredQuestions.add(this.quizQuestions[i].id);
+                }
+              }
+              console.log(`Populated ${this.answeredQuestions.size} answered questions`);
+            }
+          } else if (+questionIndex > 1) {
+            // No saved state but questionIndex > 1, so populate answered questions
+            console.log(`No saved state but questionIndex is ${questionIndex}. Populating answered questions...`);
+            for (let i = 0; i < +questionIndex - 1; i++) {
+              if (i < this.quizQuestions.length) {
+                this.answeredQuestions.add(this.quizQuestions[i].id);
+              }
+            }
+            console.log(`Populated ${this.answeredQuestions.size} answered questions`);
+          }
+        }
       }
 
+      // Set the score from parameters
       this.questionIndex = questionIndex ? +questionIndex : 1;
       this.userCumulativePoint = score ? +score : 0;
+      
+      // Store the previous score that was already counted in the total
+      const startingScore = previousScore ? +previousScore : 0;
+      this.levelOption.userCumulativePoint = startingScore;
+      
+      console.log(`Initialized quiz with:
+      - Current score: ${this.userCumulativePoint}
+      - Previous score: ${this.levelOption.userCumulativePoint}
+      - Question index: ${this.questionIndex}`);
+      
+      // Save this initial state to track points correctly
+      this.saveGameState();
 
       if (
         this.quizQuestions.length > 0 &&
-        this.questionIndex < this.quizQuestions.length
+        this.questionIndex <= this.quizQuestions.length
       ) {
         const nextQuestion = this.quizQuestions[this.questionIndex - 1];
+        console.log(`Loading question at index ${this.questionIndex - 1}:`, nextQuestion);
         
         // Handle image preloading for saved quiz state
         if (nextQuestion.picture) {
@@ -202,6 +264,7 @@ export class QuizPagePage {
             this.isImageLoading = false;
             this.questionVisible = true;
             this.startTimer();
+            console.log(`Image loaded, showing question: ${this.currentQuestion.question}`);
           };
           img.onerror = () => {
             console.error('Failed to load image:', nextQuestion.picture);
@@ -209,6 +272,7 @@ export class QuizPagePage {
             this.isImageLoading = false;
             this.questionVisible = true;
             this.startTimer();
+            console.log(`Image load failed, showing question: ${this.currentQuestion.question}`);
           };
           img.src = nextQuestion.picture;
         } else {
@@ -216,9 +280,11 @@ export class QuizPagePage {
           this.currentQuestion = nextQuestion;
           this.questionVisible = true;
           this.startTimer();
+          console.log(`No image, showing question: ${this.currentQuestion.question}`);
         }
       } else {
         console.warn('Invalid questionIndex or no questions available.');
+        console.log(`Question index: ${this.questionIndex}, Quiz questions length: ${this.quizQuestions.length}`);
       }
     });
   }
@@ -229,6 +295,19 @@ export class QuizPagePage {
 
   // get pageFrom and load quiz questions based on the page
   loadQuizQuestion(pageFrom: string, levelNumber: any = 1) {
+    // Don't reset questions if we're continuing a saved quiz
+    // We'll determine this by checking if there are params in the URL
+    const isContinuing = this.activatedRouter.snapshot.queryParamMap.has('index');
+    
+    if (!isContinuing) {
+      // Only reset the state when starting a new quiz
+      this.answeredQuestions = new Set();
+      this.questionIndex = 1;
+      console.log('Starting new quiz - resetting question index to 1');
+    } else {
+      console.log('Continuing saved quiz - keeping existing state');
+    }
+    
     switch (pageFrom) {
       case 'onka':
         this.quizQuestions = this.getQuestionLevel(
@@ -247,6 +326,9 @@ export class QuizPagePage {
         break;
       case 'ilu':
         this.quizQuestions = townsQuestions;
+        break;
+      case 'eso':
+        this.quizQuestions = fruitQuestions;
         break;
       default:
         this.quizQuestions = numberQuestions;
@@ -312,9 +394,9 @@ export class QuizPagePage {
     // Hide current question while preparing the next one
     this.questionVisible = false;
 
-    // console.log(`answeredQuestions size: ${this.answeredQuestions.size}`);
-    // console.log(`quizQuestions length: ${this.quizQuestions.length}`);
-    // console.log(`answeredQuestions < quizQuestions : ${this.answeredQuestions.size < this.quizQuestions.length}`);
+    // Log the current state for debugging
+    console.log(`Loading next question. Answered: ${this.answeredQuestions.size}/${this.quizQuestions.length}`);
+    console.log(`Current points: ${this.userCumulativePoint}, Starting points: ${this.levelOption.userCumulativePoint}`);
 
     if (this.answeredQuestions.size < this.quizQuestions.length) {
       const nextQuestion = this.quizQuestions[this.answeredQuestions.size];
@@ -329,32 +411,41 @@ export class QuizPagePage {
           // Image is loaded, now set the current question and show it
           this.currentQuestion = nextQuestion;
           this.answeredQuestions.add(this.currentQuestion.id);
-          this.questionIndex++;
+          this.questionIndex = this.answeredQuestions.size; // Update index based on answered count
           this.questionCompleted = false;
           this.isImageLoading = false;
           this.questionVisible = true;
           this.startTimer();
+          
+          // Save state after each question loads
+          this.saveGameState();
         };
         img.onerror = () => {
           // Handle image loading error
           console.error('Failed to load image:', nextQuestion.picture);
           this.currentQuestion = nextQuestion;
           this.answeredQuestions.add(this.currentQuestion.id);
-          this.questionIndex++;
+          this.questionIndex = this.answeredQuestions.size; // Update index based on answered count
           this.questionCompleted = false;
           this.isImageLoading = false;
           this.questionVisible = true;
           this.startTimer();
+          
+          // Save state after each question loads
+          this.saveGameState();
         };
         img.src = nextQuestion.picture;
       } else {
         // No image, proceed immediately
         this.currentQuestion = nextQuestion;
         this.answeredQuestions.add(this.currentQuestion.id);
-        this.questionIndex++;
+        this.questionIndex = this.answeredQuestions.size; // Update index based on answered count
         this.questionCompleted = false;
         this.questionVisible = true;
         this.startTimer();
+        
+        // Save state after each question loads
+        this.saveGameState();
       }
     } else {
       this.questionIndex = 1;
@@ -480,12 +571,23 @@ export class QuizPagePage {
     const currentLevel = this.currentQuestion.levelNumber;
     const nextLevel = currentLevel + 1;
 
-    const nextLevelQuestions = this.quizQuestions.find(
-      (q) => q.levelNumber === nextLevel
-    );
+    // Mark this level as completed and unlock the next level
+    this.gameStateService.completeLevel(currentLevel);
+    
+    console.log(`Adding ${this.userCumulativePoint} points from current quiz to total points`);
+    
+    // Save points using the new method - replaces all the direct calculation
+    const newTotalPoints = this.ensurePointsSaved();
+    
+    // Update the service's value to match
+    this.gameStateService.forceRefreshTotalPoints();
+    this.overallTotalPoints = newTotalPoints;
 
-    console.log(`nextLevelQuestions: ${nextLevelQuestions}`);
+    // Check if this was the final level for this category
+    const maxLevelForCategory = this.gameStateService.getMaxLevelsForCategory(this.pageFrom);
+    const isFinalLevel = currentLevel >= maxLevelForCategory;
 
+    // Prepare level info regardless of destination
     this.levelOption.quizPage = this.pageFrom;
     this.levelOption.title = `Level ${currentLevel}`;
     this.levelOption.levelCompleted = currentLevel;
@@ -497,20 +599,35 @@ export class QuizPagePage {
     this.levelOption.percentage =
       (this.levelOption.totalAnswered / this.levelOption.totalQuestions) * 100;
 
-    console.log(`Level Option Object: ${JSON.stringify(this.levelOption)}`);
+    // Save the game state with the current points before navigating
+    this.saveGameState();
 
-    if (nextLevelQuestions) {
-      this.isOptionSelected = false;
-      this.modalOpen = false;
-      this.navCtrl.navigateForward(`/completed-level/${nextLevel}`);
-    } else {
-      this.modalOpen = false;
-      this.isOptionSelected = false;
+    console.log(`Level Option Object: ${JSON.stringify(this.levelOption)}`);
+    console.log(`Is final level: ${isFinalLevel}, Current: ${currentLevel}, Max: ${maxLevelForCategory}`);
+
+    this.modalOpen = false;
+    this.isOptionSelected = false;
+
+    if (isFinalLevel) {
+      // Navigate to all-level page when final level is completed
       this.router.navigate([
-        'completed-level',
+        'all-level',
         { levelObject: JSON.stringify(this.levelOption) },
       ]);
-      // this.navCtrl.navigateForward('/completed-level');
+    } else {
+      // Next level exists, navigate to completed-level
+      const nextLevelQuestions = this.quizQuestions.find(
+        (q) => q.levelNumber === nextLevel
+      );
+
+      if (nextLevelQuestions) {
+        this.navCtrl.navigateForward(`/completed-level/${nextLevel}`);
+      } else {
+        this.router.navigate([
+          'completed-level',
+          { levelObject: JSON.stringify(this.levelOption) },
+        ]);
+      }
     }
   }
 
@@ -631,7 +748,13 @@ export class QuizPagePage {
           role: 'cancel',
           handler: () => {
             console.log('You picked yes');
-            this.saveGameState(); // Save the game state locally
+            
+            // Save the game state first
+            this.saveGameState();
+            
+            // Save points using the new method - replaces all the direct calculation
+            this.ensurePointsSaved();
+            
             this.isOptionSelected = false;
             this.handleModalDismiss();
             this.stopBackgroundAudio();
@@ -656,6 +779,15 @@ export class QuizPagePage {
     // Calculate total points before saving to ensure it's current
     this.calculateTotalLevelPoints();
     
+    // Get the latest overall total points
+    this.overallTotalPoints = this.gameStateService.getTotalPoints();
+    
+    // Log the values being saved
+    console.log(`SAVE STATE: Category: ${this.pageFrom}, Level: ${this.currentLevel}`);
+    console.log(`SAVE STATE: Current points: ${this.userCumulativePoint}, Initial points: ${this.levelOption.userCumulativePoint}`);
+    console.log(`SAVE STATE: Questions answered: ${this.answeredQuestions.size}/${this.quizQuestions.length}`);
+    console.log(`SAVE STATE: Question index: ${this.questionIndex}`);
+    
     const gameState = {
       quizQuestions: this.quizQuestions,
       currentQuestion: this.currentQuestion,
@@ -665,9 +797,51 @@ export class QuizPagePage {
       totalLevelPoints: this.totalLevelPoints,
       questionIndex: this.questionIndex,
       pageFrom: this.pageFrom,
+      overallTotalPoints: this.overallTotalPoints,
+      // Save the initial score for this category - what was already counted in totalPoints
+      previousScore: this.levelOption.userCumulativePoint,
+      // Add timestamp to help with debugging
+      savedAt: new Date().toISOString()
     };
 
     this.gameStateService.updateGameState(gameState);
-    console.log('Game state saved:', gameState);
+    console.log(`Game state saved for ${this.pageFrom}`);
+  }
+
+  // Ensure points are saved to localStorage just before navigation
+  ensurePointsSaved() {
+    // Get existing points from localStorage
+    const existingPoints = localStorage.getItem('totalPoints');
+    const currentStoredPoints = existingPoints ? parseInt(existingPoints) : 0;
+    
+    // Get the starting score for this category
+    const previousScore = this.levelOption.userCumulativePoint || 0;
+    
+    // Calculate new points earned in this session only
+    const newPointsEarned = Math.max(0, this.userCumulativePoint - previousScore);
+    
+    // Detailed console logging for debugging
+    console.log('--------- POINTS CALCULATION ---------');
+    console.log(`Current total in localStorage: ${currentStoredPoints}`);
+    console.log(`Previous score for this category: ${previousScore}`);
+    console.log(`Current score for this category: ${this.userCumulativePoint}`);
+    console.log(`New points earned this session: ${newPointsEarned}`);
+    
+    // Calculate the new total - only add the new points earned in this session
+    const newTotalPoints = currentStoredPoints + newPointsEarned;
+    console.log(`New total points to save: ${newTotalPoints}`);
+    
+    // Save to localStorage with a timestamp for verification
+    const timestamp = new Date().getTime();
+    localStorage.setItem('totalPoints', newTotalPoints.toString());
+    localStorage.setItem('pointsLastUpdated', timestamp.toString());
+    
+    // Update stored value for next session
+    this.levelOption.userCumulativePoint = this.userCumulativePoint;
+    
+    console.log(`Saved points to localStorage: ${newTotalPoints} at ${timestamp}`);
+    console.log('--------------------------------------');
+    
+    return newTotalPoints;
   }
 }

@@ -17,7 +17,7 @@
             <h2>Onka</h2>
             <div class="points">
               <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-              <span>1000 points</span>
+              <span>{{ getCategoryTotalPoints('onka') }} points</span>
             </div>
             <div class="play-section">
               <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
@@ -31,7 +31,7 @@
             <h2>Eranko</h2>
             <div class="points">
               <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-              <span>1200 points</span>
+              <span>{{ getCategoryTotalPoints('eranko') }} points</span>
             </div>
             <div class="play-section">
               <img src="../../assets/icon/Rectangle 19.svg" alt="" />
@@ -47,7 +47,7 @@
             <h2>Owe</h2>
             <div class="points">
               <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-              <span>1000 points</span>
+              <span>{{ getCategoryTotalPoints('owe') }} points</span>
             </div>
             <div class="play-section">
               <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
@@ -61,7 +61,7 @@
             <h2>Oba Ilu</h2>
             <div class="points">
               <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-              <span>1200 points</span>
+              <span>{{ getCategoryTotalPoints('oba-ilu') }} points</span>
             </div>
             <div class="play-section">
               <img src="../../assets/icon/Rectangle 19.svg" alt="" />
@@ -77,7 +77,7 @@
             <h2>Ilu</h2>
             <div class="points">
               <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-              <span>1000 points</span>
+              <span>{{ getCategoryTotalPoints('ilu') }} points</span>
             </div>
             <div class="play-section">
               <img src="../../assets/icon/Rectangle 19.svg" alt="" style="margin-top: 15px" />
@@ -86,12 +86,12 @@
           </div>
         </div>
 
-        <div (click)="levelsPage('akanlo-ede')" class="quiz-card brown">
+        <div (click)="levelsPage('eso')" class="quiz-card brown">
           <div class="card-content">
-            <h2>Akanlo Ede</h2>
+            <h2>Eso</h2>
             <div class="points">
               <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-              <span>1200 points</span>
+              <span>{{ getCategoryTotalPoints('eso') }} points</span>
             </div>
             <div class="play-section">
               <img src="../../assets/icon/Rectangle 19.svg" alt="" />
@@ -107,7 +107,7 @@
             <h2>Apejuwe</h2>
             <div class="points">
               <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
-              <span>1200 points</span>
+              <span>{{ getCategoryTotalPoints('apejuwe') }} points</span>
             </div>
             <div class="play-section">
               <img src="../../assets/icon/Rectangle 19.svg" alt="" />
@@ -115,8 +115,18 @@
             </div>
           </div>
         </div>
-        <div class="quiz-card">
-          &nbsp;
+        <div (click)="levelsPage('akanlo-ede')" class="quiz-card sky">
+          <div class="card-content">
+            <h2>Akanlo Ede</h2>
+            <div class="points">
+              <ion-icon src="../../assets/icon/Vector.svg"></ion-icon>
+              <span>{{ getCategoryTotalPoints('akanlo-ede') }} points</span>
+            </div>
+            <div class="play-section">
+              <img src="../../assets/icon/Rectangle 19.svg" alt="" />
+              <img src="../../assets/icon/flat.svg" alt="" />
+            </div>
+          </div>
         </div>
       </div>
       <br />

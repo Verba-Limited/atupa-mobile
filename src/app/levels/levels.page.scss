@@ -61,7 +61,8 @@
                 font-size: 24px;
 
                 &[name="checkmark-circle"] {
-                    color: #7B462F;
+                    // color: #7B462F;
+                    color: #6b8e23;
                 }
 
                 &[name="play-circle"] {
@@ -79,6 +80,16 @@
                 font-weight: 500;
             }
 
+            &.completed {
+                background: #F4F8EE;
+                border: 1px solid #6b8e23;
+                
+                span {
+                    color: #6b8e23;
+                    font-weight: 600;
+                }
+            }
+
             &.locked {
                 // opacity: 0.8;
                 cursor: not-allowed;
@@ -90,6 +101,10 @@
 
             &:not(.locked):hover {
                 background: #FFE8D3;
+            }
+            
+            &.completed:hover {
+                background: #EAF0E4;
             }
         }
     }

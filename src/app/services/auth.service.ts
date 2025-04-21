@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import PocketBase from 'pocketbase';
 import { BehaviorSubject } from 'rxjs';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,16 @@ export class AuthService {
   private pb: PocketBase;
   private userSubject = new BehaviorSubject<any>(null);
   public user$ = this.userSubject.asObservable();
+  
+  // Make authStore accessible via a getter method
+  get authStore() {
+    return this.pb.authStore;
+  }
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private platform: Platform
+  ) {
     // this.pb = new PocketBase('http://your-pocketbase-url'); // Replace with your actual PocketBase URL
     this.pb = new PocketBase('http://127.0.0.1:8090');
     
@@ -22,6 +32,21 @@ export class AuthService {
     this.pb.authStore.onChange(() => {
       this.loadUserData();
     });
+
+    // Initialize Google Auth
+    this.initGoogleAuth();
+  }
+
+  // Initialize Google Auth based on platform
+  private async initGoogleAuth(): Promise<void> {
+    if (this.platform.is('capacitor')) {
+      // Initialize for native platforms
+      GoogleAuth.initialize({
+        clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+        grantOfflineAccess: true,
+      });
+    }
   }
 
   // Load user data from localStorage or PocketBase auth store
@@ -68,6 +93,110 @@ export class AuthService {
       }
     } else {
       console.log("AuthService: PocketBase auth is not valid");
+    }
+  }
+
+  // Google Sign In
+  async signInWithGoogle(): Promise<any> {
+    try {
+      // Get Google user
+      const googleUser = await GoogleAuth.signIn();
+      console.log('Google user:', googleUser);
+      
+      // Try to authenticate with OAuth2 in PocketBase
+      try {
+        // Check if user exists and authenticate
+        const authData = await this.pb.collection('users').authWithOAuth2({
+          provider: 'google',
+          code: googleUser.authentication.idToken,
+          // Required fields for creating new users
+          createData: {
+            name: googleUser.name,
+            firstName: googleUser.givenName || googleUser.name.split(' ')[0] || '',
+            lastName: googleUser.familyName || googleUser.name.split(' ').slice(1).join(' ') || '',
+            email: googleUser.email,
+            emailVisibility: true,
+          }
+        });
+        
+        // Store user data in both BehaviorSubject and localStorage
+        this.userSubject.next(authData.record);
+        localStorage.setItem('user_data', JSON.stringify(authData.record));
+        
+        return authData.record;
+      } catch (error) {
+        console.error('PocketBase OAuth2 authentication error:', error);
+        
+        // If PocketBase OAuth fails, we can try manual authentication/registration
+        // Check if user exists by email
+        try {
+          const users = await this.pb.collection('users').getList(1, 1, {
+            filter: `email="${googleUser.email}"`
+          });
+          
+          if (users.items.length > 0) {
+            // User exists, but couldn't authenticate with OAuth
+            throw new Error('Google authentication failed. Please try again or use email/password login.');
+          } else {
+            // User doesn't exist, create a new account
+            return this.registerWithGoogle(googleUser);
+          }
+        } catch (listError) {
+          console.error('Error checking for existing user:', listError);
+          throw new Error('Authentication failed. Please try again later.');
+        }
+      }
+    } catch (error) {
+      console.error('Google Sign-In error:', error);
+      throw error;
+    }
+  }
+  
+  // Register a new user with Google profile data
+  private async registerWithGoogle(googleUser: any): Promise<any> {
+    try {
+      // Generate a random secure password
+      const randomPassword = Math.random().toString(36).slice(-10) + 
+                             Math.random().toString(36).slice(-10) +
+                             Math.random().toString(36).slice(-10);
+      
+      // Create the user in PocketBase
+      const data = {
+        email: googleUser.email,
+        password: randomPassword,
+        passwordConfirm: randomPassword,
+        name: googleUser.name,
+        firstName: googleUser.givenName || googleUser.name.split(' ')[0] || '',
+        lastName: googleUser.familyName || googleUser.name.split(' ').slice(1).join(' ') || '',
+        emailVisibility: true,
+        authProvider: 'google',
+        googleId: googleUser.id
+      };
+      
+      // Create new user in PocketBase
+      const record = await this.pb.collection('users').create(data);
+      
+      // Authenticate the new user
+      const authData = await this.pb.collection('users').authWithPassword(googleUser.email, randomPassword);
+      
+      // Store user data
+      this.userSubject.next(authData.record);
+      localStorage.setItem('user_data', JSON.stringify(authData.record));
+      
+      return authData.record;
+    } catch (error) {
+      console.error('Google registration error:', error);
+      throw error;
+    }
+  }
+
+  // Sign out from Google
+  async signOutFromGoogle(): Promise<void> {
+    try {
+      await GoogleAuth.signOut();
+      console.log('Google Sign-Out successful');
+    } catch (error) {
+      console.error('Google Sign-Out error:', error);
     }
   }
 
@@ -270,9 +399,22 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
+    // Clear PocketBase auth
     this.pb.authStore.clear();
+    
+    // Clear local user data
     this.userSubject.next(null);
     localStorage.removeItem('user_data');
+    
+    // Try to sign out from Google as well
+    try {
+      await this.signOutFromGoogle();
+    } catch (error) {
+      console.error('Error during Google sign-out:', error);
+      // Continue with normal logout even if Google sign-out fails
+    }
+    
+    // Navigate to login page
     this.router.navigate(['/login']);
   }
 

@@ -3,8 +3,7 @@
     <ion-icon
       (click)="navigateBack()"
       name="arrow-back-outline"
-      class="back-arrow"
-    ></ion-icon>
+      class="back-arrow"></ion-icon>
     <div class="framer">
       <h2>Set up Account</h2>
       <p>
@@ -95,7 +94,7 @@
 
     <!-- Social Buttons Section -->
     <div class="social-buttons">
-      <div class="social-button">
+      <div class="social-button" (click)="signInWithGoogle()">
         <img src="../../assets/icon/goggle.svg " alt="" />
         <p>Google</p>
       </div>

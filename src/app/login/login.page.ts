@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule, NavController, LoadingController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
@@ -22,7 +22,8 @@ export class LoginPage {
   constructor(
     private navCtrl: NavController, 
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingCtrl: LoadingController
   ) {}
 
   togglePasswordVisibility() {
@@ -52,6 +53,24 @@ export class LoginPage {
       this.error = 'Invalid email or password';
     } finally {
       this.loading = false;
+    }
+  }
+
+  async signInWithGoogle() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Signing in with Google...'
+    });
+    
+    await loading.present();
+    
+    try {
+      await this.authService.signInWithGoogle();
+      await loading.dismiss();
+      this.router.navigateByUrl('/tabs');
+    } catch (error: any) {
+      await loading.dismiss();
+      console.error('Google Sign-In error:', error);
+      this.error = error.message || 'Google sign-in failed. Please try again.';
     }
   }
 }

@@ -11,28 +11,37 @@
 
   <div class="quiz-wrapper">
     <div class="stars">
-      <img src="../../assets/icon/Rectangle 91.svg" alt="Star" />
-      <img src="../../assets/icon/Rectangle 91.svg" alt="Star2" />
-      <img src="../../assets/icon/Rectangle 93.svg" alt="Star3" />
+      <img 
+        [src]="levelObject.userCumulativePoint > 0 ? 
+        '../../assets/icon/loadedstar.svg' : '../../assets/icon/blankstar.svg'" 
+        alt="Star" />
+      <img 
+        [src]="levelObject.userCumulativePoint >= (levelObject.totalLevelPoints * 0.5) ? 
+        '../../assets/icon/loadedstar.svg' : '../../assets/icon/blankstar.svg'" 
+        alt="Star2" />
+      <img 
+        [src]="levelObject.userCumulativePoint === levelObject.totalLevelPoints ? 
+        '../../assets/icon/loadedstar.svg' : '../../assets/icon/blankstar.svg'" 
+        alt="Star3" />
     </div>
 
     <div class="quiz-result">
       <div>
-        <p class="rank">Rank</p>
-        <p class="five">#5</p>
+        <p class="rank">Level</p>
+        <p class="five">#{{ levelObject.levelCompleted }}</p>
       </div>
       <div class="score-container">
         <div class="progress-circle">
-          <span class="progress-text">5/10</span>
+          <span class="progress-text">{{ levelObject.userCumulativePoint }}/{{ levelObject.totalLevelPoints }}</span>
         </div>
         <p class="score-text">
-          You answered 5 out <br />
-          of 10 questions
+          You answered {{ levelObject.totalAnswered }} out <br />
+          of {{ levelObject.totalQuestions }} questions
         </p>
       </div>
 
       <p class="congratulations">
-        Congratulations, you have completed this quiz
+        Congratulations, you have completed all levels!
       </p>
 
       <p class="reward-title">Reward</p>
@@ -42,7 +51,7 @@
           <div class="star-color">
             <img src="../../assets/icon/Vector.svg" alt="" />
           </div>
-          <p>1000 Points</p>
+          <p>{{ levelObject.userCumulativePoint }} Points</p>
         </div>
       </div>
     </div>
@@ -60,9 +69,13 @@
   </div>
 
   <div class="button-container">
-    <ion-button (click)="openShopModal()" expand="block" class="create-account">
+    <!-- <ion-button (click)="openShopModal()" expand="block" class="create-account"> -->
+    <ion-button (click)="backToLevels()" expand="block" class="create-account">
       Explore More
     </ion-button>
-    <ion-button expand="block" class="login"> Back to Homepage </ion-button>
+    <!-- <ion-button expand="block" class="login"> Back to Homepage </ion-button> -->
+    <ion-button (click)="goToHomepage()" expand="block" class="login">
+      Back to Homepage
+    </ion-button>
   </div>
 </ion-content>

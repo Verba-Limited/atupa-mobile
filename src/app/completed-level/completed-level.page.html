@@ -11,9 +11,18 @@
 
   <div class="quiz-wrapper">
     <div class="stars">
-      <img src="../../assets/icon/Rectangle 91.svg" alt="Star" />
-      <img src="../../assets/icon/Rectangle 91.svg" alt="Star2" />
-      <img src="../../assets/icon/Rectangle 93.svg" alt="Star3" />
+      <img 
+        [src]="levelObject.userCumulativePoint > 0 ? 
+        '../../assets/icon/loadedstar.svg' : '../../assets/icon/blankstar.svg'" 
+        alt="Star" />
+      <img 
+        [src]="levelObject.userCumulativePoint >= (levelObject.totalLevelPoints * 0.5) ? 
+        '../../assets/icon/loadedstar.svg' : '../../assets/icon/blankstar.svg'" 
+        alt="Star2" />
+      <img 
+        [src]="levelObject.userCumulativePoint === levelObject.totalLevelPoints ? 
+        '../../assets/icon/loadedstar.svg' : '../../assets/icon/blankstar.svg'" 
+        alt="Star3" />
     </div>
 
     <div class="quiz-result">
