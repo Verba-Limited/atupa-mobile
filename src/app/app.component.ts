@@ -17,13 +17,17 @@ export class AppComponent implements OnInit {
 
   private initializeApp() {
     this.platform.ready().then(() => {
-      // Initialize Google Auth if on native platform
-      if (this.platform.is('capacitor')) {
+      // Initialize Google Auth for both platforms with a simpler configuration
+      // that works for both native and web
+      try {
         GoogleAuth.initialize({
-          clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+          clientId: '13367546245-gldofkock88udfcpr00j5tmm3pmqg5b3.apps.googleusercontent.com',
           scopes: ['profile', 'email'],
-          grantOfflineAccess: true,
+          // No additional options that could cause errors
         });
+        console.log('Google Auth initialized in app component');
+      } catch (error) {
+        console.error('Failed to initialize Google Auth:', error);
       }
     });
   }

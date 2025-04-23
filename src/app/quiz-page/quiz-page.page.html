@@ -40,6 +40,15 @@
         <p *ngIf="timer > 5">{{ timer }}s</p>
       </div> -->
     </div>
+
+    <!-- Main Loading Spinner for entire quiz -->
+    <div *ngIf="!currentQuestion || (isImageLoading && currentQuestion?.picture)" class="quiz-loading-container">
+      <div class="quiz-loading-content">
+        <ion-spinner name="circles"></ion-spinner>
+        <p>Loading Quiz...</p>
+      </div>
+    </div>
+
     <div *ngIf="currentQuestion">
       <div class="quiz-container" [class.hidden]="!questionVisible">
         <div class="quiz-card" [style]="currentQuestion.picture == null ? 'height: 250px' : ''">
@@ -56,6 +65,7 @@
               <!-- Show loading spinner while image is loading -->
               <div class="loading-spinner" *ngIf="isImageLoading">
                 <ion-spinner name="crescent"></ion-spinner>
+                <p>Loading image...</p>
               </div>
               
               <!-- Question picture when not loading -->
@@ -109,11 +119,13 @@
             </div>
           </div>
 
-          <div
+          <!-- <div
             class="correct-answerImg"
             *ngIf="showFeedback"
-            [ngClass]="{'fade-out': feedbackFadeOut}"
-          >
+            [ngClass]="{'fade-out': feedbackFadeOut}">
+            <img [src]="selectedFeedbackImage" alt="" />
+          </div> -->
+          <div class="correct-answerImg" *ngIf="showFeedback">
             <img [src]="selectedFeedbackImage" alt="" />
           </div>
         </div>

@@ -39,14 +39,36 @@ export class AuthService {
 
   // Initialize Google Auth based on platform
   private async initGoogleAuth(): Promise<void> {
-    if (this.platform.is('capacitor')) {
-      // Initialize for native platforms
-      GoogleAuth.initialize({
-        clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
+    try {
+      // Check if running in browser or native
+      const isNative = this.platform.is('capacitor');
+      console.log(`Initializing Google Auth for ${isNative ? 'native' : 'web'} platform`);
+      
+      // Initialize for all platforms (web and native)
+      await GoogleAuth.initialize({
+        clientId: '13367546245-gldofkock88udfcpr00j5tmm3pmqg5b3.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
-        grantOfflineAccess: true,
       });
+      console.log('Google Auth initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize Google Auth:', error);
     }
+  }
+
+  // Try alternative web authentication for browsers with strict security policies
+  private async tryWebGoogleAuth(): Promise<any> {
+    // This is just a placeholder - in a real implementation, you might:
+    // 1. Use a different OAuth flow (like implicit flow with redirects)
+    // 2. Use a server-side authentication flow
+    // 3. Implement a custom authentication flow using Google's JS SDK directly
+    
+    // For now, just show an alert and provide guidance
+    alert('Google Sign-in may not work properly in this browser due to security settings. Try: \n' +
+          '1. Allow popups for this site\n' +
+          '2. Use a different browser\n' +
+          '3. Use email/password login instead');
+          
+    throw new Error('Browser security restrictions prevented Google Sign-in');
   }
 
   // Load user data from localStorage or PocketBase auth store
@@ -99,9 +121,50 @@ export class AuthService {
   // Google Sign In
   async signInWithGoogle(): Promise<any> {
     try {
-      // Get Google user
-      const googleUser = await GoogleAuth.signIn();
-      console.log('Google user:', googleUser);
+      console.log('Starting Google Sign In process...');
+      
+      // Add a delay to ensure any previous auth processes have completed
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Get Google user with better error handling
+      let googleUser;
+      try {
+        googleUser = await GoogleAuth.signIn();
+        console.log('Google user:', googleUser);
+      } catch (signInError: any) {
+        // Handle specific Google Sign-In errors
+        if (signInError.error === 'popup_closed_by_user') {
+          console.log('User closed the sign-in popup');
+          
+          // Check if this might be a browser security issue
+          if (!this.platform.is('capacitor') && navigator.userAgent.includes('Chrome/')) {
+            // In Chrome with strict security policies, try alternative approach
+            console.log('Detected Chrome browser, attempting alternative auth...');
+            return this.tryWebGoogleAuth();
+          }
+          
+          throw new Error('Sign-in cancelled. Please try again.');
+        }
+        
+        // Check for Cross-Origin errors which indicate security policy issues
+        if (signInError.message && 
+            (signInError.message.includes('Cross-Origin') || 
+             signInError.message.includes('cross-origin') ||
+             signInError.message.includes('blocked by COOP'))) {
+          console.log('Detected Cross-Origin issues, trying alternative auth...');
+          return this.tryWebGoogleAuth();
+        }
+        
+        // Log and rethrow other errors
+        console.error('Google Sign-In failed:', signInError);
+        throw new Error('Google sign-in failed: ' + (signInError.message || 'Please try again'));
+      }
+      
+      // Check if we got a valid user object with required fields
+      if (!googleUser || !googleUser.authentication || !googleUser.authentication.idToken) {
+        console.error('Invalid Google user response:', googleUser);
+        throw new Error('Google sign-in returned invalid data');
+      }
       
       // Try to authenticate with OAuth2 in PocketBase
       try {

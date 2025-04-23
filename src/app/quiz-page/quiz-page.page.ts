@@ -130,6 +130,10 @@ export class QuizPagePage {
 
   pageFrom: any;
 
+  // Add audio properties to hold the sound effects
+  private correctSound: HTMLAudioElement;
+  private wrongSound: HTMLAudioElement;
+
   constructor(
     private navCtrl: NavController,
     private alertController: AlertController,
@@ -140,6 +144,12 @@ export class QuizPagePage {
     private modalController: ModalController,
     private gameStateService: GameStateService
   ) {
+    // Don't set initial loading state here since we don't know if question has picture yet
+    
+    // Initialize sound effects with relative paths
+    this.correctSound = new Audio('assets/sounds/clapping.mp3');
+    this.wrongSound = new Audio('assets/sounds/booing.mp3');
+    
     const page = this.activatedRouter.snapshot.paramMap.get('page');
     const levelNo = this.activatedRouter.snapshot.paramMap.get('level');
     const questionIndex =
@@ -173,7 +183,10 @@ export class QuizPagePage {
       this.levelOption.userCumulativePoint = 0;
       
       this.shuffleQuestions();
-      this.loadNextQuestion();
+      // Add a short delay before loading the first question to show loading indicator
+      setTimeout(() => {
+        this.loadNextQuestion();
+      }, 800);
     }
 
     this.activatedRouter.queryParams.subscribe((params) => {
@@ -190,6 +203,9 @@ export class QuizPagePage {
       console.log(`previousScore: ${previousScore}`);
 
       if (page && levelNo) {
+        // We'll set questionVisible based on whether the question has a picture
+        // in the loadQuizQuestion method, not here
+        
         this.pageFrom = page;
         this.currentLevel = +levelNo;
         this.questionIndex = +questionIndex || 1;
@@ -244,48 +260,6 @@ export class QuizPagePage {
       
       // Save this initial state to track points correctly
       this.saveGameState();
-
-      if (
-        this.quizQuestions.length > 0 &&
-        this.questionIndex <= this.quizQuestions.length
-      ) {
-        const nextQuestion = this.quizQuestions[this.questionIndex - 1];
-        console.log(`Loading question at index ${this.questionIndex - 1}:`, nextQuestion);
-        
-        // Handle image preloading for saved quiz state
-        if (nextQuestion.picture) {
-          this.isImageLoading = true;
-          this.questionVisible = false;
-          
-          // Preload the image
-          const img = new Image();
-          img.onload = () => {
-            this.currentQuestion = nextQuestion;
-            this.isImageLoading = false;
-            this.questionVisible = true;
-            this.startTimer();
-            console.log(`Image loaded, showing question: ${this.currentQuestion.question}`);
-          };
-          img.onerror = () => {
-            console.error('Failed to load image:', nextQuestion.picture);
-            this.currentQuestion = nextQuestion;
-            this.isImageLoading = false;
-            this.questionVisible = true;
-            this.startTimer();
-            console.log(`Image load failed, showing question: ${this.currentQuestion.question}`);
-          };
-          img.src = nextQuestion.picture;
-        } else {
-          // No image, proceed immediately
-          this.currentQuestion = nextQuestion;
-          this.questionVisible = true;
-          this.startTimer();
-          console.log(`No image, showing question: ${this.currentQuestion.question}`);
-        }
-      } else {
-        console.warn('Invalid questionIndex or no questions available.');
-        console.log(`Question index: ${this.questionIndex}, Quiz questions length: ${this.quizQuestions.length}`);
-      }
     });
   }
 
@@ -295,49 +269,82 @@ export class QuizPagePage {
 
   // get pageFrom and load quiz questions based on the page
   loadQuizQuestion(pageFrom: string, levelNumber: any = 1) {
-    // Don't reset questions if we're continuing a saved quiz
-    // We'll determine this by checking if there are params in the URL
-    const isContinuing = this.activatedRouter.snapshot.queryParamMap.has('index');
+    // Set questionVisible to false initially
+    this.questionVisible = false;
     
-    if (!isContinuing) {
-      // Only reset the state when starting a new quiz
-      this.answeredQuestions = new Set();
-      this.questionIndex = 1;
-      console.log('Starting new quiz - resetting question index to 1');
-    } else {
-      console.log('Continuing saved quiz - keeping existing state');
-    }
-    
+    const level = Number(levelNumber);
+    let questions: any[] = [];
+
     switch (pageFrom) {
       case 'onka':
-        this.quizQuestions = this.getQuestionLevel(
-          numberQuestions,
-          levelNumber
-        );
+        questions = [...numberQuestions];
         break;
       case 'eranko':
-        this.quizQuestions = animalQuestions;
+        questions = [...animalQuestions];
         break;
       case 'oba-ilu':
-        this.quizQuestions = kingsQuestions;
+        questions = [...kingsQuestions];
         break;
       case 'owe':
-        this.quizQuestions = proverbsQuestions;
+        questions = [...proverbsQuestions];
         break;
       case 'ilu':
-        this.quizQuestions = townsQuestions;
+        questions = [...townsQuestions];
         break;
       case 'eso':
-        this.quizQuestions = fruitQuestions;
+        questions = [...fruitQuestions];
         break;
       default:
-        this.quizQuestions = numberQuestions;
-        break;
+        questions = [...numberQuestions];
     }
+
+    // Get the selected level questions
+    this.quizQuestions = this.getQuestionLevel(questions, level);
     
-    // Calculate total level points after questions are loaded
+    // Calculate the total points available for this level
     this.calculateTotalLevelPoints();
-    console.log("Total level points calculated:", this.totalLevelPoints);
+    
+    // If there are no questions at this level, show an alert and navigate back
+    if (this.quizQuestions.length === 0) {
+      this.alertController.create({
+        header: 'No Questions Available',
+        message: 'There are no questions available for this level yet. Please check back later.',
+        buttons: ['OK']
+      }).then(alert => {
+        alert.present();
+        this.navCtrl.back();
+      });
+      return;
+    }
+
+    // Set the current question based on index
+    const index = this.questionIndex - 1;
+    if (index < this.quizQuestions.length) {
+      setTimeout(() => {
+        this.currentQuestion = this.quizQuestions[index];
+        
+        // Check if the question has an image
+        if (this.currentQuestion.picture) {
+          // For questions with pictures, load the image first
+          this.isImageLoading = true;
+          
+          const img = new Image();
+          img.onload = () => {
+            this.isImageLoading = false;
+            this.questionVisible = true;
+          };
+          img.onerror = () => {
+            this.isImageLoading = false;
+            this.questionVisible = true;
+          };
+          img.src = this.currentQuestion.picture;
+        } else {
+          // For questions without pictures, make visible immediately
+          this.isImageLoading = false;
+          this.questionVisible = true;
+        }
+      }, 500);
+    }
   }
 
   stopBackgroundAudio() {
@@ -381,9 +388,67 @@ export class QuizPagePage {
   }
 
   loadNextQuestion() {
+    // Reset states
     this.stopTimer();
     this.selectedAnswer = null;
     this.isOptionSelected = false;
+    this.showFeedback = false;
+    this.correctOption = false;
+    this.wrongAnswer = null;
+    this.feedbackFadeOut = true;
+    this.modalOpen = false;
+
+    // Determine if the quiz is complete
+    if (this.answeredQuestions.size === this.quizQuestions.length) {
+      console.log('All questions answered!');
+      this.questionCompleted = true;
+      this.evaluateLevelProgress();
+      return;
+    }
+
+    // Find the next unanswered question
+    let nextIndex = this.questionIndex - 1;
+    
+    // If we're at the end of questions, wrap around to find unanswered ones
+    if (nextIndex >= this.quizQuestions.length) {
+      nextIndex = 0;
+    }
+    
+    // Find the next unanswered question
+    let startIndex = nextIndex;
+    let found = false;
+    
+    // Loop through questions until we find an unanswered one
+    do {
+      // Check if the current question is answered
+      const currentId = this.quizQuestions[nextIndex].id;
+      if (!this.answeredQuestions.has(currentId)) {
+        // Found an unanswered question
+        this.questionIndex = nextIndex + 1; // 1-indexed for display
+        this.currentQuestion = this.quizQuestions[nextIndex];
+        found = true;
+        break;
+      }
+      
+      // Move to next question (with wrapping)
+      nextIndex = (nextIndex + 1) % this.quizQuestions.length;
+      
+      // If we've checked all questions and come back to the start, all are answered
+      if (nextIndex === startIndex) {
+        break;
+      }
+      
+    } while (!found);
+    
+    // If no unanswered questions found, mark as completed
+    if (!found) {
+      console.log('All questions have been answered');
+      this.questionCompleted = true;
+      this.evaluateLevelProgress();
+      return;
+    }
+
+    // Reset used suggestions
     this.usedSuggestions = {
       ileke: false,
       obi: false,
@@ -391,68 +456,38 @@ export class QuizPagePage {
       ami: false,
     };
 
-    // Hide current question while preparing the next one
-    this.questionVisible = false;
+    // Save the current game state
+    this.saveGameState();
 
-    // Log the current state for debugging
-    console.log(`Loading next question. Answered: ${this.answeredQuestions.size}/${this.quizQuestions.length}`);
-    console.log(`Current points: ${this.userCumulativePoint}, Starting points: ${this.levelOption.userCumulativePoint}`);
-
-    if (this.answeredQuestions.size < this.quizQuestions.length) {
-      const nextQuestion = this.quizQuestions[this.answeredQuestions.size];
+    // Check if the question has an image
+    if (this.currentQuestion.picture) {
+      // Only hide question and show loading for questions with images
+      this.questionVisible = false;
+      this.isImageLoading = true;
       
-      // Pre-load image if there is one
-      if (nextQuestion.picture) {
-        this.isImageLoading = true;
-        
-        // Preload the image
-        const img = new Image();
-        img.onload = () => {
-          // Image is loaded, now set the current question and show it
-          this.currentQuestion = nextQuestion;
-          this.answeredQuestions.add(this.currentQuestion.id);
-          this.questionIndex = this.answeredQuestions.size; // Update index based on answered count
-          this.questionCompleted = false;
+      // Preload the image
+      const img = new Image();
+      img.onload = () => {
+        setTimeout(() => {
           this.isImageLoading = false;
           this.questionVisible = true;
-          this.startTimer();
-          
-          // Save state after each question loads
-          this.saveGameState();
-        };
-        img.onerror = () => {
-          // Handle image loading error
-          console.error('Failed to load image:', nextQuestion.picture);
-          this.currentQuestion = nextQuestion;
-          this.answeredQuestions.add(this.currentQuestion.id);
-          this.questionIndex = this.answeredQuestions.size; // Update index based on answered count
-          this.questionCompleted = false;
+        }, 300);
+      };
+      img.onerror = () => {
+        setTimeout(() => {
           this.isImageLoading = false;
           this.questionVisible = true;
-          this.startTimer();
-          
-          // Save state after each question loads
-          this.saveGameState();
-        };
-        img.src = nextQuestion.picture;
-      } else {
-        // No image, proceed immediately
-        this.currentQuestion = nextQuestion;
-        this.answeredQuestions.add(this.currentQuestion.id);
-        this.questionIndex = this.answeredQuestions.size; // Update index based on answered count
-        this.questionCompleted = false;
-        this.questionVisible = true;
-        this.startTimer();
-        
-        // Save state after each question loads
-        this.saveGameState();
-      }
+        }, 300);
+      };
+      img.src = this.currentQuestion.picture;
     } else {
-      this.questionIndex = 1;
-      this.questionCompleted = true;
+      // For questions without pictures, make visible immediately
       this.questionVisible = true;
-      this.evaluateLevelProgress();
+      this.isImageLoading = false;
     }
+
+    // Start the timer for the new question
+    this.startTimer();
   }
 
   correctImages: string[] = [
@@ -509,58 +544,79 @@ export class QuizPagePage {
     this.showOptions();
   }
 
+  // Play correct answer sound
+  playCorrectSound() {
+    try {
+      // Reset the audio to start from beginning if it was already played
+      this.correctSound.currentTime = 0;
+      this.correctSound.play();
+    } catch (error) {
+      console.error('Error playing correct sound effect:', error);
+    }
+  }
+
+  // Play wrong answer sound
+  playWrongSound() {
+    try {
+      // Reset the audio to start from beginning if it was already played
+      this.wrongSound.currentTime = 0;
+      this.wrongSound.play();
+    } catch (error) {
+      console.error('Error playing wrong sound effect:', error);
+    }
+  }
+
   selectOption(selectedOption: any, questionIndex: number) {
-    // console.log(`questionIndex: ${questionIndex}`);
+    if (this.isOptionSelected) {
+      return; // Prevent multiple selections
+    }
+
     this.isOptionSelected = true;
-    this.feedbackFadeOut = false;
-    this.showFeedback = true;
-    this.answerQuestion(selectedOption);
+    this.selectedAnswer = selectedOption;
+    this.stopTimer();
 
-    const correctAnswer = this.currentQuestion.answer;
-    let newImage: string;
-
-    if (selectedOption === correctAnswer) {
-      do {
-        newImage =
-          this.correctImages[
-            Math.floor(Math.random() * this.correctImages.length)
-          ];
-      } while (
-        newImage === this.selectedFeedbackImage &&
-        this.selectedFeedbackImage.length > 1
-      );
-    } else {
-      do {
-        newImage =
-          this.wrongImages[Math.floor(Math.random() * this.wrongImages.length)];
-      } while (
-        newImage === this.selectedFeedbackImage &&
-        this.wrongImages.length > 1
-      );
-    }
-
-    this.selectedFeedbackImage = newImage;
-
-    // Check if this is the last question
-    if (questionIndex === this.quizQuestions.length) {
-      console.log('End of quiz for the level');
-      // Add this question to answered questions to ensure completion state is detected
-      if (!this.answeredQuestions.has(this.currentQuestion.id)) {
-        this.answeredQuestions.add(this.currentQuestion.id);
-      }
+    // Add the question's points to the user's score if answered correctly
+    if (selectedOption === this.currentQuestion.answer) {
+      this.correctOption = true;
+      this.userCumulativePoint += this.currentQuestion.points || 10;
+      
+      // Evaluate if the user has enough points to pass the level
       this.evaluateLevelProgress();
+      
+      // Show correct answer feedback
+      const randomIndex = Math.floor(Math.random() * this.correctImages.length);
+      this.selectedFeedbackImage = this.correctImages[randomIndex];
+      
+      // Play clapping sound
+      this.playCorrectSound();
+    } else {
+      this.correctOption = false;
+      this.wrongAnswer = selectedOption;
+      
+      // Show wrong answer feedback
+      const randomIndex = Math.floor(Math.random() * this.wrongImages.length);
+      this.selectedFeedbackImage = this.wrongImages[randomIndex];
+      
+      // Play booing sound
+      this.playWrongSound();
     }
 
-    this.modalOpen = false;
+    // Record this question as answered
+    this.answeredQuestions.add(this.currentQuestion.id);
+    
+    // Save the game state after each question is answered
+    this.saveGameState();
 
+    // Show feedback
+    this.showFeedback = true;
+    
+    // No need to hide the question container again - the image is already loaded
+    
+    // Delay opening the modal to allow feedback animation to complete
     setTimeout(() => {
-      this.feedbackFadeOut = true;
-    }, 3000);
-
-    setTimeout(() => {
+      // Show modal with explanation
       this.modalOpen = true;
-      this.showFeedback = false;
-    }, 3000);
+    }, 800);
   }
 
   goToNextLevel() {
