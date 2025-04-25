@@ -337,6 +337,7 @@ ion-content {
         }
 
         .correct-answerImg {
+            // @include width-sizes(230px, 215px);
             position: absolute;
             top: 83%;
             left: 50%;
@@ -344,7 +345,7 @@ ion-content {
             // z-index: 10;
             z-index: 999;
             opacity: 1;
-            transition: opacity 2s ease;
+            transition: opacity 4s ease;
         }
 
         .correct-answerImg.fade-out {

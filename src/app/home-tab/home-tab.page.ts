@@ -11,7 +11,8 @@ import {
   animalQuestions, 
   fruitQuestions, 
   kingsQuestions, 
-  townsQuestions 
+  townsQuestions, 
+  proverbsQuestions
 } from '../data/quizQuestions';
 
 @Component({
@@ -56,6 +57,7 @@ export class HomeTabPage implements OnInit, OnDestroy {
     this.categoryTotalPoints = {
       'onka': this.calculateTotalPointsForQuestions(numberQuestions),
       'eranko': this.calculateTotalPointsForQuestions(animalQuestions),
+      'owe': this.calculateTotalPointsForQuestions(proverbsQuestions),
       'eso': this.calculateTotalPointsForQuestions(fruitQuestions),
       'oba-ilu': this.calculateTotalPointsForQuestions(kingsQuestions),
       'ilu': this.calculateTotalPointsForQuestions(townsQuestions)

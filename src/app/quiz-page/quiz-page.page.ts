@@ -395,7 +395,7 @@ export class QuizPagePage {
     this.showFeedback = false;
     this.correctOption = false;
     this.wrongAnswer = null;
-    this.feedbackFadeOut = true;
+    this.feedbackFadeOut = false;
     this.modalOpen = false;
 
     // Determine if the quiz is complete
@@ -607,16 +607,22 @@ export class QuizPagePage {
     // Save the game state after each question is answered
     this.saveGameState();
 
-    // Show feedback
+    // Show feedback (initially don't fade out)
+    this.feedbackFadeOut = false;
     this.showFeedback = true;
     
     // No need to hide the question container again - the image is already loaded
     
-    // Delay opening the modal to allow feedback animation to complete
+    // Set a timer to start fading out the feedback image after 2 seconds
+    setTimeout(() => {
+      this.feedbackFadeOut = true;
+    }, 2000);
+    
+    // Delay opening the modal to allow feedback to be visible longer
     setTimeout(() => {
       // Show modal with explanation
       this.modalOpen = true;
-    }, 800);
+    }, 3000); // Increased from 800ms to 3000ms
   }
 
   goToNextLevel() {
