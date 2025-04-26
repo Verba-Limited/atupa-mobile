@@ -8,6 +8,7 @@ import {
   NavController,
   AlertController,
   ModalController,
+  ToastController,
 } from '@ionic/angular';
 import type { OverlayEventDetail } from '@ionic/core';
 
@@ -36,6 +37,24 @@ interface QuizQuestion {
   explanation: string;
   picture: any;
   points: number;
+}
+
+// Define a type for overlay items for better type checking
+interface OverlayItem {
+  icon: string;
+  title: string;
+  slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami';
+  subtitle: string;
+  badge: number;
+}
+
+// Define a type for badge counts
+interface BadgeCounts {
+  ileke?: number;
+  obi?: number;
+  eyoOwo?: number;
+  ami?: number;
+  [key: string]: number | undefined;
 }
 
 @Component({
@@ -83,34 +102,34 @@ export class QuizPagePage {
     ami: false,
   };
 
-  overlayItems: any = [
+  overlayItems: OverlayItem[] = [
     {
       icon: '../../assets/icon/dots.svg',
       title: 'Ileke',
       slug: 'ileke',
-      subtitle: 'yaa meji',
-      badge: '3',
+      subtitle: 'din meji',
+      badge: 3,
     },
     {
-      icon: '../../assets/icon/dots.svg',
+      icon: '../../assets/icon/almond 1.svg',
       title: 'Obi',
       slug: 'obi',
-      subtitle: 'yaa onka',
-      badge: '2',
+      subtitle: 'din okan',
+      badge: 2,
     },
     {
-      icon: '../../assets/icon/dots.svg',
-      title: 'Eyo Owo',
+      icon: '../../assets/icon/coweries.svg',
+      title: 'Eyo',
       slug: 'eyoOwo',
       subtitle: 'idahun',
-      badge: '1',
+      badge: 1,
     },
     {
-      icon: '../../assets/icon/dots.svg',
+      icon: '../../assets/icon/more 1.svg',
       title: 'Ami',
       slug: 'ami',
       subtitle: 'alaye',
-      badge: '4',
+      badge: 4,
     },
   ];
 
@@ -142,7 +161,8 @@ export class QuizPagePage {
     private bgAudio: BackgroundAudioService,
     private activatedRouter: ActivatedRoute,
     private modalController: ModalController,
-    private gameStateService: GameStateService
+    private gameStateService: GameStateService,
+    private toastController: ToastController
   ) {
     // Don't set initial loading state here since we don't know if question has picture yet
     
@@ -174,8 +194,12 @@ export class QuizPagePage {
     this.bgAudio.play();
     this.isBgSoundPlaying = true;
     
+    // Load badge counts from localStorage
+    this.loadBadgeCounts();
+    
     // Only call loadNextQuestion if not resuming from saved state
     if (!this.activatedRouter.snapshot.queryParamMap.has('index')) {
+      console.log('Starting a fresh quiz');
       // Reset these values for a fresh quiz
       this.answeredQuestions = new Set();
       this.questionIndex = 1;
@@ -187,6 +211,8 @@ export class QuizPagePage {
       setTimeout(() => {
         this.loadNextQuestion();
       }, 800);
+    } else {
+      console.log('Continuing from a saved quiz state');
     }
 
     this.activatedRouter.queryParams.subscribe((params) => {
@@ -209,12 +235,16 @@ export class QuizPagePage {
         this.pageFrom = page;
         this.currentLevel = +levelNo;
         this.questionIndex = +questionIndex || 1;
+        
+        // Load quiz questions first
         this.loadQuizQuestion(page, levelNo);
         
         // Check if this is a continuation
         if (questionIndex) {
+          console.log(`Continuing quiz at question index ${questionIndex}`);
           // Try to load the saved game state to restore answered questions
           const savedState = this.gameStateService.getQuizState(page);
+          
           if (savedState && savedState.answeredQuestions) {
             // Convert the array back to a Set
             this.answeredQuestions = new Set(savedState.answeredQuestions);
@@ -242,6 +272,8 @@ export class QuizPagePage {
             }
             console.log(`Populated ${this.answeredQuestions.size} answered questions`);
           }
+        } else {
+          console.log('Starting a fresh quiz');
         }
       }
 
@@ -332,16 +364,22 @@ export class QuizPagePage {
           img.onload = () => {
             this.isImageLoading = false;
             this.questionVisible = true;
+            // Start timer after image loads
+            this.startTimer();
           };
           img.onerror = () => {
             this.isImageLoading = false;
             this.questionVisible = true;
+            // Start timer even if image fails to load
+            this.startTimer();
           };
           img.src = this.currentQuestion.picture;
         } else {
           // For questions without pictures, make visible immediately
           this.isImageLoading = false;
           this.questionVisible = true;
+          // Start timer for questions without images
+          this.startTimer();
         }
       }, 500);
     }
@@ -378,7 +416,7 @@ export class QuizPagePage {
         this.timer--;
       } else {
         this.stopTimer();
-        this.loadNextQuestion();
+        this.handleTimerExpired();
       }
     }, 1000);
   }
@@ -387,7 +425,25 @@ export class QuizPagePage {
     clearInterval(this.timerInterval);
   }
 
+  // Handle when timer expires
+  handleTimerExpired() {
+    console.log('Timer expired - moving to next question');
+    
+    // Mark current question as answered with no points awarded
+    this.answeredQuestions.add(this.currentQuestion.id);
+    
+    // Save game state to track this skipped question
+    this.saveGameState();
+    
+    // Trigger next question with a short delay to ensure UI updates
+    setTimeout(() => {
+      this.loadNextQuestion();
+    }, 300);
+  }
+
   loadNextQuestion() {
+    console.log('Loading next question...');
+    
     // Reset states
     this.stopTimer();
     this.selectedAnswer = null;
@@ -400,18 +456,21 @@ export class QuizPagePage {
 
     // Determine if the quiz is complete
     if (this.answeredQuestions.size === this.quizQuestions.length) {
-      console.log('All questions answered!');
+      console.log('All questions answered! Evaluating level progress...');
       this.questionCompleted = true;
       this.evaluateLevelProgress();
       return;
     }
 
+    console.log(`Finding next question. Current index: ${this.questionIndex}, Total questions: ${this.quizQuestions.length}`);
+    
     // Find the next unanswered question
     let nextIndex = this.questionIndex - 1;
     
     // If we're at the end of questions, wrap around to find unanswered ones
     if (nextIndex >= this.quizQuestions.length) {
       nextIndex = 0;
+      console.log('Reached end of questions, wrapping around to beginning');
     }
     
     // Find the next unanswered question
@@ -420,13 +479,22 @@ export class QuizPagePage {
     
     // Loop through questions until we find an unanswered one
     do {
+      // Make sure we have valid questions
+      if (this.quizQuestions.length === 0) {
+        console.error('No questions available in quiz!');
+        return;
+      }
+      
       // Check if the current question is answered
       const currentId = this.quizQuestions[nextIndex].id;
+      console.log(`Checking question ${nextIndex+1} with ID ${currentId}`);
+      
       if (!this.answeredQuestions.has(currentId)) {
         // Found an unanswered question
         this.questionIndex = nextIndex + 1; // 1-indexed for display
         this.currentQuestion = this.quizQuestions[nextIndex];
         found = true;
+        console.log(`Found unanswered question at index ${nextIndex+1}`);
         break;
       }
       
@@ -435,6 +503,7 @@ export class QuizPagePage {
       
       // If we've checked all questions and come back to the start, all are answered
       if (nextIndex === startIndex) {
+        console.log('Checked all questions, all have been answered');
         break;
       }
       
@@ -447,6 +516,8 @@ export class QuizPagePage {
       this.evaluateLevelProgress();
       return;
     }
+
+    console.log(`Loading question ${this.questionIndex} of ${this.quizQuestions.length}`);
 
     // Reset used suggestions
     this.usedSuggestions = {
@@ -471,12 +542,16 @@ export class QuizPagePage {
         setTimeout(() => {
           this.isImageLoading = false;
           this.questionVisible = true;
+          // Start timer after image is loaded and visible
+          this.startTimer();
         }, 300);
       };
       img.onerror = () => {
         setTimeout(() => {
           this.isImageLoading = false;
           this.questionVisible = true;
+          // Start timer after error resolution
+          this.startTimer();
         }, 300);
       };
       img.src = this.currentQuestion.picture;
@@ -484,10 +559,12 @@ export class QuizPagePage {
       // For questions without pictures, make visible immediately
       this.questionVisible = true;
       this.isImageLoading = false;
+      
+      // Start the timer for the new question after a short delay
+      setTimeout(() => {
+        this.startTimer();
+      }, 300);
     }
-
-    // Start the timer for the new question
-    this.startTimer();
   }
 
   correctImages: string[] = [
@@ -693,12 +770,78 @@ export class QuizPagePage {
     }
   }
 
+  // Check if user has enough badges to use an item
+  checkBadgeAvailability(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami'): boolean {
+    // Find the overlay item
+    const item = this.overlayItems.find((item: OverlayItem) => item.slug === slug);
+    
+    // Check if item exists and has badges
+    if (item && item.badge > 0) {
+      return true;
+    }
+    
+    // Show toast if no badges
+    if (item) {
+      this.showToast(`You have 0 ${item.title}, you need to purchase from shop to use`);
+    }
+    
+    return false;
+  }
+  
+  // Decrement badge count for an item
+  decrementBadge(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami'): void {
+    // Find the item and decrement its badge count
+    const item = this.overlayItems.find((item: OverlayItem) => item.slug === slug);
+    if (item && item.badge > 0) {
+      item.badge--;
+      console.log(`${item.title} badges remaining: ${item.badge}`);
+      
+      // Save badge counts to game state
+      this.saveGameState();
+    }
+  }
+  
+  // Show toast message
+  async showToast(message: string): Promise<void> {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'middle',
+      color: 'warning',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    });
+    
+    await toast.present();
+  }
+  
+  // Modify useSuggestion to check badge availability
   useSuggestion(type: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
-    if (this.userCumulativePoint < this.suggestionCosts[type]) return;
+    // Check if user has badges for this item
+    if (!this.checkBadgeAvailability(type)) {
+      return; // Exit if no badges available
+    }
+    
+    // Check if user has enough points
+    if (this.userCumulativePoint < this.suggestionCosts[type]) {
+      this.showToast(`You need ${this.suggestionCosts[type]} points to use this.`);
+      return;
+    }
 
+    // Deduct the points
     this.userCumulativePoint -= this.suggestionCosts[type];
+    
+    // Mark suggestion as used for this question
     this.usedSuggestions[type] = true;
+    
+    // Decrease badge count
+    this.decrementBadge(type);
 
+    // Apply the suggestion effect
     switch (type) {
       case 'ileke':
         this.removeIncorrectOptions(2);
@@ -707,20 +850,64 @@ export class QuizPagePage {
         this.removeIncorrectOptions(1);
         break;
       case 'eyoOwo':
-        this.isOptionSelected = true;
-        this.answerQuestion(this.currentQuestion.answer);
+        this.handleAutoAnswer();
         break;
       case 'ami':
         alert(`Hint: ${this.currentQuestion.explanation}`);
         break;
     }
   }
-
-  disableSuggestion(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
+  
+  // Update disableSuggestion to also check badge count
+  disableSuggestion(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami'): boolean {
+    // Find the item
+    const item = this.overlayItems.find((item: OverlayItem) => item.slug === slug);
+    
+    // First check if the item was found - if not, disable it to be safe
+    if (!item) {
+      return true; // Item not found, disable it
+    }
+    
     return (
       this.usedSuggestions[slug] ||
-      this.userCumulativePoint < this.suggestionCosts[slug]
+      this.userCumulativePoint < this.suggestionCosts[slug] ||
+      item.badge <= 0 // Now we know item is not undefined
     );
+  }
+
+  handleAutoAnswer() {
+    // Mark as selected and set correct answer
+    this.isOptionSelected = true;
+    this.answerQuestion(this.currentQuestion.answer);
+    
+    // Show feedback with correct answer
+    this.correctOption = true;
+    const randomIndex = Math.floor(Math.random() * this.correctImages.length);
+    this.selectedFeedbackImage = this.correctImages[randomIndex];
+    
+    // Play clapping sound (commented out as per user's change)
+    // this.playCorrectSound();
+    
+    // Record this question as answered
+    this.answeredQuestions.add(this.currentQuestion.id);
+    
+    // Save the game state after each question is answered
+    this.saveGameState();
+
+    // Show feedback (initially don't fade out)
+    this.feedbackFadeOut = false;
+    this.showFeedback = true;
+    
+    // Set a timer to start fading out the feedback image after 2 seconds
+    setTimeout(() => {
+      this.feedbackFadeOut = true;
+    }, 2000);
+    
+    // Delay opening the modal to allow feedback to be visible longer
+    setTimeout(() => {
+      // Show modal with explanation
+      this.modalOpen = true;
+    }, 3000);
   }
 
   removeIncorrectOptions(count: number) {
@@ -849,6 +1036,7 @@ export class QuizPagePage {
     console.log(`SAVE STATE: Current points: ${this.userCumulativePoint}, Initial points: ${this.levelOption.userCumulativePoint}`);
     console.log(`SAVE STATE: Questions answered: ${this.answeredQuestions.size}/${this.quizQuestions.length}`);
     console.log(`SAVE STATE: Question index: ${this.questionIndex}`);
+    console.log(`SAVE STATE: Badge counts:`, this.overlayItems.map(item => `${item.title}: ${item.badge}`).join(', '));
     
     const gameState = {
       quizQuestions: this.quizQuestions,
@@ -862,12 +1050,49 @@ export class QuizPagePage {
       overallTotalPoints: this.overallTotalPoints,
       // Save the initial score for this category - what was already counted in totalPoints
       previousScore: this.levelOption.userCumulativePoint,
+      // Save badge counts
+      overlayItems: this.overlayItems,
       // Add timestamp to help with debugging
       savedAt: new Date().toISOString()
     };
 
     this.gameStateService.updateGameState(gameState);
     console.log(`Game state saved for ${this.pageFrom}`);
+    
+    // Also save badge counts separately to be used across all quizzes
+    this.saveBadgeCounts();
+  }
+  
+  // Save badge counts to be used across all quiz categories
+  saveBadgeCounts() {
+    const badgeCounts: BadgeCounts = {};
+    this.overlayItems.forEach(item => {
+      badgeCounts[item.slug] = item.badge;
+    });
+    localStorage.setItem('badgeCounts', JSON.stringify(badgeCounts));
+    console.log('Badge counts saved to localStorage:', badgeCounts);
+  }
+  
+  // Load badge counts from localStorage
+  loadBadgeCounts() {
+    const savedBadges = localStorage.getItem('badgeCounts');
+    if (savedBadges) {
+      try {
+        const badgeCounts: BadgeCounts = JSON.parse(savedBadges);
+        console.log('Loading saved badge counts:', badgeCounts);
+        
+        // Update overlay items with saved badge counts
+        this.overlayItems.forEach(item => {
+          if (badgeCounts[item.slug] !== undefined) {
+            item.badge = badgeCounts[item.slug] ?? item.badge;
+          }
+        });
+        
+        console.log('Badge counts loaded successfully');
+      } catch (error) {
+        console.error('Error loading badge counts', error);
+      }
+    }
   }
 
   // Ensure points are saved to localStorage just before navigation
