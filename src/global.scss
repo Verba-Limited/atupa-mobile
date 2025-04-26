@@ -103,3 +103,58 @@ ion-footer {
     width: 100%;
     z-index: 999;
 }
+
+/* Global Toast Styling */
+.quiz-toast {
+//   --background: #ef4444 !important;
+  --background: #7B462F !important;
+  --color: white !important;
+  --border-radius: 10px !important;
+  --button-color: white !important;
+  --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
+  --min-height: 70px !important;
+  --min-width: 250px !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  z-index: 9999 !important;
+  opacity: 1 !important;
+  text-align: center !important;
+}
+
+/* Enhanced more prominent toast */
+.prominent-toast {
+  --background: #7B462F !important;
+  --color: white !important;
+  --border-radius: 15px !important;
+  --button-color: white !important;
+  --box-shadow: 0 0 30px rgba(0, 0, 0, 0.5) !important;
+  --min-height: 100px !important;
+  --min-width: 300px !important;
+  --max-width: 90% !important;
+  font-weight: bold !important;
+  font-size: 18px !important;
+  z-index: 99999 !important;
+  opacity: 1 !important;
+  text-align: center !important;
+  --border: 3px solid white !important;
+}
+
+/* Override any visibility issues */
+ion-toast {
+  position: fixed !important;
+  top: 10% !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 99999 !important;
+}
+
+/* Extra specific selector for prominent toast */
+ion-toast.prominent-toast {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 999999 !important;
+}

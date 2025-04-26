@@ -197,6 +197,11 @@ export class QuizPagePage {
     // Load badge counts from localStorage
     this.loadBadgeCounts();
     
+    // Test toast message to verify functionality
+    // setTimeout(() => {
+    //   this.showToast('Quiz page loaded. Good luck!');
+    // }, 1000);
+    
     // Only call loadNextQuestion if not resuming from saved state
     if (!this.activatedRouter.snapshot.queryParamMap.has('index')) {
       console.log('Starting a fresh quiz');
@@ -803,32 +808,65 @@ export class QuizPagePage {
   
   // Show toast message
   async showToast(message: string): Promise<void> {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000,
-      position: 'middle',
-      color: 'warning',
-      buttons: [
-        {
-          text: 'OK',
-          role: 'cancel'
-        }
-      ]
-    });
-    
-    await toast.present();
+    try {
+      console.log('Showing toast with message:', message);
+      
+      // Dismiss any existing toasts first
+      try {
+        await this.toastController.dismiss();
+      } catch (e) {
+        // No toast to dismiss
+      }
+      
+      const toast = await this.toastController.create({
+        message: message,
+        duration: 3000, // Increased duration
+        position: 'middle', // Changed to middle for better visibility
+        cssClass: 'prominent-toast', // New CSS class
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel'
+          }
+        ]
+      });
+      
+      console.log('Toast created, now presenting...');
+      await toast.present();
+      console.log('Toast presented successfully');
+      
+      // Optional: return a promise that resolves when the toast is dismissed
+      const { role } = await toast.onDidDismiss();
+      console.log('Toast dismissed with role:', role);
+    } catch (error) {
+      console.error('Error showing toast:', error);
+      // Fallback to alert if toast fails
+      alert(message);
+    }
   }
   
   // Modify useSuggestion to check badge availability
   useSuggestion(type: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
-    // Check if user has badges for this item
-    if (!this.checkBadgeAvailability(type)) {
-      return; // Exit if no badges available
+    // Find the item
+    const item = this.overlayItems.find((item: OverlayItem) => item.slug === type);
+    
+    // Check badge count first - show toast if zero
+    if (item && item.badge <= 0) {
+      this.showToast(`You have 0 ${item.title}, you need to purchase from shop to use`);
+      return;
     }
+    
+    // Skip the badge availability check now that we've already checked badge count
     
     // Check if user has enough points
     if (this.userCumulativePoint < this.suggestionCosts[type]) {
       this.showToast(`You need ${this.suggestionCosts[type]} points to use this.`);
+      return;
+    }
+    
+    // Check if already used for this question
+    if (this.usedSuggestions[type]) {
+      this.showToast(`You already used ${item?.title || type} for this question.`);
       return;
     }
 

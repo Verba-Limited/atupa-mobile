@@ -577,3 +577,47 @@ ion-content.wrong-answer {
     margin: 15px 0;
     position: relative;
 }
+
+/* Toast styling - these styles will be applied to ion-toast with the quiz-toast class */
+:host ::ng-deep .quiz-toast {
+  --background: #7B462F;
+  --color: white;
+  --border-radius: 10px;
+  --button-color: white;
+  --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --width: 80%;
+  --max-width: 350px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  z-index: 99999; /* Ensure the toast is on top of all other elements */
+}
+
+/* Additional style to force global scope */
+:root .toast-wrapper {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.image-container.low-opacity {
+  opacity: 0.5;
+  position: relative;
+}
+
+.image-container.low-opacity::after {
+  content: "0";
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: #e53e3e;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  border: 2px solid white;
+}

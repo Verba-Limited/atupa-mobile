@@ -138,7 +138,9 @@
             *ngFor="let item of overlayItems"
             class="image-container"
             (click)="useSuggestion(item.slug)"
-            [disabled]="disableSuggestion(item.slug)">
+            [disabled]="usedSuggestions[item.slug] || userCumulativePoint < suggestionCosts[item.slug]"
+            [class.low-opacity]="item.badge <= 0"
+          >
             <!-- Background Image -->
             <img
               class="background-image"
