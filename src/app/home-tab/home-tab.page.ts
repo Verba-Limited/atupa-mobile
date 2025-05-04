@@ -215,7 +215,8 @@ export class HomeTabPage implements OnInit, OnDestroy {
       'eranko': '../../assets/icon/flat.svg',
       'oba-ilu': '../../assets/icon/obailu.svg',
       'ilu': '../../assets/icon/ilu.svg',
-      'eso': '../../assets/icon/Rectangle 22.svg'
+      'eso': '../../assets/icon/eso.svg',
+      'owe': '../../assets/icon/owe.svg'
     };
     
     return icons[category] || '../../assets/icon/flat.svg';

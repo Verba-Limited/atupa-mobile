@@ -4,6 +4,7 @@ import { IonicModule, NavController, LoadingController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginPage {
     private navCtrl: NavController, 
     private router: Router,
     private authService: AuthService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private toastService: ToastService
   ) {}
 
   togglePasswordVisibility() {
@@ -51,6 +53,7 @@ export class LoginPage {
     } catch (error) {
       console.error('Login error:', error);
       this.error = 'Invalid email or password';
+      this.toastService.showError(this.error);
     } finally {
       this.loading = false;
     }

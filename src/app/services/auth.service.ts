@@ -1,36 +1,80 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import PocketBase from 'pocketbase';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { Platform } from '@ionic/angular';
+import { initializeApp } from 'firebase/app';
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signOut, 
+  UserCredential, 
+  sendPasswordResetEmail, 
+  updatePassword,
+  updateProfile,
+  User,
+  signInWithCredential,
+  GoogleAuthProvider,
+  EmailAuthProvider,
+  reauthenticateWithCredential
+} from 'firebase/auth';
+import { environment } from '../../environments/environment';
+
+// Initialize Firebase
+const app = initializeApp(environment.firebase);
+const auth = getAuth(app);
+
+// Type to better represent our user object
+export interface AppUser {
+  id: string;
+  email: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  profileImage?: string;
+  emailVisibility?: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private pb: PocketBase;
-  private userSubject = new BehaviorSubject<any>(null);
+  private userSubject = new BehaviorSubject<AppUser | null>(null);
   public user$ = this.userSubject.asObservable();
   
-  // Make authStore accessible via a getter method
+  // Mimic authStore with a simple object for compatibility
+  private _authStore = {
+    isValid: false,
+    token: '',
+    model: null as AppUser | null,
+    onChange: (callback: () => void) => {
+      this.user$.subscribe(() => callback());
+    }
+  };
+  
+  // Make authStore accessible via a getter method for backward compatibility
   get authStore() {
-    return this.pb.authStore;
+    return this._authStore;
   }
 
   constructor(
     private router: Router,
     private platform: Platform
   ) {
-    // this.pb = new PocketBase('http://your-pocketbase-url'); // Replace with your actual PocketBase URL
-    this.pb = new PocketBase('http://127.0.0.1:8090');
-    
-    // Load user data from localStorage or PocketBase auth store
+    // Load user data from localStorage
     this.loadUserData();
     
-    // Set up listener for auth store changes
-    this.pb.authStore.onChange(() => {
-      this.loadUserData();
+    // Listen for Firebase auth state changes
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setUserData(this.mapFirebaseUserToAppUser(user));
+      } else {
+        // Only clear if we haven't restored from localStorage
+        if (this._authStore.isValid) {
+          this.setUserData(null);
+        }
+      }
     });
 
     // Initialize Google Auth
@@ -71,55 +115,70 @@ export class AuthService {
     throw new Error('Browser security restrictions prevented Google Sign-in');
   }
 
-  // Load user data from localStorage or PocketBase auth store
+  // Map Firebase user to our AppUser interface
+  private mapFirebaseUserToAppUser(firebaseUser: User): AppUser {
+    const displayName = firebaseUser.displayName || '';
+    const nameParts = displayName.split(' ');
+    const firstName = nameParts[0] || '';
+    const lastName = nameParts.slice(1).join(' ') || '';
+    
+    return {
+      id: firebaseUser.uid,
+      email: firebaseUser.email || '',
+      name: displayName,
+      firstName: firstName, 
+      lastName: lastName,
+      profileImage: firebaseUser.photoURL || undefined,
+      emailVisibility: true
+    };
+  }
+
+  // Load user data from localStorage
   private loadUserData(): void {
     console.log("AuthService: Loading user data");
     
-    // First check if user data is in localStorage
+    // Check if user data is in localStorage
     const userData = localStorage.getItem('user_data');
     if (userData) {
       try {
-        const parsedUser = JSON.parse(userData);
+        const parsedUser = JSON.parse(userData) as AppUser;
         console.log("AuthService: User data loaded from localStorage", parsedUser);
-        // Add defaults if first/last name are missing
-        if (!parsedUser['firstName']) parsedUser['firstName'] = '';
-        if (!parsedUser['lastName']) parsedUser['lastName'] = '';
         
-        this.userSubject.next(parsedUser);
-        return;
+        // Add defaults if first/last name are missing
+        if (!parsedUser.firstName) parsedUser.firstName = '';
+        if (!parsedUser.lastName) parsedUser.lastName = '';
+        
+        this.setUserData(parsedUser);
       } catch (e) {
         console.error('Error parsing user data from localStorage', e);
         localStorage.removeItem('user_data');
+        this.setUserData(null);
       }
     } else {
       console.log("AuthService: No user data found in localStorage");
+      this.setUserData(null);
     }
+  }
 
-    // Then check if PocketBase has an active session
-    if (this.pb.authStore.isValid) {
-      // Get user data from auth store
-      const userData = this.pb.authStore.model;
-      if (userData) {
-        console.log("AuthService: User data loaded from PocketBase", userData);
-        
-        // Ensure we have firstName and lastName properties
-        if (!userData['firstName'] && userData['name']) {
-          const nameParts = userData['name'].split(' ');
-          userData['firstName'] = nameParts[0] || '';
-          userData['lastName'] = nameParts.slice(1).join(' ') || '';
-        }
-        
-        this.userSubject.next(userData);
-        // Store in localStorage for persistence
-        localStorage.setItem('user_data', JSON.stringify(userData));
-      }
+  // Helper to set user data in all required places
+  private setUserData(user: AppUser | null): void {
+    // Update userSubject
+    this.userSubject.next(user);
+    
+    // Update authStore
+    this._authStore.isValid = !!user;
+    this._authStore.model = user;
+    
+    // Update localStorage
+    if (user) {
+      localStorage.setItem('user_data', JSON.stringify(user));
     } else {
-      console.log("AuthService: PocketBase auth is not valid");
+      localStorage.removeItem('user_data');
     }
   }
 
   // Google Sign In
-  async signInWithGoogle(): Promise<any> {
+  async signInWithGoogle(): Promise<AppUser> {
     try {
       console.log('Starting Google Sign In process...');
       
@@ -166,48 +225,29 @@ export class AuthService {
         throw new Error('Google sign-in returned invalid data');
       }
       
-      // Try to authenticate with OAuth2 in PocketBase
       try {
-        // Check if user exists and authenticate
-        const authData = await this.pb.collection('users').authWithOAuth2({
-          provider: 'google',
-          code: googleUser.authentication.idToken,
-          // Required fields for creating new users
-          createData: {
-            name: googleUser.name,
-            firstName: googleUser.givenName || googleUser.name.split(' ')[0] || '',
-            lastName: googleUser.familyName || googleUser.name.split(' ').slice(1).join(' ') || '',
-            email: googleUser.email,
-            emailVisibility: true,
-          }
-        });
+        // Create credential from the id token
+        const credential = GoogleAuthProvider.credential(googleUser.authentication.idToken);
         
-        // Store user data in both BehaviorSubject and localStorage
-        this.userSubject.next(authData.record);
-        localStorage.setItem('user_data', JSON.stringify(authData.record));
+        // Sign in with credential
+        const result = await signInWithCredential(auth, credential);
         
-        return authData.record;
-      } catch (error) {
-        console.error('PocketBase OAuth2 authentication error:', error);
+        // Map to AppUser
+        const appUser = this.mapFirebaseUserToAppUser(result.user);
         
-        // If PocketBase OAuth fails, we can try manual authentication/registration
-        // Check if user exists by email
-        try {
-          const users = await this.pb.collection('users').getList(1, 1, {
-            filter: `email="${googleUser.email}"`
-          });
-          
-          if (users.items.length > 0) {
-            // User exists, but couldn't authenticate with OAuth
-            throw new Error('Google authentication failed. Please try again or use email/password login.');
-          } else {
-            // User doesn't exist, create a new account
-            return this.registerWithGoogle(googleUser);
-          }
-        } catch (listError) {
-          console.error('Error checking for existing user:', listError);
-          throw new Error('Authentication failed. Please try again later.');
+        // Update user data
+        this.setUserData(appUser);
+        
+        return appUser;
+      } catch (error: any) {
+        console.error('Firebase authentication error:', error);
+        
+        // Check if the error is because user doesn't exist
+        if (error.code === 'auth/user-not-found') {
+          return this.registerWithGoogle(googleUser);
         }
+        
+        throw error;
       }
     } catch (error) {
       console.error('Google Sign-In error:', error);
@@ -216,37 +256,28 @@ export class AuthService {
   }
   
   // Register a new user with Google profile data
-  private async registerWithGoogle(googleUser: any): Promise<any> {
+  private async registerWithGoogle(googleUser: any): Promise<AppUser> {
     try {
-      // Generate a random secure password
-      const randomPassword = Math.random().toString(36).slice(-10) + 
-                             Math.random().toString(36).slice(-10) +
-                             Math.random().toString(36).slice(-10);
+      // Create credential from the id token
+      const credential = GoogleAuthProvider.credential(googleUser.authentication.idToken);
       
-      // Create the user in PocketBase
-      const data = {
-        email: googleUser.email,
-        password: randomPassword,
-        passwordConfirm: randomPassword,
-        name: googleUser.name,
-        firstName: googleUser.givenName || googleUser.name.split(' ')[0] || '',
-        lastName: googleUser.familyName || googleUser.name.split(' ').slice(1).join(' ') || '',
-        emailVisibility: true,
-        authProvider: 'google',
-        googleId: googleUser.id
-      };
+      // Sign in with credential - Firebase will create a new user if needed
+      const result = await signInWithCredential(auth, credential);
       
-      // Create new user in PocketBase
-      const record = await this.pb.collection('users').create(data);
+      // Update profile with name if needed
+      if (!result.user.displayName && googleUser.name) {
+        await updateProfile(result.user, {
+          displayName: googleUser.name
+        });
+      }
       
-      // Authenticate the new user
-      const authData = await this.pb.collection('users').authWithPassword(googleUser.email, randomPassword);
+      // Map to AppUser
+      const appUser = this.mapFirebaseUserToAppUser(result.user);
       
       // Store user data
-      this.userSubject.next(authData.record);
-      localStorage.setItem('user_data', JSON.stringify(authData.record));
+      this.setUserData(appUser);
       
-      return authData.record;
+      return appUser;
     } catch (error) {
       console.error('Google registration error:', error);
       throw error;
@@ -263,46 +294,54 @@ export class AuthService {
     }
   }
 
-  async login(email: string, password: string): Promise<any> {
+  async login(email: string, password: string): Promise<AppUser> {
     try {
-      const authData = await this.pb.collection('users').authWithPassword(email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
       
-      // Store user data in both BehaviorSubject and localStorage
-      this.userSubject.next(authData.record);
-      localStorage.setItem('user_data', JSON.stringify(authData.record));
+      // Map to AppUser
+      const appUser = this.mapFirebaseUserToAppUser(result.user);
       
-      return authData.record;
+      // Store user data
+      this.setUserData(appUser);
+      
+      return appUser;
     } catch (error) {
       console.error('Login error:', error);
       throw error;
     }
   }
 
-  async register(userData: any): Promise<any> {
+  async register(userData: any): Promise<AppUser> {
     try {
-      // Format the data for PocketBase users collection
-      const data = {
-        email: userData.email,
-        password: userData.password,
-        passwordConfirm: userData.passwordConfirm,
-        name: `${userData.firstName} ${userData.lastName}`,
-        firstName: userData.firstName,
-        lastName: userData.lastName
-      };
-
-      // Create the user in PocketBase
-      const record = await this.pb.collection('users').create(data);
+      // Create new user in Firebase
+      const result = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
       
-      return record;
+      // Update the user's profile with display name
+      const displayName = `${userData.firstName} ${userData.lastName}`.trim();
+      await updateProfile(result.user, {
+        displayName: displayName
+      });
+      
+      // Map to AppUser
+      const appUser = this.mapFirebaseUserToAppUser(result.user);
+      
+      // Add additional fields
+      appUser.firstName = userData.firstName;
+      appUser.lastName = userData.lastName;
+      
+      // Store user data
+      this.setUserData(appUser);
+      
+      return appUser;
     } catch (error) {
       console.error('Registration error:', error);
       throw error;
     }
   }
 
-  async resetPassword(email: string): Promise<any> {
+  async resetPassword(email: string): Promise<boolean> {
     try {
-      await this.pb.collection('users').requestPasswordReset(email);
+      await sendPasswordResetEmail(auth, email);
       return true;
     } catch (error) {
       console.error('Password reset error:', error);
@@ -310,36 +349,34 @@ export class AuthService {
     }
   }
 
-  async updateUserProfile(userData: any): Promise<any> {
+  async updateUserProfile(userData: any): Promise<AppUser> {
     try {
-      // Check if user is logged in and we have their ID
-      if (!this.pb.authStore.isValid || !userData.id) {
-        throw new Error('User not authenticated or missing ID');
+      // Check if user is logged in
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
+        throw new Error('User not authenticated');
       }
 
-      // Create update object with only the fields we want to update
-      const updateData: Record<string, any> = {
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        name: `${userData.firstName} ${userData.lastName}`
-      };
-
-      // If there's a profile image (and it's a string), we can update it too
-      if (userData.profileImage && typeof userData.profileImage === 'string') {
-        updateData['profileImage'] = userData.profileImage;
-      }
-
-      // Update the user record in PocketBase
-      const updatedRecord = await this.pb.collection('users').update(userData.id, updateData);
+      // Create update object
+      const displayName = `${userData.firstName} ${userData.lastName}`.trim();
       
-      // Update the stored user data
-      const currentUser = this.userSubject.value;
-      const updatedUser = { ...currentUser, ...updateData };
+      // Update Firebase profile
+      await updateProfile(currentUser, {
+        displayName: displayName,
+        photoURL: userData.profileImage || currentUser.photoURL
+      });
       
-      this.userSubject.next(updatedUser);
-      localStorage.setItem('user_data', JSON.stringify(updatedUser));
+      // Get updated user data
+      const appUser = this.mapFirebaseUserToAppUser(currentUser);
       
-      return updatedUser;
+      // Add additional fields that aren't in Firebase by default
+      appUser.firstName = userData.firstName;
+      appUser.lastName = userData.lastName;
+      
+      // Update stored user data
+      this.setUserData(appUser);
+      
+      return appUser;
     } catch (error) {
       console.error('Error updating user profile:', error);
       throw error;
@@ -349,111 +386,52 @@ export class AuthService {
   async changePassword(newPassword: string, currentPassword?: string): Promise<boolean> {
     try {
       // Check if user is logged in
-      if (!this.pb.authStore.isValid) {
+      const currentUser = auth.currentUser;
+      if (!currentUser) {
         throw new Error('User not authenticated');
       }
 
-      // Access user data directly instead of using model property
-      const userData = this.pb.authStore.model;
-      const userId = userData?.id;
-      if (!userId) {
-        throw new Error('User ID not found');
-      }
-
-      const email = userData?.['email'];
+      const email = currentUser.email;
       if (!email) {
         throw new Error('User email not found');
       }
 
       console.log('Starting password change process for user:', {
-        userId,
+        userId: currentUser.uid,
         email,
         hasCurrentPassword: !!currentPassword
       });
 
-      // Step 1: Verify current password by authenticating again
+      // Step 1: Verify current password by re-authenticating
       if (!currentPassword) {
         throw new Error('Current password is required');
       }
 
       try {
-        // Re-authenticate with current password to verify it
-        await this.pb.collection('users').authWithPassword(email, currentPassword);
+        // Create credential with email and password
+        const credential = EmailAuthProvider.credential(email, currentPassword);
+        
+        // Re-authenticate with current password
+        await reauthenticateWithCredential(currentUser, credential);
         console.log('Current password verified successfully');
       } catch (authError) {
         console.error('Current password verification failed:', authError);
         throw new Error('Current password is incorrect');
       }
 
-      // Step 2: Update the password using the update endpoint
+      // Step 2: Update the password
       try {
-        console.log('Attempting to update password');
+        await updatePassword(currentUser, newPassword);
+        console.log('Password updated successfully');
         
-        // Save the token for later restoration if needed
-        const savedToken = this.pb.authStore.token;
+        // Update stored user data
+        const appUser = this.mapFirebaseUserToAppUser(currentUser);
+        this.setUserData(appUser);
         
-        try {
-          // Update the user password
-          await this.pb.collection('users').update(userId, {
-            password: newPassword,
-            passwordConfirm: newPassword,
-            oldPassword: currentPassword // Some PocketBase configurations require this
-          });
-          
-          console.log('Password updated successfully');
-          
-          // Re-authenticate with the new password
-          this.pb.authStore.clear();
-          const authResponse = await this.pb.collection('users').authWithPassword(email, newPassword);
-          console.log('Re-authenticated with new password');
-          
-          // Update the localStorage and userSubject
-          localStorage.setItem('user_data', JSON.stringify(authResponse.record));
-          this.userSubject.next(authResponse.record);
-          
-          return true;
-        } catch (error: any) {
-          console.error('Password update error details:', error);
-          
-          // Try again with a simpler approach without oldPassword
-          if (error.toString().includes('oldPassword')) {
-            await this.pb.collection('users').update(userId, {
-              password: newPassword,
-              passwordConfirm: newPassword
-            });
-            
-            console.log('Password updated successfully with alternative method');
-            
-            // Re-authenticate with the new password
-            this.pb.authStore.clear();
-            const authResponse = await this.pb.collection('users').authWithPassword(email, newPassword);
-            console.log('Re-authenticated with new password');
-            
-            // Update the localStorage and userSubject
-            localStorage.setItem('user_data', JSON.stringify(authResponse.record));
-            this.userSubject.next(authResponse.record);
-            
-            return true;
-          } else {
-            throw error; // Re-throw if it's not the oldPassword issue
-          }
-        }
-      } catch (updateError: any) {
-        console.error('Failed to update password. Detailed error:', updateError);
-        
-        // Try to restore the session with the old password
-        try {
-          this.pb.authStore.clear();
-          const authResponse = await this.pb.collection('users').authWithPassword(email, currentPassword);
-          console.log('Restored session with old password');
-          
-          localStorage.setItem('user_data', JSON.stringify(authResponse.record));
-          this.userSubject.next(authResponse.record);
-        } catch (restoreError) {
-          console.error('Failed to restore session:', restoreError);
-        }
-        
-        throw new Error(`Password change failed: ${updateError.message || 'Please try again later.'}`);
+        return true;
+      } catch (updateError) {
+        console.error('Failed to update password:', updateError);
+        throw new Error('Password change failed. Please try again.');
       }
     } catch (error) {
       console.error('Error in changePassword method:', error);
@@ -462,12 +440,11 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
-    // Clear PocketBase auth
-    this.pb.authStore.clear();
+    // Sign out from Firebase
+    await signOut(auth);
     
     // Clear local user data
-    this.userSubject.next(null);
-    localStorage.removeItem('user_data');
+    this.setUserData(null);
     
     // Try to sign out from Google as well
     try {
@@ -482,10 +459,10 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    return this.pb.authStore.isValid || localStorage.getItem('user_data') !== null;
+    return !!auth.currentUser || localStorage.getItem('user_data') !== null;
   }
 
-  get currentUser(): any {
+  get currentUser(): AppUser | null {
     return this.userSubject.value;
   }
 } 

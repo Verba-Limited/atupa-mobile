@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package io.atupa.app;
 
 import com.getcapacitor.BridgeActivity;
 

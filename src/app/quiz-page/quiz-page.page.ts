@@ -108,28 +108,28 @@ export class QuizPagePage {
       title: 'Ileke',
       slug: 'ileke',
       subtitle: 'din meji',
-      badge: 3,
+      badge: 5,
     },
     {
       icon: '../../assets/icon/almond 1.svg',
       title: 'Obi',
       slug: 'obi',
       subtitle: 'din okan',
-      badge: 2,
+      badge: 5,
     },
     {
       icon: '../../assets/icon/coweries.svg',
       title: 'Eyo',
       slug: 'eyoOwo',
       subtitle: 'idahun',
-      badge: 1,
+      badge: 5,
     },
     {
       icon: '../../assets/icon/more 1.svg',
       title: 'Ami',
       slug: 'ami',
       subtitle: 'alaye',
-      badge: 4,
+      badge: 5,
     },
   ];
 

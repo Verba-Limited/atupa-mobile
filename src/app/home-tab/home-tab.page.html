@@ -181,7 +181,10 @@
           <div class="latest" *ngFor="let quizState of savedQuizStates; let i = index">
             <div class="quiz-container" (click)="continueQuiz(quizState.pageFrom, quizState.currentLevel, quizState.questionIndex, quizState.userCumulativePoint)">
               <!-- Left: Display an icon based on the quiz category -->
-              <div [ngClass]="{'icon': quizState.pageFrom === 'eranko' || quizState.pageFrom === 'oba-ilu', 'icon2': quizState.pageFrom === 'onka' || quizState.pageFrom === 'ilu' || quizState.pageFrom === 'eso'}">
+              <div [ngClass]="{
+                'icon': quizState.pageFrom === 'eranko' || quizState.pageFrom === 'oba-ilu' || quizState.pageFrom === 'owe', 
+                'icon2': quizState.pageFrom === 'onka' || quizState.pageFrom === 'ilu' || quizState.pageFrom === 'eso'
+              }">
                 <img [src]="getQuizIcon(quizState.pageFrom)" alt="Quiz icon" />
               </div>
 
@@ -199,7 +202,10 @@
               </div>
 
               <!-- Right: Display the progress dynamically -->
-              <div [ngClass]="{'progress-circle': quizState.pageFrom === 'eranko' || quizState.pageFrom === 'oba-ilu', 'progress-circle2': quizState.pageFrom === 'onka' || quizState.pageFrom === 'ilu' || quizState.pageFrom === 'eso'}">
+              <div [ngClass]="{
+                'progress-circle': quizState.pageFrom === 'eranko' || quizState.pageFrom === 'oba-ilu' || quizState.pageFrom === 'owe', 
+                'progress-circle2': quizState.pageFrom === 'onka' || quizState.pageFrom === 'ilu' || quizState.pageFrom === 'eso'
+              }">
                 <span class="progress-text">
                   {{ quizState.questionIndex }}/{{ quizState.quizQuestions?.length || 10 }}
                 </span>

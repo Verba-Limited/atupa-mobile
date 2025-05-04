@@ -1,0 +1,33 @@
+<!-- toast.component.html -->
+<div class="toast-container" aria-live="polite" role="status">
+    <div *ngFor="let toast of toasts" 
+         [ngClass]="['toast', toast.type]" 
+         role="alert"
+         [attr.aria-hidden]="false"
+         tabindex="0">
+      <div class="toast-content">
+        <div class="toast-icon" aria-hidden="true">
+          <ion-icon
+            *ngIf="toast.type === 'success'"
+            name="checkmark-circle"
+          ></ion-icon>
+          <ion-icon
+            *ngIf="toast.type === 'info'"
+            name="information-circle"
+          ></ion-icon>
+          <ion-icon *ngIf="toast.type === 'warning'" name="warning"></ion-icon>
+          <ion-icon *ngIf="toast.type === 'error'" name="close-circle"></ion-icon>
+        </div>
+        <div class="toast-message">
+          <div class="toast-title">{{ getTitle(toast.type) }}</div>
+          <div class="toast-text">{{ toast.message }}</div>
+        </div>
+        <button class="toast-close" 
+                (click)="dismiss(toast.id)" 
+                aria-label="Dismiss notification"
+                tabindex="0">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </div>
