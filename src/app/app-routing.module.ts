@@ -161,7 +161,8 @@ const routes: Routes = [
   {
     path: 'invite',
     loadChildren: () => import('./invite/invite.module').then( m => m.InvitePageModule)
-  },  {
+  },
+  {
     path: 'aid',
     loadChildren: () => import('./aid/aid.module').then( m => m.AidPageModule)
   },
@@ -176,6 +177,14 @@ const routes: Routes = [
   {
     path: 'notice-page',
     loadChildren: () => import('./notice-page/notice-page.module').then( m => m.NoticePagePageModule)
+  },
+  {
+    path: 'lesson-detail/:id',
+    loadComponent: () => import('./lesson-detail/lesson-detail.page').then( m => m.LessonDetailPage)
+  },
+  {
+    path: 'lessons/:id',
+    loadComponent: () => import('./lesson-detail/lesson-detail.page').then( m => m.LessonDetailPage)
   },
 
 ];

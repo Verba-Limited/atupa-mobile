@@ -26,6 +26,9 @@ export class StorePage {
   timeFilters = ['Ekele', 'Obi', 'Eyo Owo', 'Ami'];
   currentFilter = 'Ekele';
 
+  availableEleke = 0;
+  showAdModal = false;
+
   navigateBack() {
     this.navCtrl.back();
   }
@@ -41,4 +44,24 @@ export class StorePage {
     { point: 'x5', title: 'Eyo Owo', icon: '../../assets/icon/coweries.svg' },
     { point: 'x5', title: 'Ami', icon: '../../assets/icon/more 1.svg' },
   ];
+
+
+  // Existing code...
+
+  onBuyClick(item: BoardItem) {
+    if (item.buttonText === 'Watch AD') {
+      this.showAdModal = true;
+    }
+    // Handle other purchase logic if needed
+  }
+
+  onAdEnded() {
+    this.showAdModal = false;
+    this.availableEleke += 3; // Award 3 points after full watch
+  }
+
+  onAdDismissed() {
+    this.showAdModal = false; // Handle modal close without completion
+  }
+
 }

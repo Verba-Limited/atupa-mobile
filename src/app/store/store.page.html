@@ -21,11 +21,12 @@
     <!-- Buy section -->
 
     <div class="shop-content">
-      <p class="paragra">Available Eleke: <span>0</span></p>
+      <p class="paragra">Available Eleke: <span>{{ availableEleke }}</span></p>
+      <!-- <p class="paragra">Available Eleke: <span>0</span></p>
       <p class="buy">
         Buy eleke to have options to remove <br />
         two incorrect answer
-      </p>
+      </p> -->
     </div>
     <br />
 
@@ -46,7 +47,10 @@
           </div>
         </div>
         <p class="amount">{{ item.amount }}</p>
-        <button class="buy-btn">{{ item.buttonText }}</button>
+        <!-- <button class="buy-btn">{{ item.buttonText }}</button> -->
+
+
+        <button class="buy-btn" (click)="onBuyClick(item)">{{ item.buttonText }}</button>
       </div>
     </div>
 
@@ -67,5 +71,23 @@
         <button class="bundle-buy">₦20000 Buy</button>
       </div>
     </div>
+
+      <!-- Ad Video Modal -->
+      <ion-modal [isOpen]="showAdModal" (ionModalDidDismiss)="onAdDismissed()">
+        <ng-template>
+          <ion-content>
+            <video 
+              width="100%" 
+              autoplay 
+              muted 
+              (ended)="onAdEnded()"
+              style="padding: 20px;">
+              <!-- Replace with your actual ad video path -->
+              <source src="../../assets/ads.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
   </div>
 </ion-content>

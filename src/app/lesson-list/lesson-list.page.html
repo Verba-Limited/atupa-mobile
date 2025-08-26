@@ -1,52 +1,133 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>All Lessons</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="clearFilters()" fill="clear">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true">
   <div class="container">
-    <ion-icon
-      (click)="navigateBack()"
-      name="arrow-back-outline"
-      class="back-arrow"
-    ></ion-icon>
-    <div class="framer">
-      <h2>My Lesson</h2>
+    <!-- Search and Filters -->
+    <div class="filters-section">
+      <!-- Search Bar -->
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="onSearchChange()"
+        placeholder="Search lessons..."
+        show-clear-button="focus"
+        class="search-bar"
+      ></ion-searchbar>
+
+      <!-- Filter Options -->
+      <div class="filter-options">
+        <ion-select
+          [(ngModel)]="selectedCategory"
+          (ionChange)="onCategoryChange()"
+          placeholder="Select Category"
+          class="filter-select"
+        >
+          <ion-select-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </ion-select-option>
+        </ion-select>
+
+        <ion-select
+          [(ngModel)]="selectedLevel"
+          (ionChange)="onLevelChange()"
+          placeholder="Select Level"
+          class="filter-select"
+        >
+          <ion-select-option *ngFor="let level of levels" [value]="level.value">
+            {{ level.name }}
+          </ion-select-option>
+        </ion-select>
+      </div>
     </div>
-    <div style="padding-top: 13px">
-      <div class="latest">
-        <div class="quiz-container">
-          <!-- Left: Image -->
-          <div class="icon">
-            <img src="../../assets/icon/Group 627.svg" alt="Eranko icon" />
-          </div>
 
-          <!-- Middle: Title and Button -->
-          <div class="quiz-info">
-            <h3 class="title">Girama - Session 7</h3>
-            <button (click)="LessonsPage()" class="continue-btn">
-              Continue
-            </button>
-          </div>
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Loading lessons...</p>
+    </div>
 
-          <!-- Right: Progress Circle -->
-          <div class="progress-circle">
-            <span class="progress-text">5/10</span>
+    <!-- Lessons List -->
+    <div *ngIf="!loading && lessons.length > 0" class="lessons-list">
+      <div 
+        *ngFor="let lesson of lessons" 
+        class="lesson-card"
+        (click)="openLesson(lesson)"
+      >
+        <div class="lesson-icon">
+          <ion-icon 
+            [name]="getCategoryIcon(lesson.categoryId)"
+            [color]="getCategoryColor(lesson.categoryId)"
+          ></ion-icon>
+        </div>
+
+        <div class="lesson-info">
+          <h3 class="lesson-title">{{ lesson.title }}</h3>
+          <p class="lesson-description">{{ lesson.description }}</p>
+          <div class="lesson-meta">
+            <span class="category">{{ getCategoryName(lesson.categoryId) }}</span>
+            <span class="duration">{{ getLessonDuration(lesson) }}</span>
+            <span class="level">Level {{ lesson.level }}</span>
           </div>
         </div>
+
+        <div class="lesson-actions">
+          <ion-button 
+            fill="clear" 
+            size="small"
+            (click)="openLesson(lesson)"
+          >
+            <ion-icon name="play-outline"></ion-icon>
+          </ion-button>
+        </div>
       </div>
-      <br />
-      <div class="latest">
-        <div class="quiz-container">
-          <!-- Left: Image -->
-          <div class="icon2">
-            <img src="../../assets/icon/Group 624.svg" alt="Eranko icon" />
-          </div>
+    </div>
 
-          <!-- Middle: Title and Button -->
-          <div class="quiz-info">
-            <h3 class="title">Alufabeti - Session 7</h3>
-            <button class="continue-btn">Continue</button>
-          </div>
+    <!-- Empty State -->
+    <div *ngIf="!loading && lessons.length === 0" class="empty-state">
+      <ion-icon name="book-outline" class="empty-icon"></ion-icon>
+      <h3>No lessons found</h3>
+      <p>Try adjusting your search or filters</p>
+      <ion-button (click)="clearFilters()" fill="outline">
+        Clear Filters
+      </ion-button>
+    </div>
 
-          <!-- Right: Progress Circle -->
-          <div class="progress-circle2">
-            <span class="progress-text">6/10</span>
+                <!-- Fallback Lessons (when backend is not available) -->
+            <div [hidden]="loading || lessons.length > 0" class="fallback-lessons">
+      <h3>Featured Lessons</h3>
+      <div class="fallback-list">
+        <div class="fallback-item" (click)="openFallbackLesson('lesson-owe-001')">
+          <div class="fallback-icon">
+            <ion-icon name="chatbubbles-outline" color="success"></ion-icon>
+          </div>
+          <div class="fallback-info">
+            <h4>Introduction to Yoruba Proverbs</h4>
+            <p>Learn the basics of Yoruba proverbs and their cultural significance</p>
+            <span class="fallback-meta">Level 1 • 30 mins</span>
+          </div>
+        </div>
+        
+        <div class="fallback-item" (click)="openFallbackLesson('lesson-onka-001')">
+          <div class="fallback-icon">
+            <ion-icon name="calculator-outline" color="primary"></ion-icon>
+          </div>
+          <div class="fallback-info">
+            <h4>Yoruba Numbers 1-10</h4>
+            <p>Master the basic Yoruba numbers from one to ten</p>
+            <span class="fallback-meta">Level 1 • 25 mins</span>
           </div>
         </div>
       </div>

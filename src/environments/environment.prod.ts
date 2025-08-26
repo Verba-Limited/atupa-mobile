@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  apiUrl: 'https://your-production-api.com/api/v1', // Update this with your actual production API URL
   firebase: {
     apiKey: "AIzaSyCtwq-QpvSpK9Rn1ciXPaTZk1MPlTd2pkQ",
     authDomain: "yorubapp-2025.firebaseapp.com",

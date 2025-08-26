@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  apiUrl: 'http://localhost:3000/api/v1',
   firebase: {
     // apiKey: "AIzaSyCtwq-QpvSpK9Rn1ciXPaTZk1MPlTd2pkQ",
     // projectId: "yorubapp-2025",

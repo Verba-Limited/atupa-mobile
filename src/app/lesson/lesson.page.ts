@@ -1,8 +1,9 @@
 import { CategoryPage } from './../category/category.page';
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { LessonService, Lesson } from '../services/lesson.service';
 
 interface lessonTypes {
   image: string;
@@ -25,13 +26,28 @@ interface categoryTypes {
   styleUrls: ['./lesson.page.scss'],
   imports: [IonicModule, CommonModule, RouterModule],
 })
-export class LessonPage {
+export class LessonPage implements OnInit {
   isMenuVisible: boolean = false;
   showSubscription: boolean = false;
   subscriptionType = 'Monthly subscription';
   daysLeft = 20;
   progress = 60;
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  
+  // Backend lesson data
+  popularLessons: Lesson[] = [];
+  categoryLessons: Lesson[] = [];
+  loading = false;
+  
+  constructor(
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private lessonService: LessonService
+  ) {}
+
+  ngOnInit() {
+    this.loadPopularLessons();
+    this.loadCategoryLessons();
+  }
 
   toggleMenu() {
     this.isMenuVisible = !this.isMenuVisible;
@@ -119,5 +135,86 @@ export class LessonPage {
   }
   allLessons() {
     this.router.navigate(['/lesson-list']);
+  }
+
+  // Load popular lessons from backend
+  async loadPopularLessons() {
+    try {
+      this.loading = true;
+      this.popularLessons = await this.lessonService.loadPopularLessons(3);
+    } catch (error) {
+      console.error('Failed to load popular lessons:', error);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  // Load category-based lessons
+  async loadCategoryLessons() {
+    try {
+      // Load a mix of lessons from different categories for diversity
+      const categories = ['4', '1', '2']; // Proverbs, Numbers, Animals
+      for (const categoryId of categories) {
+        const lessons = await this.lessonService.getLessonsByCategory(categoryId, { limit: 1 });
+        this.categoryLessons.push(...lessons);
+      }
+    } catch (error) {
+      console.error('Failed to load category lessons:', error);
+    }
+  }
+
+  // Navigate to lesson detail
+  openLesson(lesson: Lesson) {
+    this.router.navigate(['/lessons', lesson.id]);
+  }
+
+  // Navigate to category lessons
+  viewCategoryLessons(categoryId: string) {
+    this.router.navigate(['/lesson-list'], { 
+      queryParams: { categoryId } 
+    });
+  }
+
+  // Get lesson duration display
+  getLessonDuration(lesson: Lesson): string {
+    return this.lessonService.formatDuration(lesson.duration);
+  }
+
+  // Get category display name
+  getCategoryName(categoryId: string): string {
+    return this.lessonService.getCategoryDisplayName(categoryId);
+  }
+
+  // Get category icon for display
+  getCategoryIcon(categoryId: string): string {
+    const iconMap: { [key: string]: string } = {
+      '1': 'calculator-outline',
+      '2': 'paw-outline',
+      '3': 'crown-outline',
+      '4': 'chatbubbles-outline',
+      '5': 'business-outline',
+      '6': 'leaf-outline',
+      'alphabet': 'text-outline'
+    };
+    return iconMap[categoryId] || 'book-outline';
+  }
+
+  // Get category color for display
+  getCategoryColor(categoryId: string): string {
+    const colorMap: { [key: string]: string } = {
+      '1': '#E19F65',
+      '2': '#C5BE66',
+      '3': '#F2E1CB',
+      '4': '#E19F65',
+      '5': '#D2CFB0',
+      '6': '#FBF4E4',
+      'alphabet': '#F2E1CB'
+    };
+    return colorMap[categoryId] || '#E19F65';
+  }
+
+  // TrackBy function for ngFor optimization
+  trackByLessonItem(index: number, item: any): any {
+    return item.name || index;
   }
 }

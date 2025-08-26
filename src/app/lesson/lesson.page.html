@@ -56,11 +56,47 @@
       <div class="scroll-container">
         <div class="lesson-wrap">
           <div class="proverb-card">
+            <!-- Loading State -->
+            <div *ngIf="loading" class="loading-lessons">
+              <ion-spinner name="crescent"></ion-spinner>
+              <p>Loading lessons...</p>
+            </div>
+
+            <!-- Backend Lessons -->
             <div
               class="proverb-wrapper"
-              *ngFor="let item of lessonItem"
+              *ngFor="let lesson of popularLessons"
+              [style.background-color]="getCategoryColor(lesson.categoryId)"
+              (click)="openLesson(lesson)"
+            >
+              <div class="proverb-image">
+                <ion-icon 
+                  [name]="getCategoryIcon(lesson.categoryId)"
+                  [color]="getCategoryColor(lesson.categoryId)"
+                  class="lesson-icon"
+                ></ion-icon>
+              </div>
+
+              <div class="proverb-content">
+                <h2 class="owe">{{lesson.title}}</h2>
+
+                <p class="know-small">
+                  {{getLessonDuration(lesson)}}
+                  <span
+                    ><img src="../../assets/icon/Ellipse 37.svg" alt=""
+                  /></span>
+                  Level {{lesson.level}}
+                </p>
+              </div>
+            </div>
+
+            <!-- Fallback Lessons (when backend is not available) -->
+            <div
+              class="proverb-wrapper"
+              *ngFor="let item of lessonItem; trackBy: trackByLessonItem"
               [style.background-color]="item.bgColor"
               (click)="popularPage(item.name)"
+              [hidden]="popularLessons.length > 0 || loading"
             >
               <div class="proverb-image">
                 <img [src]="item.image" alt="" />

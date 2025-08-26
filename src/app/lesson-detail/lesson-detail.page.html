@@ -1,0 +1,134 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navigateBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ lesson?.title || 'Lesson' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="shareLesson()" *ngIf="lesson">
+        <ion-icon name="share-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading lesson...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <ion-icon name="alert-circle-outline" class="error-icon"></ion-icon>
+    <h2>{{ error }}</h2>
+    <ion-button (click)="navigateBack()" fill="outline">
+      Go Back
+    </ion-button>
+  </div>
+
+  <!-- Lesson Content -->
+  <div *ngIf="lesson && !loading && !error" class="lesson-container">
+    <!-- Lesson Header -->
+    <div class="lesson-header">
+      <div class="lesson-meta">
+        <ion-chip color="primary">
+          <ion-icon name="layers-outline"></ion-icon>
+          <ion-label>Level {{ lesson.level }}</ion-label>
+        </ion-chip>
+        <ion-chip color="secondary">
+          <ion-icon name="time-outline"></ion-icon>
+          <ion-label>{{ getLessonDuration() }}</ion-label>
+        </ion-chip>
+        <ion-chip color="tertiary">
+          <ion-icon name="library-outline"></ion-icon>
+          <ion-label>{{ getCategoryName() }}</ion-label>
+        </ion-chip>
+      </div>
+      
+      <h1 class="lesson-title">{{ lesson.title }}</h1>
+      <p class="lesson-description">{{ lesson.description }}</p>
+    </div>
+
+    <!-- Media Files -->
+    <div *ngIf="lesson.mediaFiles && lesson.mediaFiles.length > 0" class="media-section">
+      <h3>Media Resources</h3>
+      <div class="media-list">
+        <div 
+          *ngFor="let media of lesson.mediaFiles" 
+          class="media-item"
+          (click)="playAudio(media.url)"
+          [ngClass]="'media-' + media.type"
+        >
+          <ion-icon 
+            [name]="media.type === 'audio' ? 'volume-high-outline' : 
+                     media.type === 'video' ? 'play-circle-outline' : 
+                     'image-outline'"
+          ></ion-icon>
+          <div class="media-info">
+            <h4>{{ media.type | titlecase }} Resource</h4>
+            <p *ngIf="media.description">{{ media.description }}</p>
+          </div>
+          <ion-button 
+            fill="clear" 
+            size="small"
+            (click)="media.type === 'audio' ? playAudio(media.url) : 
+                     media.type === 'video' ? playVideo(media.url) : 
+                     openImage(media.url)"
+          >
+            <ion-icon 
+              [name]="media.type === 'audio' ? 'play-outline' : 
+                       media.type === 'video' ? 'play-outline' : 
+                       'eye-outline'"
+            ></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prerequisites -->
+    <div *ngIf="lesson.prerequisites && lesson.prerequisites.length > 0" class="prerequisites-section">
+      <h3>Prerequisites</h3>
+      <div class="prerequisites-list">
+        <ion-chip *ngFor="let prereq of lesson.prerequisites" color="warning">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <ion-label>{{ prereq }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+
+    <!-- Lesson Content -->
+    <div class="lesson-content">
+      <h3>Lesson Content</h3>
+      <div 
+        class="content-html" 
+        [innerHTML]="sanitizedContent"
+      ></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <ion-button 
+        expand="block" 
+        color="success"
+        (click)="markAsCompleted()"
+      >
+        <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+        Mark as Completed
+      </ion-button>
+      
+      <ion-button 
+        expand="block" 
+        color="primary"
+        fill="outline"
+        (click)="goToQuiz()"
+      >
+        <ion-icon name="school-outline" slot="start"></ion-icon>
+        Take Quiz
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
