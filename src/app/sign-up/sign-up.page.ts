@@ -75,6 +75,7 @@ export class SignUpPage {
       const userData = {
         firstName: this.firstName,
         lastName: this.lastName,
+        displayName: `${this.firstName} ${this.lastName}`,
         email: this.email,
         password: this.password,
         passwordConfirm: this.password
@@ -82,9 +83,7 @@ export class SignUpPage {
 
       await this.authService.register(userData);
       
-      // Optionally auto-login the user after registration
-      await this.authService.login(this.email, this.password);
-      
+      // Firebase auth will automatically sign in the user after registration
       this.router.navigateByUrl('/tabs');
     } catch (error) {
       console.error('Registration error:', error);

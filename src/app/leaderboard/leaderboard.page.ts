@@ -1,99 +1,113 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
+import { GameStateService } from '../services/game-state.service';
+import { AuthService, AppUser } from '../services/auth.service';
+import { LeaderboardService, LeaderboardUser } from '../services/leaderboard.service';
+import { Subscription } from 'rxjs';
 
-interface LeaderboardUser {
-  id: number;
-  name: string;
-  points: number;
-  avatar: string;
-  position: number;
-  isCurrentUser?: boolean;
-}
 @Component({
   selector: 'app-leaderboard',
   templateUrl: './leaderboard.page.html',
   styleUrls: ['./leaderboard.page.scss'],
   imports: [IonicModule, RouterModule, CommonModule, FormsModule],
 })
-export class LeaderboardPage {
-  constructor(private navCtrl: NavController) {}
+export class LeaderboardPage implements OnInit, OnDestroy {
+  private subscriptions = new Subscription();
+  private currentUser: AppUser | null = null;
+  
+  timeFilters = ['Today', 'This Week', 'All Time'];
+  currentFilter = 'Today';
+  
+  topThree: LeaderboardUser[] = [];
+  otherUsers: LeaderboardUser[] = [];
+  allUsers: LeaderboardUser[] = [];
+  isLoading = true;
+
+  constructor(
+    private navCtrl: NavController,
+    private gameStateService: GameStateService,
+    private authService: AuthService,
+    private leaderboardService: LeaderboardService
+  ) {}
+
+  ngOnInit() {
+    this.loadCurrentUser();
+    this.loadLeaderboardData();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 
   navigateBack() {
     this.navCtrl.back();
   }
 
-  timeFilters = ['Today', 'This Week', 'All Time'];
-  currentFilter = 'Today';
+  private loadCurrentUser() {
+    this.subscriptions.add(
+      this.authService.user$.subscribe(user => {
+        this.currentUser = user;
+        this.updateCurrentUserHighlight();
+      })
+    );
+  }
 
-  // Sample data - replace with your actual data
-  topThree: LeaderboardUser[] = [
-    {
-      id: 1,
-      name: 'Funmi',
-      points: 2000,
-      avatar: '../../assets/icon/Frame 1.svg',
-      position: 1,
-    },
-    {
-      id: 2,
-      name: 'John',
-      points: 1600,
-      avatar: '../../assets/icon/Group 596.svg',
-      position: 2,
-    },
-    {
-      id: 3,
-      name: 'Kunle',
-      points: 1300,
-      avatar: '../../assets/icon/Group 597.svg',
-      position: 3,
-      isCurrentUser: true,
-    },
-  ];
+  private loadLeaderboardData() {
+    this.isLoading = true;
+    
+    // Update current user's points in leaderboard
+    this.updateCurrentUserInLeaderboard();
+    
+    // Apply current filter
+    this.applyFilter();
+    
+    this.isLoading = false;
+  }
 
-  otherUsers: LeaderboardUser[] = [
-    {
-      id: 4,
-      name: 'John',
-      points: 1600,
-      avatar: '../../assets/icon/Group 596.svg',
-      position: 4,
-    },
-    {
-      id: 5,
-      name: 'John',
-      points: 1600,
-      avatar: '../../assets/icon/Group 596.svg',
-      position: 5,
-    },
-    {
-      id: 5,
-      name: 'John',
-      points: 1600,
-      avatar: '../../assets/icon/Group 596.svg',
-      position: 5,
-    },
-    {
-      id: 5,
-      name: 'John',
-      points: 1600,
-      avatar: '../../assets/icon/Group 596.svg',
-      position: 5,
-    },
-    {
-      id: 5,
-      name: 'John',
-      points: 1600,
-      avatar: '../../assets/icon/Group 596.svg',
-      position: 5,
-    },
-  ];
+  private updateCurrentUserInLeaderboard() {
+    if (!this.currentUser) return;
+    
+    const currentUserPoints = this.gameStateService.getTotalPoints();
+    this.leaderboardService.updateUserPoints(
+      this.currentUser.id,
+      currentUserPoints,
+      this.currentUser.displayName || 'You',
+      this.currentUser.photoURL || '../../assets/icon/Frame 1.svg'
+    );
+  }
+
+  private updateCurrentUserHighlight() {
+    if (!this.currentUser) return;
+    this.applyFilter();
+  }
+
+  private applyFilter() {
+    // Get filtered leaderboard from service
+    const filteredUsers = this.leaderboardService.getFilteredLeaderboard(this.currentFilter as any);
+    
+    // Mark current user
+    if (this.currentUser) {
+      filteredUsers.forEach(user => {
+        user.isCurrentUser = user.id === this.currentUser!.id;
+      });
+    }
+    
+    // Split into top 3 and others
+    this.topThree = filteredUsers.slice(0, 3);
+    this.otherUsers = filteredUsers.slice(3);
+    this.allUsers = filteredUsers;
+  }
 
   setFilter(filter: string) {
     this.currentFilter = filter;
-    // Add your filter logic here
+    this.applyFilter();
+  }
+
+  // Method to refresh leaderboard data
+  refreshLeaderboard() {
+    this.loadLeaderboardData();
   }
 }

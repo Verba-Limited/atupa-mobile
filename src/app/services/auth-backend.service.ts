@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { Platform } from '@ionic/angular';
 import { ApiService, AuthTokens } from './api.service';
 
@@ -67,13 +66,7 @@ export class AuthBackendService {
   }
 
   private async initializeGoogleAuth() {
-    if (this.platform.is('capacitor')) {
-      await GoogleAuth.initialize({
-        clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com',
-        scopes: ['profile', 'email'],
-        grantOfflineAccess: true,
-      });
-    }
+    // Google Auth initialization removed - not available
   }
 
   private loadUserData(): void {
@@ -158,55 +151,12 @@ export class AuthBackendService {
 
   // Google OAuth login
   async signInWithGoogle(): Promise<AppUser> {
-    try {
-      let result;
-      
-      if (this.platform.is('capacitor')) {
-        // Native Google Sign-In
-        result = await GoogleAuth.signIn();
-      } else {
-        // Web Google Sign-In (fallback)
-        throw new Error('Google Sign-In not available in web environment');
-      }
-
-      if (!result?.email) {
-        throw new Error('Failed to get user information from Google');
-      }
-
-      // Send Google auth data to backend
-      const authResult = await this.apiService.googleLogin({
-        idToken: result.authentication?.idToken,
-        email: result.email,
-        name: result.name,
-        picture: result.imageUrl
-      }).toPromise();
-
-      if (authResult?.tokens) {
-        this.apiService.setToken(authResult.tokens);
-      }
-
-      const user: AppUser = {
-        ...authResult?.user,
-        id: authResult?.user._id || authResult?.user.id
-      };
-
-      this.setUserData(user);
-      return user;
-    } catch (error) {
-      console.error('Google Sign-In error:', error);
-      throw error;
-    }
+    throw new Error('Google Sign-In not available - package removed');
   }
 
   // Sign out from Google
   async signOutFromGoogle(): Promise<void> {
-    try {
-      if (this.platform.is('capacitor')) {
-        await GoogleAuth.signOut();
-      }
-    } catch (error) {
-      console.error('Google Sign-Out error:', error);
-    }
+    // Google Auth removed - no action needed
   }
 
   // Logout

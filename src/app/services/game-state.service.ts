@@ -29,12 +29,13 @@ export class GameStateService {
   totalPoints$ = this.totalPointsSubject.asObservable();
   
   private readonly MAX_SAVED_QUIZZES = 5; // Limit number of saved quizzes
+  private isAuthenticated = false;
 
   constructor() {
-    this.loadAllGameStates();
-    this.loadLevelProgress();
+    this.loadAllGameStatesFromStorage();
+    this.loadLevelProgressFromStorage();
+    this.loadTotalPointsFromStorage();
     this.calculateMaxLevels();
-    this.loadTotalPoints();
   }
 
   // Calculate the maximum available levels from quiz question data
@@ -91,6 +92,11 @@ export class GameStateService {
 
   // Load level progress from localStorage
   private loadLevelProgress() {
+    this.loadLevelProgressFromStorage();
+  }
+
+  // Load level progress from localStorage (fallback)
+  private loadLevelProgressFromStorage() {
     const highestLevel = localStorage.getItem('highestLevelUnlocked');
     if (highestLevel) {
       this.highestLevelUnlockedSubject.next(parseInt(highestLevel));
@@ -102,8 +108,13 @@ export class GameStateService {
     }
   }
 
-  // Load the user's total accumulated points
+  // Load the user's total accumulated points from localStorage
   private loadTotalPoints() {
+    this.loadTotalPointsFromStorage();
+  }
+
+  // Load total points from localStorage (fallback)
+  private loadTotalPointsFromStorage() {
     const totalPoints = localStorage.getItem('totalPoints');
     console.log('LOADING totalPoints from localStorage:', totalPoints);
     
@@ -169,6 +180,17 @@ export class GameStateService {
     // Double check localStorage was updated correctly
     const savedValue = localStorage.getItem('totalPoints');
     console.log(`VERIFICATION - Read back from localStorage: ${savedValue}`);
+    
+    // Notify leaderboard service about points update
+    // This will be handled by the quiz page when it completes a level
+    this.notifyPointsUpdated(newTotal);
+  }
+  
+  // Method to notify about points update (can be called by other services)
+  private notifyPointsUpdated(totalPoints: number) {
+    // Emit event or trigger leaderboard update
+    // The leaderboard will be updated when the user visits the leaderboard page
+    console.log(`Points updated to ${totalPoints} - leaderboard will refresh on next visit`);
   }
 
   // Add a completed level and unlock the next one
@@ -208,6 +230,11 @@ export class GameStateService {
   
   // Get completed levels
   getCompletedLevels(): number[] {
+    return this.getCompletedLevelsFromStorage();
+  }
+
+  // Get completed levels from localStorage (fallback)
+  getCompletedLevelsFromStorage(): number[] {
     return this.completedLevelsSubject.getValue();
   }
 
@@ -220,10 +247,15 @@ export class GameStateService {
 
     // Update the current state for immediate use
     this.gameStateSubject.next(state);
+    this.updateGameStateInStorage(state);
+  }
+
+  // Update game state in localStorage (fallback)
+  private updateGameStateInStorage(state: any) {
     localStorage.setItem('latestQuizState', JSON.stringify(state));
     
     // Get existing quiz states
-    const states = this.getQuizStates();
+    const states = this.getQuizStatesFromStorage();
     
     // Find if this category already exists
     const existingIndex = states.findIndex(quiz => quiz.pageFrom === state.pageFrom);
@@ -285,11 +317,16 @@ export class GameStateService {
 
   // Get all saved quiz states (excluding completed levels)
   getQuizStates(): any[] {
+    return this.getQuizStatesFromStorage();
+  }
+
+  // Get quiz states from localStorage (fallback)
+  getQuizStatesFromStorage(): any[] {
     const savedStates = localStorage.getItem('quizStates');
     let states = savedStates ? JSON.parse(savedStates) : [];
     
     // Filter out any states for levels that have been completed
-    const completedLevels = this.getCompletedLevels();
+    const completedLevels = this.getCompletedLevelsFromStorage();
     
     // Keep only quiz states where either:
     // 1. The quiz level is not in completedLevels array
@@ -316,16 +353,21 @@ export class GameStateService {
 
   // Get a specific quiz state by page name
   getQuizState(pageName: string): any {
-    const states = this.getQuizStates();
+    const states = this.getQuizStatesFromStorage();
     return states.find(state => state.pageFrom === pageName);
   }
 
   // Load all saved quiz states
   private loadAllGameStates() {
+    this.loadAllGameStatesFromStorage();
+  }
+
+  // Fallback method to load game states from localStorage
+  private loadAllGameStatesFromStorage() {
     this.loadGameState(); // Load the latest state
     
     // Load all saved states (filtered by the getQuizStates method)
-    const savedStates = this.getQuizStates();
+    const savedStates = this.getQuizStatesFromStorage();
     this.quizStatesSubject.next(savedStates);
   }
 
@@ -338,28 +380,23 @@ export class GameStateService {
   
   // Track points for each category to avoid double-counting
   getCategoryPoints(categoryName: string): number {
-    try {
-      const states = this.getQuizStates();
-      const categoryState = states.find(state => state.pageFrom === categoryName);
+    const states = this.getQuizStates();
+    const categoryState = states.find(state => state.pageFrom === categoryName);
+    
+    if (categoryState) {
+      // Return either previousScore or userCumulativePoint, whichever is available
+      // This represents the points that have already been added to the total
+      let previousScore = 0;
       
-      if (categoryState) {
-        // Return either previousScore or userCumulativePoint, whichever is available
-        // This represents the points that have already been added to the total
-        let previousScore = 0;
-        
-        if (categoryState.previousScore !== undefined) {
-          previousScore = categoryState.previousScore;
-        } else if (categoryState.userCumulativePoint !== undefined) {
-          previousScore = categoryState.userCumulativePoint;
-        }
-        
-        console.log(`Retrieved previous score for ${categoryName}: ${previousScore}`);
-        return previousScore;
+      if (categoryState.previousScore !== undefined) {
+        previousScore = categoryState.previousScore;
+      } else if (categoryState.userCumulativePoint !== undefined) {
+        previousScore = categoryState.userCumulativePoint;
       }
-      return 0;
-    } catch (error) {
-      console.error(`Error getting points for category ${categoryName}:`, error);
-      return 0;
+      
+      console.log(`Retrieved previous score for ${categoryName}: ${previousScore}`);
+      return previousScore;
     }
+    return 0;
   }
 }

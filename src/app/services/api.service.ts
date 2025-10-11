@@ -349,6 +349,68 @@ export class ApiService {
     return this.request<any>('GET', '/content/lessons/stats', null, false);
   }
 
+  // Game State Management API methods
+  saveGameState(gameState: any): Observable<any> {
+    return this.request<any>('POST', '/progress/game-state', gameState);
+  }
+
+  getGameState(): Observable<any> {
+    return this.request<any>('GET', '/progress/game-state');
+  }
+
+  getAllGameStates(): Observable<any[]> {
+    return this.request<any[]>('GET', '/progress/game-states');
+  }
+
+  getGameStateByCategory(category: string): Observable<any> {
+    return this.request<any>('GET', `/progress/game-state/${category}`);
+  }
+
+  deleteGameState(category?: string): Observable<any> {
+    const endpoint = category ? `/progress/game-state/${category}` : '/progress/game-state';
+    return this.request<any>('DELETE', endpoint);
+  }
+
+  // Quiz Progress API methods
+  saveQuizProgress(progressData: {
+    categoryId: string;
+    levelNumber: number;
+    totalPoints: number;
+    completedLevels: number[];
+    highestLevelUnlocked: number;
+    gameState?: any;
+  }): Observable<any> {
+    return this.request<any>('POST', '/progress/quiz-progress', progressData);
+  }
+
+  getQuizProgress(): Observable<any> {
+    return this.request<any>('GET', '/progress/quiz-progress');
+  }
+
+  updateTotalPoints(points: number): Observable<any> {
+    return this.request<any>('PUT', '/progress/total-points', { totalPoints: points });
+  }
+
+  getTotalPoints(): Observable<{ totalPoints: number }> {
+    return this.request<{ totalPoints: number }>('GET', '/progress/total-points');
+  }
+
+  updateCompletedLevels(levels: number[]): Observable<any> {
+    return this.request<any>('PUT', '/progress/completed-levels', { completedLevels: levels });
+  }
+
+  getCompletedLevels(): Observable<{ completedLevels: number[] }> {
+    return this.request<{ completedLevels: number[] }>('GET', '/progress/completed-levels');
+  }
+
+  updateHighestLevel(level: number): Observable<any> {
+    return this.request<any>('PUT', '/progress/highest-level', { highestLevel: level });
+  }
+
+  getHighestLevel(): Observable<{ highestLevel: number }> {
+    return this.request<{ highestLevel: number }>('GET', '/progress/highest-level');
+  }
+
   // Utility method to check if user is authenticated
   isAuthenticated(): boolean {
     return !!this.getToken() && !this.isTokenExpired();

@@ -41,6 +41,20 @@
       </div> -->
     </div>
 
+    <!-- Image Preloading Indicator -->
+    <div *ngIf="isPreloadingImages" class="preload-loading-container">
+      <div class="preload-loading-content">
+        <ion-spinner name="circles"></ion-spinner>
+        <p>Preloading Quiz Images...</p>
+        <div class="preload-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="(preloadingProgress / preloadingTotal) * 100"></div>
+          </div>
+          <p class="progress-text">{{ preloadingProgress }}/{{ preloadingTotal }} images loaded</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Main Loading Spinner for entire quiz -->
     <div *ngIf="!currentQuestion || (isImageLoading && currentQuestion?.picture)" class="quiz-loading-container">
       <div class="quiz-loading-content">
@@ -164,7 +178,6 @@
 
       <ion-modal
         #modal
-        trigger="open-modal"
         [isOpen]="modalOpen"
         [initialBreakpoint]="answeredQuestions.size === quizQuestions.length ? 0.5 : 0.33"
         [breakpoints]="answeredQuestions.size === quizQuestions.length ? [0.5] : [0.33]"
@@ -206,11 +219,17 @@
               </div>
 
 
-              <div *ngIf="answeredQuestions.size === quizQuestions.length || questionIndex === quizQuestions.length">
-                <!-- <div class="new-content">
-                  <h3>Level Completed!</h3>
-                  <p>Your Score: {{ userCumulativePoint }} / {{ totalLevelPoints }}</p>
+              <div *ngIf="answeredQuestions.size === quizQuestions.length || questionIndex === quizQuestions.length || levelCompleted">
+                <!-- Debug info (remove in production) -->
+                <!-- <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; font-size: 12px;">
+                  <p><strong>Debug Info:</strong></p>
+                  <p>Answered: {{answeredQuestions.size}}/{{quizQuestions.length}}</p>
+                  <p>User Points: {{userCumulativePoint}}</p>
+                  <p>Total Points: {{totalLevelPoints}}</p>
+                  <p>Required (50%): {{totalLevelPoints * 0.5}}</p>
+                  <p>Level Completed: {{levelCompleted}}</p>
                 </div> -->
+                
                 <ion-button
                   expand="block"
                   class="create-account"

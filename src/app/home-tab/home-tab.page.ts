@@ -238,7 +238,23 @@ export class HomeTabPage implements OnInit, OnDestroy {
   }
 
   levelsPage(pageName: string) {
-    this.router.navigate(['/levels', { page: pageName }]);
+    // Check if there's a saved game state for this category
+    const savedState = this.gameStateService.getQuizState(pageName);
+    
+    if (savedState) {
+      // If there's a saved state, continue directly from the quiz
+      console.log('Found saved state for', pageName, '- continuing directly');
+      this.continueQuiz(
+        savedState.pageFrom, 
+        savedState.currentLevel, 
+        savedState.questionIndex, 
+        savedState.userCumulativePoint
+      );
+    } else {
+      // No saved state, go to levels page to select level
+      console.log('No saved state for', pageName, '- going to levels page');
+      this.router.navigate(['/levels', { page: pageName }]);
+    }
   }
 
   openNoticePage() {

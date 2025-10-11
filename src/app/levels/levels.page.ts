@@ -92,9 +92,30 @@ export class LevelsPage implements OnInit, OnDestroy {
     this.router.navigate(['/quiz-page']);
   }
 
-  goToPage(page: string, level: number) {
+  async goToPage(page: string, level: number) {
     if (this.isLevelUnlocked(level)) {
-      this.router.navigate(['/quiz-page', { page: page, level: level }]);
+      // Check if there's a saved game state for this category
+      const savedState = this.gameStateService.getQuizState(page);
+      
+      if (savedState && savedState.currentLevel === level) {
+        // Continue from saved state
+        console.log('Found saved state for', page, 'level', level, '- continuing from saved state');
+        const previousScore = this.gameStateService.getCategoryPoints(page);
+        
+        this.router.navigate(['/quiz-page'], {
+          queryParams: {
+            page: page,
+            level: savedState.currentLevel,
+            index: savedState.questionIndex || 0,
+            score: savedState.userCumulativePoint || 0,
+            previousScore: previousScore
+          }
+        });
+      } else {
+        // Start fresh
+        console.log('No saved state found for', page, 'level', level, '- starting fresh');
+        this.router.navigate(['/quiz-page', { page: page, level: level }]);
+      }
     }
   }
 

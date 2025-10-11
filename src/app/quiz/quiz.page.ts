@@ -10,6 +10,7 @@ import {
   townsQuestions,
   proverbsQuestions 
 } from '../data/quizQuestions';
+import { GameStateService } from '../services/game-state.service';
 
 @Component({
   selector: 'app-quiz',
@@ -31,7 +32,10 @@ export class QuizPage implements OnInit {
     'akanlo-ede': 0
   };
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private gameStateService: GameStateService
+  ) {}
 
   ngOnInit() {
     // Calculate total points for each category
@@ -69,7 +73,59 @@ export class QuizPage implements OnInit {
   }
 
   levelsPage(pageName: string) {
-    this.router.navigate(['/levels', { page: pageName }]);
+    // Check if there's a saved game state for this category
+    const savedState = this.gameStateService.getQuizState(pageName);
+    
+    if (savedState) {
+      // If there's a saved state, continue directly from the quiz
+      console.log('Found saved state for', pageName, '- continuing directly');
+      this.continueQuiz(
+        savedState.pageFrom, 
+        savedState.currentLevel, 
+        savedState.questionIndex, 
+        savedState.userCumulativePoint
+      );
+    } else {
+      // No saved state, go to levels page to select level
+      console.log('No saved state for', pageName, '- going to levels page');
+      this.router.navigate(['/levels', { page: pageName }]);
+    }
+  }
+
+  continueQuiz(page: string, level?: number, index?: number, score?: number) {
+    // Get the quizState to extract additional details if available
+    const savedState = this.gameStateService.getQuizState(page);
+    
+    // Log for debugging
+    console.log('Found saved state:', savedState);
+    
+    // Ensure we use the correct question index - the question we stopped at
+    // If the saved state has a more recent questionIndex, use that instead
+    let questionIndex = index;
+    if (savedState && savedState.questionIndex) {
+      questionIndex = savedState.questionIndex;
+      console.log(`Using questionIndex ${questionIndex} from saved state`);
+    }
+    
+    // Use the dedicated method to get category points to ensure consistency
+    // This is the historical score that has already been counted in the totalPoints
+    const previousScore = this.gameStateService.getCategoryPoints(page);
+    
+    console.log(`Continuing quiz ${page} with params:
+    - Level: ${level || 1}
+    - Question Index: ${questionIndex || 0}
+    - Score: ${score || 0}
+    - Previous Score: ${previousScore}`);
+    
+    this.router.navigate(['/quiz-page'], {
+      queryParams: {
+        page: page,
+        level: level || 1,
+        index: questionIndex || 0,
+        score: score || 0,
+        previousScore: previousScore
+      },
+    });
   }
   // erankoPage() {
   //   this.router.navigate(['/eranko-quiz']);

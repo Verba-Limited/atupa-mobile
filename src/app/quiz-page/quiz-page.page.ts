@@ -25,6 +25,7 @@ import {
   fruitQuestions,
 } from '../data/quizQuestions'; // Import the quiz questions from the data file
 import { GameStateService } from '../services/game-state.service';
+import { ImagePreloaderService } from '../services/image-preloader.service';
 
 interface QuizQuestion {
   id: string;
@@ -87,6 +88,11 @@ export class QuizPagePage {
   questionCompleted: boolean = false;
   isImageLoading: boolean = false;
   questionVisible: boolean = true;
+  
+  // Image preloading properties
+  isPreloadingImages: boolean = false;
+  preloadingProgress: number = 0;
+  preloadingTotal: number = 0;
 
   suggestionCosts: Record<'ileke' | 'obi' | 'eyoOwo' | 'ami', number> = {
     ileke: 10,
@@ -162,7 +168,8 @@ export class QuizPagePage {
     private activatedRouter: ActivatedRoute,
     private modalController: ModalController,
     private gameStateService: GameStateService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private imagePreloader: ImagePreloaderService
   ) {
     // Don't set initial loading state here since we don't know if question has picture yet
     
@@ -202,7 +209,7 @@ export class QuizPagePage {
     //   this.showToast('Quiz page loaded. Good luck!');
     // }, 1000);
     
-    // Only call loadNextQuestion if not resuming from saved state
+    // If continuing from saved state, we won't trigger initial question load here
     if (!this.activatedRouter.snapshot.queryParamMap.has('index')) {
       console.log('Starting a fresh quiz');
       // Reset these values for a fresh quiz
@@ -210,17 +217,12 @@ export class QuizPagePage {
       this.questionIndex = 1;
       this.userCumulativePoint = 0;
       this.levelOption.userCumulativePoint = 0;
-      
-      this.shuffleQuestions();
-      // Add a short delay before loading the first question to show loading indicator
-      setTimeout(() => {
-        this.loadNextQuestion();
-      }, 800);
+      // Do not call loadNextQuestion here; initial question will be set after images preload in loadQuizQuestion
     } else {
       console.log('Continuing from a saved quiz state');
     }
 
-    this.activatedRouter.queryParams.subscribe((params) => {
+    this.activatedRouter.queryParams.subscribe(async (params) => {
       const page = params['page'];
       const levelNo = params['level'];
       const questionIndex = params['index'];
@@ -241,14 +243,14 @@ export class QuizPagePage {
         this.currentLevel = +levelNo;
         this.questionIndex = +questionIndex || 1;
         
-        // Load quiz questions first
+        // Load quiz questions first (this will preload images before showing the first question)
         this.loadQuizQuestion(page, levelNo);
         
         // Check if this is a continuation
         if (questionIndex) {
           console.log(`Continuing quiz at question index ${questionIndex}`);
           // Try to load the saved game state to restore answered questions
-          const savedState = this.gameStateService.getQuizState(page);
+          const savedState = await this.gameStateService.getQuizState(page);
           
           if (savedState && savedState.answeredQuestions) {
             // Convert the array back to a Set
@@ -296,7 +298,15 @@ export class QuizPagePage {
       - Question index: ${this.questionIndex}`);
       
       // Save this initial state to track points correctly
-      this.saveGameState();
+      await this.saveGameState();
+      
+      // If we're continuing from a saved state with points, evaluate level progress
+      // to check if the user has already passed
+      if (questionIndex && score && +score > 0) {
+        console.log('Continuing from saved state with score - evaluating level progress');
+        this.calculateTotalLevelPoints();
+        this.evaluateLevelProgress();
+      }
     });
   }
 
@@ -304,8 +314,38 @@ export class QuizPagePage {
     return questions.filter((q: any) => q.levelNumber == levelNumber);
   }
 
+  private shuffleQuestionOptions(question: QuizQuestion): QuizQuestion {
+    if (!question || !question.options) return question;
+    const originalOptions = Object.entries(question.options);
+    if (originalOptions.length < 2) return question;
+
+    const correctText = question.options[question.answer];
+    // Fisher–Yates shuffle
+    for (let i = originalOptions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [originalOptions[i], originalOptions[j]] = [originalOptions[j], originalOptions[i]];
+    }
+
+    // Reassign to option1..optionN
+    const shuffledOptions: Record<string, string> = {};
+    let newAnswerKey = 'option1';
+    originalOptions.forEach(([_, value], idx) => {
+      const key = `option${idx + 1}`;
+      shuffledOptions[key] = value;
+      if (value === correctText) {
+        newAnswerKey = key;
+      }
+    });
+
+    return {
+      ...question,
+      options: shuffledOptions,
+      answer: newAnswerKey,
+    };
+  }
+
   // get pageFrom and load quiz questions based on the page
-  loadQuizQuestion(pageFrom: string, levelNumber: any = 1) {
+  async loadQuizQuestion(pageFrom: string, levelNumber: any = 1) {
     // Set questionVisible to false initially
     this.questionVisible = false;
     
@@ -336,7 +376,8 @@ export class QuizPagePage {
     }
 
     // Get the selected level questions
-    this.quizQuestions = this.getQuestionLevel(questions, level);
+    this.quizQuestions = this.getQuestionLevel(questions, level)
+      .map((q: QuizQuestion) => this.shuffleQuestionOptions(q));
     
     // Calculate the total points available for this level
     this.calculateTotalLevelPoints();
@@ -354,7 +395,10 @@ export class QuizPagePage {
       return;
     }
 
-    // Set the current question based on index
+    // Preload all images FIRST before showing any question
+    await this.preloadQuizImages();
+
+    // After preloading completes, set the current question based on index and start timer
     const index = this.questionIndex - 1;
     if (index < this.quizQuestions.length) {
       setTimeout(() => {
@@ -362,23 +406,29 @@ export class QuizPagePage {
         
         // Check if the question has an image
         if (this.currentQuestion.picture) {
-          // For questions with pictures, load the image first
-          this.isImageLoading = true;
-          
-          const img = new Image();
-          img.onload = () => {
+          // Check if image is already preloaded
+          if (this.imagePreloader.isImagePreloaded(this.currentQuestion.picture)) {
+            // Image is preloaded, show immediately
             this.isImageLoading = false;
             this.questionVisible = true;
-            // Start timer after image loads
             this.startTimer();
-          };
-          img.onerror = () => {
-            this.isImageLoading = false;
-            this.questionVisible = true;
-            // Start timer even if image fails to load
-            this.startTimer();
-          };
-          img.src = this.currentQuestion.picture;
+          } else {
+            // Fall back to loading individual image if not preloaded
+            this.isImageLoading = true;
+            
+            const img = new Image();
+            img.onload = () => {
+              this.isImageLoading = false;
+              this.questionVisible = true;
+              this.startTimer();
+            };
+            img.onerror = () => {
+              this.isImageLoading = false;
+              this.questionVisible = true;
+              this.startTimer();
+            };
+            img.src = this.currentQuestion.picture;
+          }
         } else {
           // For questions without pictures, make visible immediately
           this.isImageLoading = false;
@@ -406,9 +456,10 @@ export class QuizPagePage {
 
   calculateTotalLevelPoints() {
     this.totalLevelPoints = this.quizQuestions.reduce(
-      (sum, q) => sum + q.points,
+      (sum, q) => sum + (q.points || 10),
       0
     );
+    console.log(`Calculated total level points: ${this.totalLevelPoints} for ${this.quizQuestions.length} questions`);
   }
 
   startTimer() {
@@ -431,14 +482,14 @@ export class QuizPagePage {
   }
 
   // Handle when timer expires
-  handleTimerExpired() {
+  async handleTimerExpired() {
     console.log('Timer expired - moving to next question');
     
     // Mark current question as answered with no points awarded
     this.answeredQuestions.add(this.currentQuestion.id);
     
     // Save game state to track this skipped question
-    this.saveGameState();
+    await this.saveGameState();
     
     // Trigger next question with a short delay to ensure UI updates
     setTimeout(() => {
@@ -446,7 +497,43 @@ export class QuizPagePage {
     }, 300);
   }
 
-  loadNextQuestion() {
+  /**
+   * Preload all images in the quiz questions to avoid loading delays
+   */
+  private async preloadQuizImages() {
+    // Extract all image URLs from quiz questions
+    const imageUrls = this.quizQuestions
+      .map(question => question.picture)
+      .filter(picture => picture && typeof picture === 'string');
+
+    if (imageUrls.length === 0) {
+      console.log('No images to preload in this quiz');
+      return;
+    }
+
+    console.log(`Starting to preload ${imageUrls.length} images...`);
+    this.isPreloadingImages = true;
+    this.preloadingProgress = 0;
+    this.preloadingTotal = imageUrls.length;
+
+    try {
+      await this.imagePreloader.preloadImagesWithProgress(
+        imageUrls,
+        (loaded, total, currentUrl) => {
+          this.preloadingProgress = loaded;
+          console.log(`Preloaded ${loaded}/${total} images: ${currentUrl}`);
+        }
+      );
+      
+      console.log('All quiz images preloaded successfully');
+    } catch (error) {
+      console.error('Error preloading images:', error);
+    } finally {
+      this.isPreloadingImages = false;
+    }
+  }
+
+  async loadNextQuestion() {
     console.log('Loading next question...');
     
     // Reset states
@@ -463,6 +550,8 @@ export class QuizPagePage {
     if (this.answeredQuestions.size === this.quizQuestions.length) {
       console.log('All questions answered! Evaluating level progress...');
       this.questionCompleted = true;
+      // Recalculate total level points to ensure it's accurate
+      this.calculateTotalLevelPoints();
       this.evaluateLevelProgress();
       return;
     }
@@ -518,6 +607,8 @@ export class QuizPagePage {
     if (!found) {
       console.log('All questions have been answered');
       this.questionCompleted = true;
+      // Recalculate total level points to ensure it's accurate
+      this.calculateTotalLevelPoints();
       this.evaluateLevelProgress();
       return;
     }
@@ -533,33 +624,41 @@ export class QuizPagePage {
     };
 
     // Save the current game state
-    this.saveGameState();
+    await this.saveGameState();
 
     // Check if the question has an image
     if (this.currentQuestion.picture) {
-      // Only hide question and show loading for questions with images
-      this.questionVisible = false;
-      this.isImageLoading = true;
-      
-      // Preload the image
-      const img = new Image();
-      img.onload = () => {
+      // Check if image is already preloaded
+      if (this.imagePreloader.isImagePreloaded(this.currentQuestion.picture)) {
+        // Image is preloaded, show immediately with minimal delay
+        this.questionVisible = true;
+        this.isImageLoading = false;
+        
         setTimeout(() => {
-          this.isImageLoading = false;
-          this.questionVisible = true;
-          // Start timer after image is loaded and visible
           this.startTimer();
         }, 300);
-      };
-      img.onerror = () => {
-        setTimeout(() => {
-          this.isImageLoading = false;
-          this.questionVisible = true;
-          // Start timer after error resolution
-          this.startTimer();
-        }, 300);
-      };
-      img.src = this.currentQuestion.picture;
+      } else {
+        // Fall back to loading individual image if not preloaded
+        this.questionVisible = false;
+        this.isImageLoading = true;
+        
+        const img = new Image();
+        img.onload = () => {
+          setTimeout(() => {
+            this.isImageLoading = false;
+            this.questionVisible = true;
+            this.startTimer();
+          }, 300);
+        };
+        img.onerror = () => {
+          setTimeout(() => {
+            this.isImageLoading = false;
+            this.questionVisible = true;
+            this.startTimer();
+          }, 300);
+        };
+        img.src = this.currentQuestion.picture;
+      }
     } else {
       // For questions without pictures, make visible immediately
       this.questionVisible = true;
@@ -598,16 +697,29 @@ export class QuizPagePage {
 
   evaluateLevelProgress() {
     const requiredScore = this.totalLevelPoints * 0.5;
+    
+    // User passes if they have achieved the required score (50%)
+    // regardless of whether they've answered all questions
     this.levelCompleted = this.userCumulativePoint >= requiredScore;
-    console.log(`Total Level Point: ${this.totalLevelPoints}`);
-    console.log(`requiredScore: ${requiredScore}`);
-    console.log(`levelCompleted: ${this.levelCompleted}`);
+    
+    console.log(`=== LEVEL EVALUATION ===`);
+    console.log(`Total Level Points: ${this.totalLevelPoints}`);
+    console.log(`User Points: ${this.userCumulativePoint}`);
+    console.log(`Required Score (50%): ${requiredScore}`);
+    console.log(`Questions Answered: ${this.answeredQuestions.size}/${this.quizQuestions.length}`);
+    console.log(`Level Completed: ${this.levelCompleted}`);
+    console.log(`Pass Condition: User has ${this.userCumulativePoint >= requiredScore ? 'PASSED' : 'NOT PASSED'} the required score`);
+    console.log(`========================`);
   }
 
   resetLevel() {
     this.questionIndex = 1;
     this.answeredQuestions.clear();
     this.userCumulativePoint = 0;
+    this.levelCompleted = false;
+    this.modalOpen = false;
+    this.isOptionSelected = false;
+    this.showFeedback = false;
     this.shuffleQuestions();
     this.loadNextQuestion();
   }
@@ -648,7 +760,7 @@ export class QuizPagePage {
     }
   }
 
-  selectOption(selectedOption: any, questionIndex: number) {
+  async selectOption(selectedOption: any, questionIndex: number) {
     if (this.isOptionSelected) {
       return; // Prevent multiple selections
     }
@@ -661,9 +773,6 @@ export class QuizPagePage {
     if (selectedOption === this.currentQuestion.answer) {
       this.correctOption = true;
       this.userCumulativePoint += this.currentQuestion.points || 10;
-      
-      // Evaluate if the user has enough points to pass the level
-      this.evaluateLevelProgress();
       
       // Show correct answer feedback
       const randomIndex = Math.floor(Math.random() * this.correctImages.length);
@@ -687,7 +796,7 @@ export class QuizPagePage {
     this.answeredQuestions.add(this.currentQuestion.id);
     
     // Save the game state after each question is answered
-    this.saveGameState();
+    await this.saveGameState();
 
     // Show feedback (initially don't fade out)
     this.feedbackFadeOut = false;
@@ -702,12 +811,17 @@ export class QuizPagePage {
     
     // Delay opening the modal to allow feedback to be visible longer
     setTimeout(() => {
+      // Re-evaluate level progress right before showing modal to ensure correct button state
+      if (this.answeredQuestions.size === this.quizQuestions.length) {
+        this.calculateTotalLevelPoints();
+        this.evaluateLevelProgress();
+      }
       // Show modal with explanation
       this.modalOpen = true;
     }, 3000); // Increased from 800ms to 3000ms
   }
 
-  goToNextLevel() {
+  async goToNextLevel() {
     this.stopBackgroundAudio();
 
     if (!this.currentQuestion) return;
@@ -743,8 +857,9 @@ export class QuizPagePage {
     this.levelOption.percentage =
       (this.levelOption.totalAnswered / this.levelOption.totalQuestions) * 100;
 
-    // Save the game state with the current points before navigating
-    this.saveGameState();
+    // IMPORTANT: Remove the saved game state for this category since level is completed
+    console.log(`Removing saved game state for ${this.pageFrom} since level ${currentLevel} is completed`);
+    this.gameStateService.removeQuizState(this.pageFrom);
 
     console.log(`Level Option Object: ${JSON.stringify(this.levelOption)}`);
     console.log(`Is final level: ${isFinalLevel}, Current: ${currentLevel}, Max: ${maxLevelForCategory}`);
@@ -794,7 +909,7 @@ export class QuizPagePage {
   }
   
   // Decrement badge count for an item
-  decrementBadge(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami'): void {
+  async decrementBadge(slug: 'ileke' | 'obi' | 'eyoOwo' | 'ami'): Promise<void> {
     // Find the item and decrement its badge count
     const item = this.overlayItems.find((item: OverlayItem) => item.slug === slug);
     if (item && item.badge > 0) {
@@ -802,7 +917,7 @@ export class QuizPagePage {
       console.log(`${item.title} badges remaining: ${item.badge}`);
       
       // Save badge counts to game state
-      this.saveGameState();
+      await this.saveGameState();
     }
   }
   
@@ -846,7 +961,7 @@ export class QuizPagePage {
   }
   
   // Modify useSuggestion to check badge availability
-  useSuggestion(type: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
+  async useSuggestion(type: 'ileke' | 'obi' | 'eyoOwo' | 'ami') {
     // Find the item
     const item = this.overlayItems.find((item: OverlayItem) => item.slug === type);
     
@@ -877,7 +992,7 @@ export class QuizPagePage {
     this.usedSuggestions[type] = true;
     
     // Decrease badge count
-    this.decrementBadge(type);
+    await this.decrementBadge(type);
 
     // Apply the suggestion effect
     switch (type) {
@@ -888,7 +1003,7 @@ export class QuizPagePage {
         this.removeIncorrectOptions(1);
         break;
       case 'eyoOwo':
-        this.handleAutoAnswer();
+        await this.handleAutoAnswer();
         break;
       case 'ami':
         alert(`Hint: ${this.currentQuestion.explanation}`);
@@ -913,7 +1028,7 @@ export class QuizPagePage {
     );
   }
 
-  handleAutoAnswer() {
+  async handleAutoAnswer() {
     // Mark as selected and set correct answer
     this.isOptionSelected = true;
     this.answerQuestion(this.currentQuestion.answer);
@@ -930,7 +1045,7 @@ export class QuizPagePage {
     this.answeredQuestions.add(this.currentQuestion.id);
     
     // Save the game state after each question is answered
-    this.saveGameState();
+    await this.saveGameState();
 
     // Show feedback (initially don't fade out)
     this.feedbackFadeOut = false;
@@ -943,6 +1058,11 @@ export class QuizPagePage {
     
     // Delay opening the modal to allow feedback to be visible longer
     setTimeout(() => {
+      // Re-evaluate level progress right before showing modal to ensure correct button state
+      if (this.answeredQuestions.size === this.quizQuestions.length) {
+        this.calculateTotalLevelPoints();
+        this.evaluateLevelProgress();
+      }
       // Show modal with explanation
       this.modalOpen = true;
     }, 3000);
@@ -960,6 +1080,11 @@ export class QuizPagePage {
   }
 
   openModal() {
+    // Re-evaluate level progress right before showing modal to ensure correct button state
+    if (this.answeredQuestions.size === this.quizQuestions.length) {
+      this.calculateTotalLevelPoints();
+      this.evaluateLevelProgress();
+    }
     this.modalOpen = true;
   }
 
@@ -973,6 +1098,10 @@ export class QuizPagePage {
       await modal.dismiss();
     }
     this.modalOpen = false;
+    
+    // Clear preloaded images to free up memory
+    this.imagePreloader.clearPreloadedImages();
+    console.log('Cleared preloaded images on quiz exit');
   }
 
   // Text to Speech Section
@@ -1033,11 +1162,11 @@ export class QuizPagePage {
         {
           text: 'Yes',
           role: 'cancel',
-          handler: () => {
+          handler: async () => {
             console.log('You picked yes');
             
             // Save the game state first
-            this.saveGameState();
+            await this.saveGameState();
             
             // Save points using the new method - replaces all the direct calculation
             this.ensurePointsSaved();
@@ -1062,7 +1191,7 @@ export class QuizPagePage {
     await alert.present();
   }
 
-  saveGameState() {
+  async saveGameState() {
     // Calculate total points before saving to ensure it's current
     this.calculateTotalLevelPoints();
     
@@ -1094,7 +1223,7 @@ export class QuizPagePage {
       savedAt: new Date().toISOString()
     };
 
-    this.gameStateService.updateGameState(gameState);
+    await this.gameStateService.updateGameState(gameState);
     console.log(`Game state saved for ${this.pageFrom}`);
     
     // Also save badge counts separately to be used across all quizzes
