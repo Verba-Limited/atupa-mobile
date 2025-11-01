@@ -26,6 +26,11 @@ const routes: Routes = [
           import('../lesson/lesson.module').then((m) => m.LessonPageModule),
       },
       {
+        path: 'dictionary',
+        loadChildren: () =>
+          import('../dictionary/dictionary.module').then((m) => m.DictionaryPageModule),
+      },
+      {
         path: 'profile',
         loadChildren: () =>
           import('../profile/profile.module').then((m) => m.ProfilePageModule),
