@@ -1,12 +1,12 @@
 ion-tab-bar {
-    --color-selected: #7B462F; // Active color
+    --color-selected: var(--ion-color-primary); // Active color
     --background: #fff;
     --border: none;
     box-shadow: rgb(0 0 0 /50%) 0px -2px 5px -5px;
 }
 
 ion-tab-button {
-    --color: #7b462f; // Default color
+    --color: var(--ion-color-primary); // Default color
     --color-hover: black; // Custom hover color (Not available by default)
 }
 

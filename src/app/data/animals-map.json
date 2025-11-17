@@ -36,7 +36,7 @@
   {"name":"Monitor Lizard","picture":"https://images.unsplash.com/photo-1564636016104-c5eac91b46f7","yorubaName":"Àtàà / Alẹ̀ẹ́gbẹ̀"},
   {"name":"Lizard","picture":"https://images.unsplash.com/photo-1597245623587-82578a8b0c90","yorubaName":"Alangba"},
   {"name":"Gecko","picture":"https://images.unsplash.com/photo-1682788820655-d3915d4b95b9","yorubaName":"Ọmọ-ilé"},
-  {"name":"Chameleon","picture":"https://images.unsplash.com/photo-1617540021016-72023b487e99","yorubaName":"Agẹ̀mọ̀n / Ògà"},
+  {"name":"Chameleon","picture":"https://images.unsplash.com/photo-1617540021016-72023b487e99","yorubaName":"Agẹmọ / Ọ̀gà"},
   {"name":"Frog","picture":"https://images.unsplash.com/photo-1611724407375-6fcb55367fda","yorubaName":"Kọ̀nkọ̀"},
   {"name":"Toad","picture":"https://images.unsplash.com/photo-1577877275414-83194fe325fc","yorubaName":"Ọpọlọ"},
   {"name":"Eagle","picture":"https://images.unsplash.com/photo-1557401622-cfc0aa5d146c","yorubaName":"Ìdì"},
@@ -61,7 +61,7 @@
   {"name":"Canary","picture":"https://images.unsplash.com/photo-1654181920354-5c4add3989a1","yorubaName":"Ìbákà"},
   {"name":"Butterfly","picture":"https://images.unsplash.com/photo-1560263816-d704d83cce0f","yorubaName":"Labalábá"},
   {"name":"Dragonfly","picture":"https://images.unsplash.com/photo-1554945121-0c64ff46da04","yorubaName":"Lámílámí"},
-  {"name":"Beetle","picture":"https://images.unsplash.com/photo-1516434593931-42aaf04e6ef2","yorubaName":"Ìràwọ̀"},
+  {"name":"Beetle","picture":"https://images.unsplash.com/photo-1516434593931-42aaf04e6ef2","yorubaName":"Ìràwò"},
   {"name":"Scorpion","picture":"https://images.unsplash.com/photo-1700488217112-5a174f599624","yorubaName":"Àkẹ̀kẹ́"},
   {"name":"Bee","picture":"https://images.unsplash.com/photo-1570786097801-b8b9531ed5cb","yorubaName":"Ọ̀yìn"},
   {"name":"Housefly","picture":"https://images.unsplash.com/photo-1643781410686-5a9c75eb6c90","yorubaName":"Ẹṣinṣin"},
@@ -82,5 +82,25 @@
   {"name":"Woodpecker","picture":"https://images.unsplash.com/photo-1615018160530-d37d31520d87","yorubaName":"Àkókó"},
   {"name":"Palm bird","picture":"https://images.unsplash.com/photo-1663612161150-2292b03c7d73","yorubaName":"Ọlọ́gìrì"},
   {"name":"Songbird","picture":"https://images.unsplash.com/photo-1718846774142-be0759d96415","yorubaName":"Ẹyẹ-orin"},
-  {"name":"Bushfowl","picture":"https://images.unsplash.com/photo-1601189517967-0cb931eb313b","yorubaName":"Àpárò"}
+  {"name":"Bushfowl","picture":"https://images.unsplash.com/photo-1601189517967-0cb931eb313b","yorubaName":"Àpárò"},
+
+
+  {"name":"Zebra","yorubaName":"Kẹ́tẹ́kẹ́tẹ́ abilà"},
+  {"name":"Camel","yorubaName":"Ràkúnmí / Ìbakasíẹ"},
+  {"name":"Tree Bear","yorubaName":"Ofàfà"},
+  {"name":"Turkey","yorubaName":"Tòlótòló"},
+  {"name":"Spider","yorubaName":"Alá-ntakùn"},
+  {"name":"Pigeon","yorubaName":"Ẹyẹlé"},
+  {"name":"Parrot","yorubaName":"Odídẹrẹ́ / Aiyekooto"},
+  {"name":"Kangaroo","yorubaName":"Ṣáṣámúrá"},
+  {"name":"Colt","yorubaName":"Agodongbo"},
+  {"name":"Bed-bug","yorubaName":"Idun"},
+  {"name":"Civet Cat","yorubaName":"Ẹtà"},
+  {"name":"Antelope","yorubaName":"Ìgalà"},
+  {"name":"Cock","yorubaName":"Àkùkọ"},
+  {"name":"Hen","yorubaName":"Àgbébọ̀ adìẹ"},
+
+  {"name":"Rabbit","yorubaName":"Ehoro"},
+  {"name":"Pig","yorubaName":"Ẹlẹ́dẹ̀"}
+  
 ]

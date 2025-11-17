@@ -26,9 +26,14 @@ const routes: Routes = [
           import('../lesson/lesson.module').then((m) => m.LessonPageModule),
       },
       {
-        path: 'dictionary',
+        path: 'general',
         loadChildren: () =>
-          import('../dictionary/dictionary.module').then((m) => m.DictionaryPageModule),
+          import('../general/general.module').then((m) => m.GeneralPageModule),
+      },
+      {
+        path: 'dictionary',
+        redirectTo: '/tabs/general/animal-dictionary',
+        pathMatch: 'full',
       },
       {
         path: 'profile',

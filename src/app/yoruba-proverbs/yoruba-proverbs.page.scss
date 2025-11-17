@@ -1,0 +1,31 @@
+/* Styles for Yoruba Proverbs page */
+
+ion-list[inset] {
+  margin-top: 12px;
+}
+
+ion-item {
+  --padding-start: 16px;
+  --inner-padding-end: 12px;
+  --min-height: 56px;
+}
+
+ion-label h3 {
+  color: var(--ion-color-dark);
+}
+
+ion-label p {
+  color: var(--ion-color-medium);
+}
+
+ion-item:hover {
+  background: var(--ion-color-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  ion-item:hover {
+    background: var(--ion-color-medium-shade, #3a3a3a);
+  }
+}
+
+

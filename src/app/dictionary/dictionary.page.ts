@@ -158,4 +158,15 @@ export class DictionaryPage implements OnInit {
     // Fallback image or hide broken images
     event.target.style.display = 'none';
   }
+
+  getAnimalRows(): Animal[][] {
+    const rows: Animal[][] = [];
+    const itemsPerRow = 2;
+    
+    for (let i = 0; i < this.filteredAnimals.length; i += itemsPerRow) {
+      rows.push(this.filteredAnimals.slice(i, i + itemsPerRow));
+    }
+    
+    return rows;
+  }
 }

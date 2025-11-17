@@ -1,3 +1,70 @@
+.container-wrap {
+  background-color: #FFFFFF;
+  color: #000000;
+
+  .framer {
+    color: #505050;
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .dictionary-badge {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dictionary-badge img {
+    width: 99.95px;
+    height: 101px;
+  }
+
+  .dictionary-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .dictionary-description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.82px;
+    color: #505050;
+    margin: 5px;
+  }
+
+  .search-section {
+    padding: 0 16px;
+    margin-top: 16px;
+  }
+
+  .category-section {
+    padding: 0 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+    ion-segment {
+      --background: #f5f5f5;
+      border-radius: 12px;
+      padding: 4px;
+
+      ion-segment-button {
+        --indicator-color: var(--ion-color-primary);
+        --color-checked: var(--ion-color-primary);
+        
+        ion-label {
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -17,7 +84,7 @@
 }
 
 .dictionary-container {
-  padding: 1rem;
+  padding: 0 16px 16px;
 }
 
 .no-results {
@@ -44,51 +111,77 @@
   }
 }
 
-.animal-card {
-  margin: 0;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  height: 100%;
+.container {
+  padding: 0;
+  background-color: #FFFFFF;
+  color: #000000;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  .animal-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 16px;
   }
 
-  .image-container {
-    position: relative;
-    width: 100%;
-    height: 120px;
-    overflow: hidden;
+  .animal-card-wrapper {
+    flex: 0 0 auto;
+    cursor: pointer;
+  }
 
-    .animal-image {
-      width: 100%;
+  .animal-card {
+    width: 157px;
+    height: 143px;
+    border-radius: 20px;
+    padding: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(135deg, #BACA93 0%, #D7DEC9 100%);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
       height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-  }
 
-  &:hover .animal-image {
-    transform: scale(1.05);
-  }
+      .image-container {
+        position: relative;
+        width: 100%;
+        height: 80px;
+        overflow: hidden;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        background: #f0f0f0;
 
-  ion-card-content {
-    padding: 0.75rem;
+        .animal-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+      }
 
-    .animal-name {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin: 0 0 0.25rem 0;
-      color: var(--ion-color-dark);
-      line-height: 1.2;
-    }
+      &:hover .animal-image {
+        transform: scale(1.05);
+      }
 
-    .yoruba-name {
-      font-size: 0.8rem;
-      color: var(--ion-color-primary);
-      margin: 0;
-      font-weight: 500;
+      .animal-name {
+        font-size: 14px;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        color: var(--ion-color-dark);
+        line-height: 1.2;
+      }
+
+      .yoruba-name {
+        font-size: 12px;
+        color: var(--ion-color-primary);
+        margin: 0;
+        font-weight: 600;
+      }
     }
   }
 }
@@ -133,20 +226,20 @@
 
 // Responsive adjustments
 @media (max-width: 768px) {
-  .animal-card {
-    .image-container {
-      height: 100px;
-    }
+  .container {
+    .animal-card {
+      .card-content {
+        .image-container {
+          height: 70px;
+        }
 
-    ion-card-content {
-      padding: 0.5rem;
+        .animal-name {
+          font-size: 12px;
+        }
 
-      .animal-name {
-        font-size: 0.85rem;
-      }
-
-      .yoruba-name {
-        font-size: 0.75rem;
+        .yoruba-name {
+          font-size: 10px;
+        }
       }
     }
   }
@@ -154,10 +247,22 @@
 
 // Dark mode support
 @media (prefers-color-scheme: dark) {
-  .animal-card {
-    ion-card-content {
-      .animal-name {
-        color: var(--ion-color-light);
+  .container-wrap {
+    background-color: var(--ion-background-color, #000000);
+    color: var(--ion-text-color, #ffffff);
+
+    .container {
+      background-color: var(--ion-background-color, #000000);
+      color: var(--ion-text-color, #ffffff);
+    }
+  }
+
+  .container {
+    .animal-card {
+      .card-content {
+        .animal-name {
+          color: var(--ion-color-light);
+        }
       }
     }
   }

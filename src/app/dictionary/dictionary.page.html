@@ -1,48 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Dictionary
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="container-wrap">
+    <div class="framer">
+      <div class="dictionary-badge">
+        <img src="../../assets/icon/Rectangle 42.svg" alt="" />
+        <p class="dictionary-text">ANIMAL DICTIONARY</p>
+      </div>
+      <p class="dictionary-description">
+        Explore animals and their Yoruba names
+      </p>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Dictionary</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Search Bar -->
+    <div class="search-section">
+      <ion-searchbar 
+        [(ngModel)]="searchTerm" 
+        (ionInput)="onSearchChange($event)"
+        placeholder="Search animals..."
+        show-clear-button="focus"
+        debounce="300">
+      </ion-searchbar>
+    </div>
 
-  <!-- Search Bar -->
-  <ion-searchbar 
-    [(ngModel)]="searchTerm" 
-    (ionInput)="onSearchChange($event)"
-    placeholder="Search animals..."
-    show-clear-button="focus"
-    debounce="300">
-  </ion-searchbar>
-
-  <!-- Filter Buttons -->
-  <ion-segment [(ngModel)]="selectedCategory" (ionChange)="onCategoryChange($event)">
-    <ion-segment-button value="all">
-      <ion-label style="font-size: 8px;">All</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="mammals">
-      <ion-label style="font-size: 8px;">Mammals</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="birds">
-      <ion-label style="font-size: 8px;">Birds</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="reptiles">
-      <ion-label style="font-size: 8px;">Reptiles</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="insects">
-      <ion-label style="font-size: 8px;">Insects</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="aquatic">
-      <ion-label style="font-size: 8px;">Aquatic</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+    <!-- Filter Buttons -->
+    <div class="category-section">
+      <ion-segment [(ngModel)]="selectedCategory" (ionChange)="onCategoryChange($event)">
+        <ion-segment-button value="all">
+          <ion-label>All</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="mammals">
+          <ion-label>Mammals</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="birds">
+          <ion-label>Birds</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="reptiles">
+          <ion-label>Reptiles</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="insects">
+          <ion-label>Insects</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="aquatic">
+          <ion-label>Aquatic</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
 
   <!-- Loading Spinner -->
   <div *ngIf="isLoading" class="loading-container">
@@ -50,30 +51,34 @@
     <p>Loading dictionary...</p>
   </div>
 
-  <!-- Dictionary Grid -->
-  <div *ngIf="!isLoading" class="dictionary-container">
-    <div *ngIf="filteredAnimals.length === 0" class="no-results">
-      <ion-icon name="search-outline" size="large"></ion-icon>
-      <h3>No animals found</h3>
-      <p>Try adjusting your search or filter criteria</p>
-    </div>
+    <!-- Dictionary Grid -->
+    <div *ngIf="!isLoading" class="dictionary-container">
+      <div *ngIf="filteredAnimals.length === 0" class="no-results">
+        <ion-icon name="search-outline" size="large"></ion-icon>
+        <h3>No animals found</h3>
+        <p>Try adjusting your search or filter criteria</p>
+      </div>
 
-    <ion-grid *ngIf="filteredAnimals.length > 0">
-      <ion-row>
-        <ion-col size="6" size-md="4" size-lg="3" *ngFor="let animal of filteredAnimals">
-          <ion-card class="animal-card" (click)="openAnimalDetail(animal)">
-            <div class="image-container">
-              <img [src]="animal.picture" [alt]="animal.name" loading="lazy" 
-                   (error)="onImageError($event)" class="animal-image">
+      <div *ngIf="filteredAnimals.length > 0" class="container">
+        <div class="animal-grid" *ngFor="let row of getAnimalRows(); let rowIndex = index">
+          <div 
+            class="animal-card-wrapper" 
+            *ngFor="let animal of row"
+            (click)="openAnimalDetail(animal)">
+            <div class="animal-card">
+              <div class="card-content">
+                <div class="image-container">
+                  <img [src]="animal.picture" [alt]="animal.name" loading="lazy" 
+                       (error)="onImageError($event)" class="animal-image">
+                </div>
+                <h3 class="animal-name">{{ animal.name }}</h3>
+                <p class="yoruba-name">{{ animal.yorubaName }}</p>
+              </div>
             </div>
-            <ion-card-content>
-              <h3 class="animal-name">{{ animal.name }}</h3>
-              <p class="yoruba-name">{{ animal.yorubaName }}</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Animal Detail Modal -->

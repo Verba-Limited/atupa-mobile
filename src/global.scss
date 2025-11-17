@@ -39,7 +39,7 @@
 @font-face {
     font-family: 'Nunito';
     src: url('/assets/fonts/static/Nunito-Regular.ttf') format('truetype'),
-         url('/assets/fonts/static/Nunito-Bold.tff') format('truetype');
+         url('/assets/fonts/static/Nunito-Bold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -107,7 +107,7 @@ ion-footer {
 /* Global Toast Styling */
 .quiz-toast {
 //   --background: #ef4444 !important;
-  --background: #7B462F !important;
+  --background: var(--ion-color-primary) !important;
   --color: white !important;
   --border-radius: 10px !important;
   --button-color: white !important;
@@ -123,7 +123,7 @@ ion-footer {
 
 /* Enhanced more prominent toast */
 .prominent-toast {
-  --background: #7B462F !important;
+  --background: var(--ion-color-primary) !important;
   --color: white !important;
   --border-radius: 15px !important;
   --button-color: white !important;

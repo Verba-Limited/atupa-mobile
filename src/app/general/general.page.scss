@@ -1,0 +1,132 @@
+/* Styles for General page */
+
+.container-wrap {
+  background-color: #FFFFFF;
+  color: #000000;
+
+  .framer {
+    color: #505050;
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .general-badge {
+    position: relative;
+    display: inline-block;
+  }
+
+  .general-badge img {
+    width: 99.95px;
+    height: 101px;
+  }
+
+  .general-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .general-description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21.82px;
+    color: #505050;
+    margin: 5px;
+  }
+
+  .container {
+    padding: 16px;
+    background-color: #FFFFFF;
+    color: #000000;
+
+    .first {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+    }
+
+    .general-card {
+      flex: 0 0 auto;
+      width: 157px;
+      height: 143px;
+      border-radius: 20px;
+      padding: 16px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      &.green {
+        background: #BACA93;
+      }
+
+      &.orange {
+        background: #EDC78D;
+      }
+
+      &.sky {
+        background: #CCCDB1;
+      }
+
+      &.light {
+        background: #D7DEC9;
+      }
+
+      &.brown {
+        background: #D2C5B2;
+      }
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      h2 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      .card-description {
+        font-size: 12px;
+        color: #505050;
+        margin: 0 0 auto 0;
+      }
+
+      .icon-section {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+
+        ion-icon {
+          font-size: 32px;
+          color: rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container-wrap {
+    background-color: var(--ion-background-color, #000000);
+    color: var(--ion-text-color, #ffffff);
+
+    .container {
+      background-color: var(--ion-background-color, #000000);
+      color: var(--ion-text-color, #ffffff);
+    }
+  }
+}
+
+
