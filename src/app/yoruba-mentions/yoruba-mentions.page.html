@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Yoruba Mentions
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Yoruba Mentions</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list inset>
+    <ion-item button *ngFor="let person of personalities" (click)="viewPersonalityDetail(person)">
+      <ion-avatar slot="start">
+        <img [src]="person.picture" [alt]="person.name" (error)="onImageError($event)" />
+      </ion-avatar>
+      <ion-label>
+        <h3>{{ person.name }}</h3>
+        <p *ngIf="person.title" class="person-title">{{ person.title }}</p>
+        <p *ngIf="person.description" class="person-description">{{ person.description }}</p>
+      </ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

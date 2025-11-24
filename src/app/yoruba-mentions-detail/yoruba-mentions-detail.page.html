@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/general/yoruba-mentions"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Personality Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="personality">
+  <div class="detail-container">
+    <div class="header-section">
+      <div class="avatar-container">
+        <img [src]="personality.picture" [alt]="personality.name" (error)="onImageError($event)" class="profile-image" />
+      </div>
+      <h1 class="person-name">{{ personality.name }}</h1>
+      <p class="person-title" *ngIf="personality.title">{{ personality.title }}</p>
+    </div>
+
+    <div class="content-section">
+      <div class="bio-section" *ngIf="personality.bio">
+        <h2>Biography</h2>
+        <p class="bio-text">{{ personality.bio }}</p>
+      </div>
+
+      <div class="achievements-section" *ngIf="personality.achievements && personality.achievements.length > 0">
+        <h2>Achievements</h2>
+        <ion-list>
+          <ion-item *ngFor="let achievement of personality.achievements">
+            <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <p>{{ achievement }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+
+      <div class="description-section" *ngIf="personality.description">
+        <h2>Overview</h2>
+        <p class="description-text">{{ personality.description }}</p>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content *ngIf="!personality">
+  <div class="error-container">
+    <ion-icon name="alert-circle-outline" size="large"></ion-icon>
+    <h2>Personality not found</h2>
+    <ion-button (click)="goBack()">Go Back</ion-button>
+  </div>
+</ion-content>
+

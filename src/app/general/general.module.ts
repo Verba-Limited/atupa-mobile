@@ -29,6 +29,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'yoruba-songs-detail',
+    loadChildren: () =>
+      import('../yoruba-songs-detail/yoruba-songs-detail.module').then(
+        (m) => m.YorubaSongsDetailPageModule
+      ),
+  },
+  {
     path: 'yoruba-stories',
     loadChildren: () =>
       import('../yoruba-stories/yoruba-stories.module').then(
@@ -40,6 +47,20 @@ const routes: Routes = [
     loadChildren: () =>
       import('../yoruba-towns/yoruba-towns.module').then(
         (m) => m.YorubaTownsPageModule
+      ),
+  },
+  {
+    path: 'yoruba-mentions',
+    loadChildren: () =>
+      import('../yoruba-mentions/yoruba-mentions.module').then(
+        (m) => m.YorubaMentionsPageModule
+      ),
+  },
+  {
+    path: 'yoruba-mentions-detail',
+    loadChildren: () =>
+      import('../yoruba-mentions-detail/yoruba-mentions-detail.module').then(
+        (m) => m.YorubaMentionsDetailPageModule
       ),
   },
 ];

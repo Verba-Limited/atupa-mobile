@@ -1,0 +1,128 @@
+.detail-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--ion-color-light);
+}
+
+.avatar-container {
+  margin-bottom: 20px;
+  
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--ion-color-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.person-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ion-color-dark);
+  margin: 16px 0 8px 0;
+}
+
+.person-title {
+  font-size: 18px;
+  color: var(--ion-color-primary);
+  font-weight: 600;
+  margin: 0;
+}
+
+.content-section {
+  text-align: left;
+}
+
+.bio-section,
+.achievements-section,
+.description-section {
+  margin-bottom: 30px;
+  
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ion-color-primary);
+  }
+}
+
+.bio-text,
+.description-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ion-color-dark);
+  margin: 0;
+}
+
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent;
+  margin-bottom: 12px;
+  
+  ion-icon {
+    margin-right: 12px;
+  }
+  
+  ion-label p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ion-color-dark);
+    margin: 0;
+  }
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  min-height: 50vh;
+  
+  ion-icon {
+    color: var(--ion-color-medium);
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    color: var(--ion-color-dark);
+    margin-bottom: 20px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .header-section {
+    border-bottom-color: var(--ion-color-medium-shade, #3a3a3a);
+  }
+  
+  .person-name,
+  .bio-text,
+  .description-text,
+  ion-item ion-label p {
+    color: var(--ion-color-light);
+  }
+  
+  h2 {
+    color: var(--ion-color-light);
+    border-bottom-color: var(--ion-color-primary);
+  }
+}
+

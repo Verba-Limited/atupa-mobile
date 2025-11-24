@@ -1,0 +1,172 @@
+.detail-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--ion-color-light);
+}
+
+.song-icon {
+  font-size: 64px;
+  color: var(--ion-color-primary);
+  margin-bottom: 16px;
+}
+
+.song-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ion-color-dark);
+  margin: 0;
+}
+
+.content-section {
+  text-align: left;
+}
+
+.audio-section {
+  margin-bottom: 30px;
+  
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ion-color-primary);
+  }
+}
+
+.audio-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  margin-top: 12px;
+  
+  .play-button {
+    min-width: 150px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+  
+  .embed-player {
+    width: 100%;
+    height: 152px;
+    border-radius: 8px;
+    border: none;
+    
+    &.youtube-embed {
+      height: 315px;
+      min-height: 315px;
+    }
+  }
+}
+
+.lyrics-section,
+.interpretation-section {
+  margin-bottom: 30px;
+  
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ion-color-primary);
+  }
+}
+
+.lyrics-text,
+.interpretation-text {
+  background: var(--ion-color-light);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 12px;
+  
+  pre {
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ion-color-dark);
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}
+
+.lyrics-text {
+  background: linear-gradient(135deg, var(--ion-color-primary-tint) 0%, var(--ion-color-light) 100%);
+  
+  pre {
+    color: var(--ion-color-dark);
+    font-weight: 500;
+  }
+}
+
+.interpretation-text {
+  background: var(--ion-color-light);
+  
+  pre {
+    color: var(--ion-color-dark);
+    font-style: italic;
+  }
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  min-height: 50vh;
+  
+  ion-icon {
+    color: var(--ion-color-medium);
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    color: var(--ion-color-dark);
+    margin-bottom: 20px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .header-section {
+    border-bottom-color: var(--ion-color-medium-shade, #3a3a3a);
+  }
+  
+  .song-title,
+  h2,
+  .lyrics-text pre,
+  .interpretation-text pre {
+    color: var(--ion-color-light);
+  }
+  
+  h2 {
+    border-bottom-color: var(--ion-color-primary);
+  }
+  
+  .lyrics-text,
+  .interpretation-text {
+    background: var(--ion-color-medium-shade, #3a3a3a);
+  }
+  
+  .audio-player {
+    background: var(--ion-color-medium-shade, #3a3a3a);
+  }
+}
+
